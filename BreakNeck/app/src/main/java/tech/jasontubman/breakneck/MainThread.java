@@ -12,6 +12,8 @@ public class MainThread extends Thread {
 
     private double averageFPS;
 
+    private int score;
+
     private SurfaceHolder surfaceHolder;
     private GamePanel panel;
     private boolean running;
@@ -73,7 +75,6 @@ public class MainThread extends Thread {
                 averageFPS = 1000/((totalTime/frameCount)/1000000);
                 frameCount = 0;
                 totalTime = 0;
-                System.out.println(averageFPS);
             }
         }
     }

@@ -3,6 +3,7 @@ package tech.jasontubman.breakneck;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.MotionEvent;
@@ -16,23 +17,22 @@ import android.view.SurfaceView;
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
     private MainThread thread;
-    private Player player;
-    private Point playerPoint;
-    private ObstacleManager obstacleManager;
+
+    private SceneManager manager = new SceneManager();
+
     public GamePanel(Context context) {
         super(context);
 
+        this.manager = new SceneManager();
         getHolder().addCallback(this);
 
         thread = new MainThread(getHolder(), this);
 
-        player = new Player(new Rect(100, 100, 200, 200), Color.YELLOW);
-        playerPoint = new Point(150, 150);
-
-        obstacleManager = new ObstacleManager(200, 350, 75, Color.BLACK);
 
         setFocusable(true);
     }
+
+
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
@@ -64,32 +64,26 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch(event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-            {
 
-            }
-            case MotionEvent.ACTION_MOVE: {
-                playerPoint.set((int) event.getX(), (int) event.getY());
-            }
-        }
+        manager.recieveTouch(event);
 
         return true;
     }
 
     public void update() {
-        player.update(playerPoint);
-        obstacleManager.update();
+        manager.update();
     }
 
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-
-        canvas.drawColor(Color.WHITE);
-
-        player.draw(canvas);
-        obstacleManager.draw(canvas);
+        manager.draw(canvas);
     }
+
+    public SceneManager getManager() {
+        return manager;
+    }
+
+
 
 }
