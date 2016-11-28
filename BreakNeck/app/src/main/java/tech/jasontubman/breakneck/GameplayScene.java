@@ -13,8 +13,7 @@ import android.view.MotionEvent;
 
 public class GameplayScene implements Scene {
     private float eventX =0;
-    private float eventX2 =0;
-    private int numPoints = 1;
+    private int numPoints = 0;
     private Player player;
     private Point playerPoint;
     private Player player2;
@@ -49,8 +48,9 @@ public class GameplayScene implements Scene {
 
         obstacleManager = new ObstacleManager(200, 650, 400, Color.BLACK);
         movingPlayer = false;
+        this.score = 0;
+        numPoints  = 0;
     }
-
     @Override
     public void update() {
         if (!gameOver) {
@@ -58,24 +58,37 @@ public class GameplayScene implements Scene {
             player.update(playerPoint);
             player2.update(playerPoint2);
             obstacleManager.update();
-            if(!gameOver && numPoints == 2) {
-                player2.setVisible(true);
+
+            //RESETING PLAYERPOINT 1
+            if (numPoints == 0 && playerPoint.x != Constants.screenWidth/2) {
+                resetPoint();
             }
-            if (movingPlayer && !gameOver) {
+
+            //MOVING PLAYER 1
+            if (numPoints > 0 && !gameOver) {
                 if (eventX < Constants.screenWidth/2) {
                     if (!(playerPoint.x < player.getRectangle().width())) {
-                        playerPoint.set(playerPoint.x-150, playerPoint.y);
+                        playerPoint.set(playerPoint.x-70, playerPoint.y);
                     }
                 } else if (eventX > Constants.screenWidth/2) {
                     if (!(playerPoint.x > Constants.screenWidth - player.getRectangle().width())) {
-                        playerPoint.set(playerPoint.x+150, playerPoint.y);
+                        playerPoint.set(playerPoint.x+70, playerPoint.y);
                     }
                 }
             }
-
+            //IF MULTI TOUCH SPLIT / RESET AT END
+            if(!gameOver && numPoints >1) {
+                player2.setVisible(true);
+                split();
+            } else if (!gameOver && numPoints <= 1){
+                resetPointTwo();
+                if (playerPoint2.x == playerPoint.x) {
+                    player2.setVisible(false);
+                }
+            }
 
         }
-        if (obstacleManager.playerCollided(player) && !gameOver) {
+        if (obstacleManager.playerCollided(player) && !gameOver || obstacleManager.playerCollided(player2) && !gameOver) {
             gameOver = true;
             timeEnded = System.currentTimeMillis();
         }
@@ -113,8 +126,8 @@ public class GameplayScene implements Scene {
         switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN: {
                 if (!gameOver) {
-                    movingPlayer = true;
-                    eventX = event.getX();
+                    numPoints = event.getPointerCount();
+                    eventX = event.getX(0);
                 }
                 if (gameOver && (System.currentTimeMillis() - timeEnded) >= 2000) {
                     reset();
@@ -124,62 +137,49 @@ public class GameplayScene implements Scene {
             }
             case MotionEvent.ACTION_MOVE: {
                 if (!gameOver) {
-                    movingPlayer = true;
-                    eventX = event.getX();
+                    numPoints = event.getPointerCount();
+                    eventX = event.getX(0);
                 }
                 if (gameOver && (System.currentTimeMillis() - timeEnded) >= 2000) {
                     reset();
                     gameOver = false;
                 }
-                break;
-            }
-            case MotionEvent.ACTION_POINTER_DOWN: {
-                if (!gameOver) {
-                    eventX2 = event.getX();
-                    numPoints = 2;
-                }
-                if (gameOver && (System.currentTimeMillis() - timeEnded) >= 2000) {
-                    reset();
-                    gameOver = false;
-                }
-                break;
-            }
-            case MotionEvent.ACTION_POINTER_UP: {
-                player2.setVisible(false);
-                eventX2 = 0;
-                numPoints = 1;
                 break;
             }
             case MotionEvent.ACTION_UP: {
-                movingPlayer = false;
-                eventX = 0;
-                resetPoint();
+                numPoints = event.getPointerCount() - 1;
                 break;
             }
         }
 
     }
     private void resetPoint() {
-
-        while (playerPoint.x != Constants.screenWidth/2 - player.getRectangle().width()/2) {
-            if (playerPoint.x > Constants.screenWidth/2 - player.getRectangle().width()/2) {
-                playerPoint.set(playerPoint.x - 1, playerPoint.y);
-
-                if (playerPoint.x < Constants.screenWidth/2 - player.getRectangle().width()/2) {
-                    playerPoint.set(Constants.screenWidth/2 - player.getRectangle().width()/2, playerPoint.y);
-                }
-
-            } else if (playerPoint.x < Constants.screenWidth/2 - player.getRectangle().width()/2) {
-                playerPoint.set(playerPoint.x + 1, playerPoint.y);
-
-                if (playerPoint.x > Constants.screenWidth/2 - player.getRectangle().width()/2) {
-                    playerPoint.set(Constants.screenWidth/2 - player.getRectangle().width()/2, playerPoint.y);
-                }
-
+        if (playerPoint.x > (Constants.screenWidth / 2)) {
+            playerPoint.set(playerPoint.x - 70, playerPoint.y);
+            if (playerPoint.x < (Constants.screenWidth / 2)) {
+                playerPoint.set(Constants.screenWidth/2, playerPoint.y);
             }
-
+        } else if (playerPoint.x < (Constants.screenWidth / 2)) {
+            playerPoint.set(playerPoint.x + 70, playerPoint.y);
+            if (playerPoint.x > (Constants.screenWidth / 2)) {
+                playerPoint.set(Constants.screenWidth/2, playerPoint.y);
+            }
         }
-
+        eventX = 0;
+        numPoints = 0;
+    }
+    private void resetPointTwo() {
+        if (playerPoint2.x > playerPoint.x) {
+            playerPoint2.set(playerPoint2.x - 70, playerPoint2.y);
+            if (playerPoint2.x < playerPoint.x) {
+                playerPoint2.set(playerPoint.x, playerPoint2.y);
+            }
+        } else if (playerPoint2.x < playerPoint.x) {
+            playerPoint2.set(playerPoint2.x + 70, playerPoint2.y);
+            if (playerPoint2.x > playerPoint.x) {
+                playerPoint2.set(playerPoint.x, playerPoint2.y);
+            }
+        }
     }
 
     private void drawScore(Canvas canvas, Paint paint, String text) {
@@ -195,6 +195,18 @@ public class GameplayScene implements Scene {
     public void addToScore(int score){
         if (!gameOver) {
             this.score += score;
+        }
+    }
+
+    private void split() {
+        if (eventX < Constants.screenWidth/2) {
+            if (!(playerPoint2.x > Constants.screenWidth - player.getRectangle().width())) {
+                playerPoint2.set(playerPoint2.x+70, playerPoint2.y);
+            }
+        } else if (eventX > Constants.screenWidth/2) {
+            if (!(playerPoint2.x < player.getRectangle().width())) {
+                playerPoint2.set(playerPoint2.x-70, playerPoint2.y);
+            }
         }
     }
 
