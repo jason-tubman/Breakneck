@@ -12,9 +12,13 @@ import android.view.MotionEvent;
  */
 
 public class GameplayScene implements Scene {
-
+    private float eventX =0;
+    private float eventX2 =0;
+    private int numPoints = 1;
     private Player player;
     private Point playerPoint;
+    private Player player2;
+    private Point playerPoint2;
     private ObstacleManager obstacleManager;
     private int score;
     private Rect r = new Rect();
@@ -25,16 +29,24 @@ public class GameplayScene implements Scene {
 
     public GameplayScene() {
         player = new Player(new Rect(100, 100, 200, 200), Color.YELLOW);
-        playerPoint = new Point(Constants.screenWidth/2, Constants.screenHeight/4);
+        playerPoint = new Point(Constants.screenWidth/2, Constants.screenHeight-Constants.screenHeight/4);
         player.update(playerPoint);
-
         obstacleManager = new ObstacleManager(200, 650, 400, Color.BLACK);
 
+        player2 = new Player(new Rect(100, 100, 200, 200), Color.RED);
+        playerPoint2 = new Point(Constants.screenWidth/2, Constants.screenHeight-Constants.screenHeight/4);
+        player2.update(playerPoint2);
+        player2.setVisible(false);
     }
 
     public void reset() {
-        playerPoint = new Point(Constants.screenWidth/2, Constants.screenHeight/4);
+        playerPoint = new Point(Constants.screenWidth/2, Constants.screenHeight-Constants.screenHeight/4);
         player.update(playerPoint);
+
+        playerPoint2 = new Point(Constants.screenWidth/2, Constants.screenHeight-Constants.screenHeight/4);
+        player2.update(playerPoint2);
+        player2.setVisible(false);
+
         obstacleManager = new ObstacleManager(200, 650, 400, Color.BLACK);
         movingPlayer = false;
     }
@@ -44,9 +56,26 @@ public class GameplayScene implements Scene {
         if (!gameOver) {
             addToScore(1);
             player.update(playerPoint);
+            player2.update(playerPoint2);
             obstacleManager.update();
+            if(!gameOver && numPoints == 2) {
+                player2.setVisible(true);
+            }
+            if (movingPlayer && !gameOver) {
+                if (eventX < Constants.screenWidth/2) {
+                    if (!(playerPoint.x < player.getRectangle().width())) {
+                        playerPoint.set(playerPoint.x-150, playerPoint.y);
+                    }
+                } else if (eventX > Constants.screenWidth/2) {
+                    if (!(playerPoint.x > Constants.screenWidth - player.getRectangle().width())) {
+                        playerPoint.set(playerPoint.x+150, playerPoint.y);
+                    }
+                }
+            }
+
+
         }
-        if (obstacleManager.playerCollided(player)) {
+        if (obstacleManager.playerCollided(player) && !gameOver) {
             gameOver = true;
             timeEnded = System.currentTimeMillis();
         }
@@ -62,6 +91,8 @@ public class GameplayScene implements Scene {
         drawScore(canvas, score, Integer.toString(this.score));
 
         player.draw(canvas);
+        player2.draw(canvas);
+
         obstacleManager.draw(canvas);
 
         if (gameOver) {
@@ -80,10 +111,10 @@ public class GameplayScene implements Scene {
     @Override
     public void recieveTouch(MotionEvent event) {
         switch(event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-            {
-                if (!gameOver && player.getRectangle().contains((int) event.getX(), (int) event.getY())) {
+            case MotionEvent.ACTION_DOWN: {
+                if (!gameOver) {
                     movingPlayer = true;
+                    eventX = event.getX();
                 }
                 if (gameOver && (System.currentTimeMillis() - timeEnded) >= 2000) {
                     reset();
@@ -92,15 +123,61 @@ public class GameplayScene implements Scene {
                 break;
             }
             case MotionEvent.ACTION_MOVE: {
-                if (movingPlayer && !gameOver) {
-                    playerPoint.set((int) event.getX(), (int) event.getY());
+                if (!gameOver) {
+                    movingPlayer = true;
+                    eventX = event.getX();
                 }
+                if (gameOver && (System.currentTimeMillis() - timeEnded) >= 2000) {
+                    reset();
+                    gameOver = false;
+                }
+                break;
+            }
+            case MotionEvent.ACTION_POINTER_DOWN: {
+                if (!gameOver) {
+                    eventX2 = event.getX();
+                    numPoints = 2;
+                }
+                if (gameOver && (System.currentTimeMillis() - timeEnded) >= 2000) {
+                    reset();
+                    gameOver = false;
+                }
+                break;
+            }
+            case MotionEvent.ACTION_POINTER_UP: {
+                player2.setVisible(false);
+                eventX2 = 0;
+                numPoints = 1;
                 break;
             }
             case MotionEvent.ACTION_UP: {
                 movingPlayer = false;
+                eventX = 0;
+                resetPoint();
                 break;
             }
+        }
+
+    }
+    private void resetPoint() {
+
+        while (playerPoint.x != Constants.screenWidth/2 - player.getRectangle().width()/2) {
+            if (playerPoint.x > Constants.screenWidth/2 - player.getRectangle().width()/2) {
+                playerPoint.set(playerPoint.x - 1, playerPoint.y);
+
+                if (playerPoint.x < Constants.screenWidth/2 - player.getRectangle().width()/2) {
+                    playerPoint.set(Constants.screenWidth/2 - player.getRectangle().width()/2, playerPoint.y);
+                }
+
+            } else if (playerPoint.x < Constants.screenWidth/2 - player.getRectangle().width()/2) {
+                playerPoint.set(playerPoint.x + 1, playerPoint.y);
+
+                if (playerPoint.x > Constants.screenWidth/2 - player.getRectangle().width()/2) {
+                    playerPoint.set(Constants.screenWidth/2 - player.getRectangle().width()/2, playerPoint.y);
+                }
+
+            }
+
         }
 
     }

@@ -10,9 +10,11 @@ import android.graphics.Rect;
  */
 
 public class Player implements Entity{
-
+    private int x;
+    private int y;
     private Rect rectangle;
     private int color;
+    private boolean visible = true;
 
     public Player(Rect rectangle, int color) {
         this.rectangle = rectangle;
@@ -25,9 +27,11 @@ public class Player implements Entity{
 
     @Override
     public void draw(Canvas canvas) {
-        Paint paint = new Paint();
-        paint.setColor(color);
-        canvas.drawRect(rectangle, paint);
+        if (visible == true) {
+            Paint paint = new Paint();
+            paint.setColor(color);
+            canvas.drawRect(rectangle, paint);
+        }
     }
 
     @Override
@@ -36,8 +40,26 @@ public class Player implements Entity{
     }
 
     public void update(Point point) {
-
+        this.x = point.x;
+        this.y = point.y;
         rectangle.set(point.x - rectangle.width()/2, point.y - rectangle.height()/2,
                 point.x + rectangle.width()/2, point.y + rectangle.height()/2);
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
+    public int getX() {
+        return this.x;
+    }
+    public int getY() {
+        return this.y;
+    }
+    public int getHeight(){
+        return rectangle.height();
+    }
+    public int getWidth() {
+        return rectangle.width();
     }
 }

@@ -4,10 +4,11 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
-import android.graphics.Rect;
+import android.graphics.Region;
+
 
 import tech.jasontubman.breakneck.Constants;
-import tech.jasontubman.breakneck.Entity;
+
 import tech.jasontubman.breakneck.Obstacle;
 import tech.jasontubman.breakneck.Player;
 
@@ -17,16 +18,21 @@ import tech.jasontubman.breakneck.Player;
 
 public class LeftTriangle implements Obstacle {
 
-    Point point1 = new Point(0, 0);
-    Point point2 = new Point(Constants.screenWidth/2, 200);
-    Point point3 = new Point(0, 400);
+    private Point point1 = new Point(0, 0);
+    private Point point2 = new Point(Constants.screenWidth/2, 200);
+    private Point point3 = new Point(0, 400);
+    private Path path = new Path();
     private int color;
+    private int startX;
+    private int startY;
 
-    public LeftTriangle(int color, int startX, int startY, double offset) {
+    public LeftTriangle(int color, int startX, int startY) {
         this.color = color;
+        this.startY = startY;
+        this.startX = startX;
         point1.x = startX;
         point1.y = startY;
-        point2.x = startX + Constants.screenWidth/2;
+        point2.x = startX + Constants.screenWidth - Constants.screenWidth/4;
         point2.y = startY + 200;
         point3.x = startX;
         point3.y = startY + 400;
@@ -42,14 +48,22 @@ public class LeftTriangle implements Obstacle {
     }
 
     public boolean playerCollided(Player player) {
-       return false;
+       Region clip = new Region(startX, startY, Constants.screenWidth, Constants.screenHeight);
+        Region region1 = new Region();
+        region1.setPath(path, clip);
+
+        if (!region1.quickReject(player.getRectangle()) && region1.op(player.getRectangle(), Region.Op.INTERSECT)){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public void draw(Canvas canvas) {
+        path.reset();
         Paint paint = new Paint();
         paint.setColor(color);
-        Path path = new Path();
         path.moveTo(point1.x, point1.y);
         path.lineTo(point2.x, point2.y);
         path.lineTo(point3.x, point3.y);
