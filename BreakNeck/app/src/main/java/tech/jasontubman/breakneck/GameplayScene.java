@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+
 import android.view.MotionEvent;
 
 /**
@@ -22,6 +23,8 @@ public class GameplayScene implements Scene {
     private int score;
     private Rect r = new Rect();
 
+    private StarManager starManager;
+
     private boolean movingPlayer = false;
     private boolean gameOver = false;
     private long timeEnded;
@@ -30,7 +33,11 @@ public class GameplayScene implements Scene {
         player = new Player(new Rect(100, 100, 200, 200), Color.YELLOW);
         playerPoint = new Point(Constants.screenWidth/2, Constants.screenHeight-Constants.screenHeight/4);
         player.update(playerPoint);
-        obstacleManager = new ObstacleManager(200, 650, 400, Color.BLACK);
+        obstacleManager = new ObstacleManager(200, 650, 400, Color.LTGRAY, player);
+
+        starManager = new StarManager(player.getSpeed());
+
+
 
         player2 = new Player(new Rect(100, 100, 200, 200), Color.RED);
         playerPoint2 = new Point(Constants.screenWidth/2, Constants.screenHeight-Constants.screenHeight/4);
@@ -46,7 +53,7 @@ public class GameplayScene implements Scene {
         player2.update(playerPoint2);
         player2.setVisible(false);
 
-        obstacleManager = new ObstacleManager(200, 650, 400, Color.BLACK);
+        obstacleManager = new ObstacleManager(200, 650, 400, Color.LTGRAY, player);
         movingPlayer = false;
         this.score = 0;
         numPoints  = 0;
@@ -58,7 +65,7 @@ public class GameplayScene implements Scene {
             player.update(playerPoint);
             player2.update(playerPoint2);
             obstacleManager.update();
-
+            starManager.update();
             //RESETING PLAYERPOINT 1
             if (numPoints == 0 && playerPoint.x != Constants.screenWidth/2) {
                 resetPoint();
@@ -96,17 +103,22 @@ public class GameplayScene implements Scene {
 
     @Override
     public void draw(Canvas canvas) {
-        canvas.drawColor(Color.WHITE);
+        canvas.drawRGB(44, 42, 49);
+
+
+
+
 
         Paint score = new Paint();
         score.setTextSize(50);
-        score.setColor(Color.RED);
+        score.setColor(Color.WHITE);
         drawScore(canvas, score, Integer.toString(this.score));
 
         player.draw(canvas);
         player2.draw(canvas);
 
         obstacleManager.draw(canvas);
+        starManager.draw(canvas);
 
         if (gameOver) {
             Paint paint = new Paint();
@@ -194,7 +206,7 @@ public class GameplayScene implements Scene {
 
     public void addToScore(int score){
         if (!gameOver) {
-            this.score += score;
+            this.score += score*player.getScoreMulti();
         }
     }
 

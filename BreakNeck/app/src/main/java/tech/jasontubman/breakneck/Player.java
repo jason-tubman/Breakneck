@@ -16,9 +16,13 @@ public class Player implements Entity{
     private int color;
     private boolean visible = true;
 
+    private float speed;
+    private float scoreMulti = 1;
+
     public Player(Rect rectangle, int color) {
         this.rectangle = rectangle;
         this.color = color;
+        this.speed = Constants.screenHeight/5000.0f;
     }
 
     public Rect getRectangle() {
@@ -62,4 +66,16 @@ public class Player implements Entity{
     public int getWidth() {
         return rectangle.width();
     }
+
+    public void setSpeed(double speed) {
+        this.speed += speed;
+    }
+
+    public float getSpeed() {
+        return this.speed;
+    }
+    public float getScoreMulti() {
+        return this.scoreMulti;
+    }
+
 }

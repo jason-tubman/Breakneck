@@ -23,14 +23,14 @@ public class ObstacleManager {
     private float speed;
     private long startTime;
     private long initTime;
+    private Player player;
 
-
-    public ObstacleManager(int playerGap, int obstacleGap, int obstacleHeight, int color) {
+    public ObstacleManager(int playerGap, int obstacleGap, int obstacleHeight, int color, Player player) {
         this.playerGap = playerGap;
         this.obstacleGap = obstacleGap;
         this.obstacleHeight = obstacleHeight;
         this.color = color;
-
+        this.player = player;
 
         startTime = initTime = System.currentTimeMillis();
 
@@ -56,17 +56,17 @@ public class ObstacleManager {
             switch (random) {
 
                 case 1 : {
-                    obstacles.add(new LeftTriangle(Color.BLACK, 0, obstacleY));
+                    obstacles.add(new LeftTriangle(this.color, 0, obstacleY));
                     obstacleY += obstacleHeight + obstacleGap;
                     break;
                 }
                 case 2 : {
-                    obstacles.add(new RightTriangle(Color.BLACK, Constants.screenWidth/4, obstacleY));
+                    obstacles.add(new RightTriangle(this.color, Constants.screenWidth/4, obstacleY));
                     obstacleY += obstacleHeight + obstacleGap;
                     break;
                 }
                 case 3 : {
-                    obstacles.add(new Diamond(Color.BLACK, Constants.screenWidth/2, obstacleY));
+                    obstacles.add(new Diamond(this.color, Constants.screenWidth/2, obstacleY));
                     obstacleY += obstacleHeight + obstacleGap;
                     break;
                 }
@@ -76,7 +76,7 @@ public class ObstacleManager {
     public void update(){
         int elapsedTime = (int)(System.currentTimeMillis() - startTime);
         startTime = System.currentTimeMillis();
-        this.speed = (float)(Math.sqrt(1 + (startTime - initTime)/2000)) * Constants.screenHeight/10000.0f;
+        this.speed = (float)(Math.sqrt(1.5 + (startTime - initTime)/2000)) * player.getSpeed();
         for(Obstacle obstacle : obstacles) {
             obstacle.moveObstacle(speed*elapsedTime);
         }
@@ -86,15 +86,15 @@ public class ObstacleManager {
 
             switch (random) {
                 case 1 : {
-                    obstacles.add(0, new LeftTriangle(Color.BLACK, 0, obstacleY));
+                    obstacles.add(0, new LeftTriangle(this.color, 0, obstacleY));
                     break;
                 }
                 case 2 : {
-                    obstacles.add(0, new RightTriangle(Color.BLACK, Constants.screenWidth/4, obstacleY));
+                    obstacles.add(0, new RightTriangle(this.color, Constants.screenWidth/4, obstacleY));
                     break;
                 }
                 case 3 : {
-                    obstacles.add(new Diamond(Color.BLACK, Constants.screenWidth/2, obstacleY));
+                    obstacles.add(new Diamond(this.color, Constants.screenWidth/2, obstacleY));
                     break;
                 }
             }
