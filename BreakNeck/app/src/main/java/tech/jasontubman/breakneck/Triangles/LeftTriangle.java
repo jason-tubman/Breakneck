@@ -48,7 +48,7 @@ public class LeftTriangle implements Obstacle {
     }
 
     public boolean playerCollided(Player player) {
-       Region clip = new Region(startX, startY, Constants.screenWidth, Constants.screenHeight);
+        Region clip = new Region(startX, startY, Constants.screenWidth, Constants.screenHeight);
         Region region1 = new Region();
         region1.setPath(path, clip);
 

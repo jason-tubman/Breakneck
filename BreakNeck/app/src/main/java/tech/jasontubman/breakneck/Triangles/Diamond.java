@@ -15,12 +15,12 @@ import tech.jasontubman.breakneck.Player;
  */
 
 public class Diamond implements Obstacle {
-    Point point1 = new Point(Constants.screenWidth/2, 0);
-    Point point2 = new Point(Constants.screenWidth/5, 200);
-    Point point3 = new Point(Constants.screenWidth, 400);
-    Point point4 = new Point(Constants.screenWidth/2, 0);
-    Point point5 = new Point(Constants.screenWidth/5, 200);
-    Point point6 = new Point(Constants.screenWidth, 400);
+    private Point point1 = new Point(Constants.screenWidth/2, 0);
+    private Point point2 = new Point(Constants.screenWidth/5, 200);
+    private Point point3 = new Point(Constants.screenWidth, 400);
+    private Point point4 = new Point(Constants.screenWidth/2, 0);
+    private Point point5 = new Point(Constants.screenWidth/5, 200);
+    private Point point6 = new Point(Constants.screenWidth, 400);
     private Path path = new Path();
     private Path path2 = new Path();
     private int startX;
