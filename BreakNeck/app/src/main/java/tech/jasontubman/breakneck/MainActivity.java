@@ -5,8 +5,13 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Window;
 import android.view.WindowManager;
+import android.media.MediaPlayer;
+
+import tech.jasontubman.game.R;
 
 public class MainActivity extends Activity {
+
+    MediaPlayer backgroundMusic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,5 +26,9 @@ public class MainActivity extends Activity {
         Constants.screenWidth = dm.widthPixels;
 
         setContentView(new GamePanel(this));
+
+        backgroundMusic = MediaPlayer.create(MainActivity.this, R.raw.fly1);
+        backgroundMusic.setLooping(true);
+        backgroundMusic.start();
     }
 }

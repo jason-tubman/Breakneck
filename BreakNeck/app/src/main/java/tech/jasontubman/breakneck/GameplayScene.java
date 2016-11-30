@@ -147,11 +147,15 @@ public class GameplayScene implements Scene {
         score.setColor(Color.WHITE);
         drawScore(canvas, score, Integer.toString(this.score));
 
-        player.draw(canvas);
-        player2.draw(canvas);
+
 
 
         starManager.draw(canvas);
+
+
+        player.draw(canvas);
+        player2.draw(canvas);
+
         obstacleManager.draw(canvas);
 
         if (gameOver) {
