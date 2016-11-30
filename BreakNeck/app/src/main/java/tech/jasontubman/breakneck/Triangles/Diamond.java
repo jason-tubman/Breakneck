@@ -33,14 +33,14 @@ public class Diamond implements Obstacle {
         this.color = color;
         point1.x = startX;
         point1.y = startY;
-        point2.x = startX - Constants.screenWidth/3;
+        point2.x = startX - (int) (Constants.screenWidth/2.5);
         point2.y = startY + 200;
         point3.x = startX;
         point3.y = startY + 400;
 
         point4.x = startX;
         point4.y = startY;
-        point5.x = startX + Constants.screenWidth/3;
+        point5.x = startX + (int) (Constants.screenWidth/2.5);
         point5.y = startY + 200;
         point6.x = startX;
         point6.y = startY + 400;

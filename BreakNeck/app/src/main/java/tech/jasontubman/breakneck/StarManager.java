@@ -31,14 +31,14 @@ public class StarManager {
         for (int i = 0; i < 100; i++) {
             int x = getRandomNumberInRange(20, Constants.screenWidth - 20);
             int y = getRandomNumberInRange(-500, Constants.screenHeight - 20);
-            int radius = getRandomNumberInRange(2, Constants.screenWidth/200);
+            int radius = getRandomNumberInRange(2, 25);
             stars.add(i, new Star(radius, Color.WHITE, x, y));
         }
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 5; i++) {
             int x = getRandomNumberInRange(20, Constants.screenWidth - 20);
-            int y = getRandomNumberInRange(-500, Constants.screenHeight - 20);
-            int radius = getRandomNumberInRange(10, Constants.screenWidth/150);
-            int planetStyle = getRandomNumberInRange(0, 5);
+            int y = getRandomNumberInRange(-2000, Constants.screenHeight - 20);
+            int radius = getRandomNumberInRange(20, 40);
+            int planetStyle = getRandomNumberInRange(0, 8);
             planets.add(i, new Planet(radius, planetStyle, x, y));
         }
 
@@ -49,16 +49,29 @@ public class StarManager {
         for (Star star : stars) {
             star.draw(canvas);
         }
+        for (Planet planet : planets) {
+            planet.draw(canvas);
+        }
 
     }
 
     public void update() {
-            for (Star star : stars) {
+        for (Star star : stars) {
                 star.Move((int) (3 * speed));
                 if (star.y > Constants.screenHeight) {
-                    star.y = getRandomNumberInRange(-500, 0);
+                    int value = getRandomNumberInRange(1, 500);
+                    star.y = value* -1;
                 }
+        }
+        for (Planet planet : planets) {
+            planet.Move((int) (4 * speed));
+            if (planet.y > Constants.screenHeight) {
+                int value = getRandomNumberInRange(1, 3000);
+                planet.y = value*-1;
+                int value2 = getRandomNumberInRange(1, Constants.screenWidth);
+                planet.x = value2;
             }
+        }
 
     }
 

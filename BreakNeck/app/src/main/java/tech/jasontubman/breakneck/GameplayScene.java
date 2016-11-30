@@ -8,6 +8,8 @@ import android.graphics.Rect;
 
 import android.view.MotionEvent;
 
+import java.util.Timer;
+
 /**
  * Created by Jason on 21/11/2016.
  */
@@ -24,22 +26,24 @@ public class GameplayScene implements Scene {
     private Rect r = new Rect();
 
     private StarManager starManager;
-
-    private boolean movingPlayer = false;
+    private boolean split;
     private boolean gameOver = false;
     private long timeEnded;
 
+    private ShipSelector selector;
+
+
     public GameplayScene() {
-        player = new Player(new Rect(100, 100, 200, 200), Color.YELLOW);
+        selector = new ShipSelector(18, 1);
+        player = new Player(new Rect(100, 100, 235, 235), selector.getSprite());
         playerPoint = new Point(Constants.screenWidth/2, Constants.screenHeight-Constants.screenHeight/4);
         player.update(playerPoint);
+
         obstacleManager = new ObstacleManager(200, 650, 400, Color.LTGRAY, player);
 
         starManager = new StarManager(player.getSpeed());
 
-
-
-        player2 = new Player(new Rect(100, 100, 200, 200), Color.RED);
+        player2 = new Player(new Rect(100, 100, 235, 235), selector.getSprite());
         playerPoint2 = new Point(Constants.screenWidth/2, Constants.screenHeight-Constants.screenHeight/4);
         player2.update(playerPoint2);
         player2.setVisible(false);
@@ -54,18 +58,25 @@ public class GameplayScene implements Scene {
         player2.setVisible(false);
 
         obstacleManager = new ObstacleManager(200, 650, 400, Color.LTGRAY, player);
-        movingPlayer = false;
         this.score = 0;
         numPoints  = 0;
+
     }
     @Override
     public void update() {
         if (!gameOver) {
-            addToScore(1);
+
             player.update(playerPoint);
             player2.update(playerPoint2);
+
             obstacleManager.update();
+
+            if (!obstacleManager.getcountDown()) {
+                addToScore(1);
+            }
+
             starManager.update();
+
             //RESETING PLAYERPOINT 1
             if (numPoints == 0 && playerPoint.x != Constants.screenWidth/2) {
                 resetPoint();
@@ -75,20 +86,45 @@ public class GameplayScene implements Scene {
             if (numPoints > 0 && !gameOver) {
                 if (eventX < Constants.screenWidth/2) {
                     if (!(playerPoint.x < player.getRectangle().width())) {
-                        playerPoint.set(playerPoint.x-70, playerPoint.y);
+                        if (obstacleManager.getSpeed() > 0) {
+                            playerPoint.set((int) (playerPoint.x - 70 * obstacleManager.getSpeed()), playerPoint.y);
+                        } else {
+                                playerPoint.set(playerPoint.x - 70, playerPoint.y);
+                        }
+                    } else {
+                        if (!split) {
+                            playerPoint.set(100, playerPoint.y);
+                        }
                     }
                 } else if (eventX > Constants.screenWidth/2) {
                     if (!(playerPoint.x > Constants.screenWidth - player.getRectangle().width())) {
-                        playerPoint.set(playerPoint.x+70, playerPoint.y);
+                        if (obstacleManager.getSpeed() > 0) {
+                            playerPoint.set((int) (playerPoint.x + 70 * obstacleManager.getSpeed()), playerPoint.y);
+                        } else {playerPoint.set(playerPoint.x + 70, playerPoint.y);}
+                    }
+                    else {
+                        playerPoint.set(Constants.screenWidth - 100, playerPoint.y);
                     }
                 }
             }
             //IF MULTI TOUCH SPLIT / RESET AT END
             if(!gameOver && numPoints >1) {
                 player2.setVisible(true);
+                if (!split) {
+                    split = true;
+                    selector.selectSprite(18, 0.5);
+                    player.halfRect(player.getX() - player.getWidth()/2, player.getY() + player.getHeight()/2);
+                    player2.halfRect(player2.getX() - player2.getWidth()/2, player2.getY() + player2.getHeight()/2);
+                    player.updateSprite(selector.getSprite());
+                    player2.updateSprite(selector.getSprite());
+                }
                 split();
+
             } else if (!gameOver && numPoints <= 1){
                 resetPointTwo();
+                split = false;
+                player.resetRect(player.getX() - player.getWidth()/2, player.getY());
+                player2.resetRect(player2.getX() - player2.getWidth()/2, player2.getY());
                 if (playerPoint2.x == playerPoint.x) {
                     player2.setVisible(false);
                 }
@@ -101,13 +137,10 @@ public class GameplayScene implements Scene {
         }
     }
 
+
     @Override
     public void draw(Canvas canvas) {
         canvas.drawRGB(44, 42, 49);
-
-
-
-
 
         Paint score = new Paint();
         score.setTextSize(50);
@@ -117,8 +150,9 @@ public class GameplayScene implements Scene {
         player.draw(canvas);
         player2.draw(canvas);
 
-        obstacleManager.draw(canvas);
+
         starManager.draw(canvas);
+        obstacleManager.draw(canvas);
 
         if (gameOver) {
             Paint paint = new Paint();
@@ -167,14 +201,28 @@ public class GameplayScene implements Scene {
     }
     private void resetPoint() {
         if (playerPoint.x > (Constants.screenWidth / 2)) {
-            playerPoint.set(playerPoint.x - 70, playerPoint.y);
-            if (playerPoint.x < (Constants.screenWidth / 2)) {
+            if (obstacleManager.getSpeed() > 0) {
+                playerPoint.set((int) (playerPoint.x - 70 * obstacleManager.getSpeed()), playerPoint.y);
+            } else {
+                playerPoint.set(playerPoint.x - 70, playerPoint.y);
+            }
+            if (playerPoint.x <= (Constants.screenWidth / 2)) {
                 playerPoint.set(Constants.screenWidth/2, playerPoint.y);
+                selector.selectSprite(18, 1);
+                player.updateSprite(selector.getSprite());
+                player2.updateSprite(selector.getSprite());
             }
         } else if (playerPoint.x < (Constants.screenWidth / 2)) {
-            playerPoint.set(playerPoint.x + 70, playerPoint.y);
-            if (playerPoint.x > (Constants.screenWidth / 2)) {
+            if (obstacleManager.getSpeed() > 0) {
+                playerPoint.set((int) (playerPoint.x + 70 * obstacleManager.getSpeed()), playerPoint.y);
+            } else {
+                playerPoint.set(playerPoint.x + 70, playerPoint.y);
+            }
+            if (playerPoint.x >= (Constants.screenWidth / 2)) {
                 playerPoint.set(Constants.screenWidth/2, playerPoint.y);
+                selector.selectSprite(18, 1);
+                player.updateSprite(selector.getSprite());
+                player2.updateSprite(selector.getSprite());
             }
         }
         eventX = 0;
@@ -182,14 +230,28 @@ public class GameplayScene implements Scene {
     }
     private void resetPointTwo() {
         if (playerPoint2.x > playerPoint.x) {
-            playerPoint2.set(playerPoint2.x - 70, playerPoint2.y);
-            if (playerPoint2.x < playerPoint.x) {
+            if (obstacleManager.getSpeed() > 0) {
+                playerPoint2.set((int) (playerPoint2.x - 70 * obstacleManager.getSpeed()), playerPoint2.y);
+            } else {
+                playerPoint2.set(playerPoint2.x - 70, playerPoint2.y);
+            }
+            if (playerPoint2.x <= playerPoint.x) {
                 playerPoint2.set(playerPoint.x, playerPoint2.y);
+                selector.selectSprite(18, 1);
+                player.updateSprite(selector.getSprite());
+                player2.updateSprite(selector.getSprite());
             }
         } else if (playerPoint2.x < playerPoint.x) {
-            playerPoint2.set(playerPoint2.x + 70, playerPoint2.y);
-            if (playerPoint2.x > playerPoint.x) {
+            if (obstacleManager.getSpeed() > 0) {
+                playerPoint2.set((int) (playerPoint2.x + 70 * obstacleManager.getSpeed()), playerPoint2.y);
+            } else {
+                playerPoint2.set(playerPoint2.x + 70, playerPoint2.y);
+            }
+            if (playerPoint2.x >= playerPoint.x) {
                 playerPoint2.set(playerPoint.x, playerPoint2.y);
+                selector.selectSprite(18, 1);
+                player.updateSprite(selector.getSprite());
+                player2.updateSprite(selector.getSprite());
             }
         }
     }
@@ -214,10 +276,17 @@ public class GameplayScene implements Scene {
         if (eventX < Constants.screenWidth/2) {
             if (!(playerPoint2.x > Constants.screenWidth - player.getRectangle().width())) {
                 playerPoint2.set(playerPoint2.x+70, playerPoint2.y);
+            } else {
+                playerPoint2.set(Constants.screenWidth - 60, playerPoint2.y);
+               // playerPoint.set(player.getRectangle().width() - 40, playerPoint.y);
             }
         } else if (eventX > Constants.screenWidth/2) {
             if (!(playerPoint2.x < player.getRectangle().width())) {
-                playerPoint2.set(playerPoint2.x-70, playerPoint2.y);
+                playerPoint2.set(playerPoint2.x-41, playerPoint2.y);
+                playerPoint.set(Constants.screenWidth - 60, playerPoint.y);
+            } else {
+                playerPoint2.set(player.getRectangle().width() - 40, playerPoint2.y);
+                playerPoint.set(Constants.screenWidth - 60, playerPoint.y);
             }
         }
     }

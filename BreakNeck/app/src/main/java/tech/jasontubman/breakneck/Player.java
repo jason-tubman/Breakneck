@@ -1,6 +1,8 @@
 package tech.jasontubman.breakneck;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -13,15 +15,14 @@ public class Player implements Entity{
     private int x;
     private int y;
     private Rect rectangle;
-    private int color;
+    private Bitmap sprite;
     private boolean visible = true;
-
     private float speed;
     private float scoreMulti = 1;
 
-    public Player(Rect rectangle, int color) {
+    public Player(Rect rectangle, Bitmap sprite) {
         this.rectangle = rectangle;
-        this.color = color;
+        this.sprite = sprite;
         this.speed = Constants.screenHeight/5000.0f;
     }
 
@@ -33,8 +34,12 @@ public class Player implements Entity{
     public void draw(Canvas canvas) {
         if (visible == true) {
             Paint paint = new Paint();
-            paint.setColor(color);
+            paint.setColor(Color.BLUE);
+            int x = rectangle.centerX() - (rectangle.width()/2);
+            int y = rectangle.centerY() - (rectangle.height()/2);
+
             canvas.drawRect(rectangle, paint);
+            canvas.drawBitmap(sprite, x, y, paint);
         }
     }
 
@@ -78,4 +83,14 @@ public class Player implements Entity{
         return this.scoreMulti;
     }
 
+    public void updateSprite(Bitmap sprite) {
+        this.sprite = sprite;
+    }
+
+    public void halfRect(int x, int y) {
+        this.rectangle.set(x, y, x+100, y+100);
+    }
+    public void resetRect(int x, int y) {
+        this.rectangle.set(x, y, x+205, y+205);
+    }
 }
