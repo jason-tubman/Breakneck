@@ -89,7 +89,6 @@ public class ObstacleManager {
             if (obstacles.get(obstacles.size() - 1).getTop() >= Constants.screenHeight) {
                 int obstacleY = obstacles.get(0).getTop() - obstacleHeight - obstacleGap;
                 int random = getRandomNumberInRange(1, 3);
-
                 switch (random) {
                     case 1: {
                         obstacles.add(0, new LeftTriangle(this.color, 0, obstacleY));
@@ -101,6 +100,7 @@ public class ObstacleManager {
                     }
                     case 3: {
                         obstacles.add(new Diamond(this.color, Constants.screenWidth / 2, obstacleY));
+                        System.out.println("HERE");
                         break;
                     }
                 }

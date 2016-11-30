@@ -275,16 +275,26 @@ public class GameplayScene implements Scene {
     private void split() {
         if (eventX < Constants.screenWidth/2) {
             if (!(playerPoint2.x > Constants.screenWidth - player.getRectangle().width())) {
-                playerPoint2.set(playerPoint2.x+70, playerPoint2.y);
-                playerPoint.set(player.getRectangle().width() - 40, playerPoint.y);
+                if (obstacleManager.getSpeed() > 0) {
+                    playerPoint2.set(playerPoint2.x + (int) (70 * obstacleManager.getSpeed()), playerPoint2.y);
+                    playerPoint.set(player.getRectangle().width() - 40, playerPoint.y);
+                } else {
+                    playerPoint2.set(playerPoint2.x +70, playerPoint2.y);
+                    playerPoint.set(player.getRectangle().width() - 40, playerPoint.y);
+                }
             } else {
                 playerPoint2.set(Constants.screenWidth - 60, playerPoint2.y);
                 playerPoint.set(player.getRectangle().width() - 40, playerPoint.y);
             }
         } else if (eventX > Constants.screenWidth/2) {
             if (!(playerPoint2.x < player.getRectangle().width())) {
-                playerPoint2.set(playerPoint2.x-41, playerPoint2.y);
-                playerPoint.set(Constants.screenWidth - 60, playerPoint.y);
+                if (obstacleManager.getSpeed() > 0) {
+                    playerPoint2.set(playerPoint2.x - (int) (70 * obstacleManager.getSpeed()), playerPoint2.y);
+                    playerPoint.set(Constants.screenWidth - 60, playerPoint.y);
+                } else {
+                    playerPoint2.set(playerPoint2.x - (70), playerPoint2.y);
+                    playerPoint.set(Constants.screenWidth - 60, playerPoint.y);
+                }
             } else {
                 playerPoint2.set(player.getRectangle().width() - 40, playerPoint2.y);
                 playerPoint.set(Constants.screenWidth - 60, playerPoint.y);
