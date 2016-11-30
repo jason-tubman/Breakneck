@@ -41,7 +41,7 @@ public class GameplayScene implements Scene {
 
         obstacleManager = new ObstacleManager(200, 650, 400, Color.LTGRAY, player);
 
-        starManager = new StarManager(player.getSpeed());
+        starManager = new StarManager(player.getSpeed(), false);
 
         player2 = new Player(new Rect(100, 100, 235, 235), selector.getSprite(), selector.getSpeed());
         playerPoint2 = new Point(Constants.screenWidth/2, Constants.screenHeight-Constants.screenHeight/4);
@@ -146,8 +146,6 @@ public class GameplayScene implements Scene {
         score.setTextSize(50);
         score.setColor(Color.WHITE);
         drawScore(canvas, score, Integer.toString(this.score));
-
-
 
 
         starManager.draw(canvas);

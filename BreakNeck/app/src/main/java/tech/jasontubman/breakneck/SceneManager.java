@@ -16,7 +16,8 @@ public class SceneManager {
 
     public SceneManager() {
         activeScene = 0;
-        scenes.add(new GameplayScene());
+        scenes.add(0, new MenuScene());
+        scenes.add(1, new GameplayScene());
     }
 
     public void recieveTouch(MotionEvent event) {

@@ -8,14 +8,25 @@ import android.view.MotionEvent;
  */
 
 public class MenuScene implements Scene {
+
+    private StarManager manager;
+
+    public MenuScene() {
+
+        manager = new StarManager(7, true);
+
+    }
+
     @Override
     public void update() {
 
+        manager.update();
     }
 
     @Override
     public void draw(Canvas canvas) {
         canvas.drawRGB(44, 42, 49);
+        manager.draw(canvas);
     }
 
     @Override
