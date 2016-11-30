@@ -35,7 +35,7 @@ public class GameplayScene implements Scene {
 
     public GameplayScene() {
         selector = new ShipSelector(18, 1);
-        player = new Player(new Rect(100, 100, 235, 235), selector.getSprite());
+        player = new Player(new Rect(100, 100, 235, 235), selector.getSprite(), selector.getSpeed());
         playerPoint = new Point(Constants.screenWidth/2, Constants.screenHeight-Constants.screenHeight/4);
         player.update(playerPoint);
 
@@ -43,7 +43,7 @@ public class GameplayScene implements Scene {
 
         starManager = new StarManager(player.getSpeed());
 
-        player2 = new Player(new Rect(100, 100, 235, 235), selector.getSprite());
+        player2 = new Player(new Rect(100, 100, 235, 235), selector.getSprite(), selector.getSpeed());
         playerPoint2 = new Point(Constants.screenWidth/2, Constants.screenHeight-Constants.screenHeight/4);
         player2.update(playerPoint2);
         player2.setVisible(false);
@@ -268,7 +268,7 @@ public class GameplayScene implements Scene {
 
     public void addToScore(int score){
         if (!gameOver) {
-            this.score += score*player.getScoreMulti();
+            this.score += score;
         }
     }
 

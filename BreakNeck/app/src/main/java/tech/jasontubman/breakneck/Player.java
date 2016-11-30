@@ -18,12 +18,11 @@ public class Player implements Entity{
     private Bitmap sprite;
     private boolean visible = true;
     private float speed;
-    private float scoreMulti = 1;
 
-    public Player(Rect rectangle, Bitmap sprite) {
+    public Player(Rect rectangle, Bitmap sprite, double speed) {
         this.rectangle = rectangle;
         this.sprite = sprite;
-        this.speed = Constants.screenHeight/5000.0f;
+        this.speed = Constants.screenHeight/5000.0f * (float) speed;
     }
 
     public Rect getRectangle() {
@@ -79,10 +78,6 @@ public class Player implements Entity{
     public float getSpeed() {
         return this.speed;
     }
-    public float getScoreMulti() {
-        return this.scoreMulti;
-    }
-
     public void updateSprite(Bitmap sprite) {
         this.sprite = sprite;
     }
