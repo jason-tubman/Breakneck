@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 
+import android.os.Parcelable;
 import android.view.MotionEvent;
 
 import java.util.Timer;
@@ -113,8 +114,10 @@ public class GameplayScene implements Scene {
                 if (!split) {
                     split = true;
                     selector.selectSprite(18, 0.5);
-                    player.halfRect(player.getX() - player.getWidth()/2, player.getY() + player.getHeight()/2);
-                    player2.halfRect(player2.getX() - player2.getWidth()/2, player2.getY() + player2.getHeight()/2);
+                    player.halfRect(player.getX() - player.getWidth()/2, player.getY());
+                    player2.halfRect(player2.getX() - player2.getWidth()/2, player2.getY());
+                    playerPoint.y += player.getHeight();
+                    playerPoint2.y += player2.getHeight();
                     player.updateSprite(selector.getSprite());
                     player2.updateSprite(selector.getSprite());
                 }
@@ -123,6 +126,7 @@ public class GameplayScene implements Scene {
             } else if (!gameOver && numPoints <= 1){
                 resetPointTwo();
                 if (!split) {
+
                     player.resetRect(player.getX() - player.getWidth() / 2, player.getY());
                     player2.resetRect(player2.getX() - player2.getWidth() / 2, player2.getY());
                 }
@@ -240,8 +244,8 @@ public class GameplayScene implements Scene {
             }
             if (playerPoint2.x <= playerPoint.x) {
                 split = false;
-
-                playerPoint2.set(playerPoint.x, playerPoint2.y);
+                playerPoint.set(playerPoint.x, Constants.screenHeight - Constants.screenHeight/4);
+                playerPoint2.set(playerPoint.x, Constants.screenHeight - Constants.screenHeight/4);
                 selector.selectSprite(18, 1);
                 player.updateSprite(selector.getSprite());
                 player2.updateSprite(selector.getSprite());
@@ -254,8 +258,8 @@ public class GameplayScene implements Scene {
             }
             if (playerPoint2.x >= playerPoint.x) {
                 split = false;
-
-                playerPoint2.set(playerPoint.x, playerPoint2.y);
+                playerPoint.set(playerPoint.x, Constants.screenHeight - Constants.screenHeight/4);
+                playerPoint2.set(playerPoint.x, Constants.screenHeight - Constants.screenHeight/4);
                 selector.selectSprite(18, 1);
                 player.updateSprite(selector.getSprite());
                 player2.updateSprite(selector.getSprite());
