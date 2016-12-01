@@ -65,7 +65,7 @@ public class Diamond implements Obstacle {
 
         Region region2 = new Region();
         region2.setPath(path2, clip);
-        
+
         if (!region1.quickReject(player.getRectangle()) && region1.op(player.getRectangle(), Region.Op.INTERSECT)){
             return true;
         }
