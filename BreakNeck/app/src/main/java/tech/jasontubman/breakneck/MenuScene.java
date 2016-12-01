@@ -38,18 +38,18 @@ public class MenuScene implements Scene {
         Typeface typeface = Typeface.createFromAsset(Constants.currentContext.getAssets(), "spaceage.ttf");
 
         Paint paint2 = new Paint();
-        paint2.setTextSize(100);
+        paint2.setTextSize(200);
         paint2.setColor(Color.BLACK);
         paint2.setTypeface(typeface);
-        centreText2(canvas, paint2, "Break Neck");
+        centreText2(canvas, paint2, "SURGE");
 
         Paint paint = new Paint();
-        paint.setTextSize(100);
+        paint.setTextSize(200);
         paint.setColor(Color.WHITE);
 
         paint.setTypeface(typeface);
 
-        centreText(canvas, paint, "Break Neck");
+        centreText(canvas, paint, "SURGE");
 
     }
 

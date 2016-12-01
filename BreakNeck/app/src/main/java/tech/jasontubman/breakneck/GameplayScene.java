@@ -122,9 +122,10 @@ public class GameplayScene implements Scene {
 
             } else if (!gameOver && numPoints <= 1){
                 resetPointTwo();
-                split = false;
-                player.resetRect(player.getX() - player.getWidth()/2, player.getY());
-                player2.resetRect(player2.getX() - player2.getWidth()/2, player2.getY());
+                if (!split) {
+                    player.resetRect(player.getX() - player.getWidth() / 2, player.getY());
+                    player2.resetRect(player2.getX() - player2.getWidth() / 2, player2.getY());
+                }
                 if (playerPoint2.x == playerPoint.x) {
                     player2.setVisible(false);
                 }
@@ -238,6 +239,8 @@ public class GameplayScene implements Scene {
                 playerPoint2.set(playerPoint2.x - 70, playerPoint2.y);
             }
             if (playerPoint2.x <= playerPoint.x) {
+                split = false;
+
                 playerPoint2.set(playerPoint.x, playerPoint2.y);
                 selector.selectSprite(18, 1);
                 player.updateSprite(selector.getSprite());
@@ -250,6 +253,8 @@ public class GameplayScene implements Scene {
                 playerPoint2.set(playerPoint2.x + 70, playerPoint2.y);
             }
             if (playerPoint2.x >= playerPoint.x) {
+                split = false;
+
                 playerPoint2.set(playerPoint.x, playerPoint2.y);
                 selector.selectSprite(18, 1);
                 player.updateSprite(selector.getSprite());

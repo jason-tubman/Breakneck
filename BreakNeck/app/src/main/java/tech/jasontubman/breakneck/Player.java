@@ -36,6 +36,7 @@ public class Player implements Entity{
             paint.setColor(Color.BLUE);
             int x = rectangle.centerX() - (rectangle.width()/2);
             int y = rectangle.centerY() - (rectangle.height()/2);
+            canvas.drawRect(rectangle, paint);
             canvas.drawBitmap(sprite, x, y, paint);
         }
     }
