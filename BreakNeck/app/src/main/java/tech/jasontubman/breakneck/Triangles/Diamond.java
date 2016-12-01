@@ -58,20 +58,23 @@ public class Diamond implements Obstacle {
     }
 
     public boolean playerCollided(Player player) {
-        Region clip = new Region(startX, startY, Constants.screenWidth, Constants.screenHeight);
+        Region clip = new Region(startX - (int) (Constants.screenWidth/2.5), startY, Constants.screenWidth, Constants.screenHeight);
+
         Region region1 = new Region();
         region1.setPath(path, clip);
-        Region region2 = new Region();
-        region1.setPath(path2, clip);
 
+        Region region2 = new Region();
+        region2.setPath(path2, clip);
+        
         if (!region1.quickReject(player.getRectangle()) && region1.op(player.getRectangle(), Region.Op.INTERSECT)){
             return true;
-        } else if (!region2.quickReject(player.getRectangle()) && region2.op(player.getRectangle(), Region.Op.INTERSECT)) {
+        }
+        if (!region2.quickReject(player.getRectangle()) && region2.op(player.getRectangle(), Region.Op.INTERSECT)) {
             return true;
         }
-        else {
-            return false;
-        }
+
+        return false;
+
     }
 
     @Override
