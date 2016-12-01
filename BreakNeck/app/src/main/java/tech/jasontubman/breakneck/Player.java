@@ -86,4 +86,8 @@ public class Player implements Entity{
     public void resetRect(int x, int y) {
         this.rectangle.set(x, y, x+205, y+205);
     }
+
+    public boolean isVisible () {
+        return this.visible;
+    }
 }

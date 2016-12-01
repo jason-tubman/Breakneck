@@ -45,10 +45,22 @@ public class Particle {
     // Method to display
     void draw(Canvas canvas) {
         Paint paint = new Paint();
-        paint.setColor(Color.RED);
-        paint.setAlpha((int) (255 / (30/lifespan)));
 
-        canvas.drawCircle(currentX, currentY, 8, paint);
+        if (lifespan < 11 && lifespan >= 0 ) {
+            //Yellow
+            paint.setColor(Color.rgb(249, 201, 3));
+        } else if (lifespan < 15 && lifespan >=11 ) {
+            //Orange
+            paint.setColor(Color.rgb(198, 78, 26));
+        } else if (lifespan < 22.5 && lifespan >= 15 ) {
+            //Red
+            paint.setColor(Color.rgb(179, 33, 34));
+        } else if (lifespan < 30 && lifespan >= 22.5 ) {
+            //Purple
+            paint.setColor(Color.rgb(59, 65, 125));
+        }
+        paint.setAlpha((int) (255 / (30/lifespan)));
+        canvas.drawCircle(currentX, currentY, 6, paint);
     }
 
     // Is the particle still useful?
