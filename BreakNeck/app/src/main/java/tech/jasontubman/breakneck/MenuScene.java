@@ -26,6 +26,8 @@ public class MenuScene implements Scene {
     private  SceneManager sceneManager;
     private  Canvas canvas;
 
+    private boolean sliderMoving = true;
+
     private boolean play = false;
     private boolean store = false;
     private boolean highscore = false;
@@ -34,8 +36,14 @@ public class MenuScene implements Scene {
     private boolean exit = false;
     Boolean[] ships = new Boolean[28];
 
+    private int sliderMin = (int) (Constants.screenWidth/7.9);
+    private int sliderMax = (int) (Constants.screenWidth / 1.22);
+    private int sliderX = (int) sliderMax;
+
     private int selectedShip = 0;
     private boolean menu = true;
+
+    private boolean musicMuted = false;
 
     private ParticleGenerator creditGen;
 
@@ -588,7 +596,7 @@ public class MenuScene implements Scene {
         Bitmap resizedExit = Bitmap.createScaledBitmap(exit, (int) (Constants.screenWidth / 12), Constants.screenHeight / 20, false);
         canvas.drawBitmap(resizedExit, (int) (Constants.screenWidth - Constants.screenWidth/7), Constants.screenHeight/14, paint);
 
-        creditGen.addParticle((int) (Constants.screenWidth/2), (int) (Constants.screenHeight/1.2), 0, false);
+        creditGen.addParticle((int) (Constants.screenWidth/2.07), (int) (Constants.screenHeight/1.2), 0, false);
         creditGen.update();
         creditGen.draw(canvas);
 
@@ -599,7 +607,81 @@ public class MenuScene implements Scene {
     }
 
     public void drawOptions(Canvas canvas) {
+        if (!musicMuted) {
+            this.sceneManager.backgroundMusic.setVolume((float) sliderX / sliderMax, (float) sliderX / sliderMax);
+        } else {
+            this.sceneManager.backgroundMusic.setVolume(0, 0);
+        }
+        Paint paint3 = new Paint();
+        paint3.setColor(Color.WHITE);
+        RectF shopPanel = new RectF();
+        shopPanel.set(Constants.screenWidth/9, Constants.screenHeight/5, Constants.screenWidth - Constants.screenWidth/9, Constants.screenHeight - (int) (Constants.screenHeight/9.7));
+        canvas.drawRoundRect(shopPanel, 10, 10, paint3);
+        Typeface typeface = Typeface.createFromAsset(Constants.currentContext.getAssets(), "spaceage.ttf");
+        Paint paint = new Paint();
+        paint.setTypeface(typeface);
+        paint.setColor(Color.DKGRAY);
+        paint.setTextSize(260 / Constants.currentContext.getResources().getDisplayMetrics().density);
 
+        BitmapFactory bf = new BitmapFactory();
+        Bitmap exit = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.exitbutton);
+        Bitmap resizedExit = Bitmap.createScaledBitmap(exit, (int) (Constants.screenWidth / 12), Constants.screenHeight / 20, false);
+        canvas.drawBitmap(resizedExit, (int) (Constants.screenWidth - Constants.screenWidth/7), Constants.screenHeight/14, paint);
+
+        canvas.drawText("OPTIONS", (int)(Constants.screenWidth/3.8), Constants.screenHeight/4, paint);
+        paint.setTextSize(180 / Constants.currentContext.getResources().getDisplayMetrics().density);
+        canvas.drawText("VOLUME", (int)(Constants.screenWidth/7), (int)(Constants.screenHeight/3.3), paint);
+
+        canvas.drawText("MUTE MUSIC:", (int)(Constants.screenWidth/7), (int)(Constants.screenHeight/2.4), paint);
+
+        Bitmap slider = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.slider);
+        Bitmap resizedSlider = Bitmap.createScaledBitmap(slider, (int) (Constants.screenWidth / 1.4), Constants.screenWidth/100, false);
+        canvas.drawBitmap(resizedSlider, (int) (Constants.screenWidth/7), (int) (Constants.screenHeight/3.1), paint);
+
+
+        Bitmap mute = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_boxcross);
+        Bitmap resizedmute = Bitmap.createScaledBitmap(mute, (int) (Constants.screenWidth / 10), Constants.screenWidth/11, false);
+
+        Bitmap notmute = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_box);
+        Bitmap resizednotmute = Bitmap.createScaledBitmap(notmute, (int) (Constants.screenWidth /10), Constants.screenWidth/11, false);
+
+        if (musicMuted) {
+            canvas.drawBitmap(resizedmute, (int) (Constants.screenWidth/1.6), (int) (Constants.screenHeight/2.62), paint);
+        } else {
+            canvas.drawBitmap(resizednotmute, (int) (Constants.screenWidth/1.6), (int) (Constants.screenHeight/2.62), paint);
+        }
+
+
+        Bitmap sliderUp = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.sliderup);
+        Bitmap resizedSliderUp = Bitmap.createScaledBitmap(sliderUp, (int) (Constants.screenWidth / 19), Constants.screenWidth/13, false);
+        canvas.drawBitmap(resizedSliderUp, (int) (this.sliderX), (int) (Constants.screenHeight/3.05), paint);
+
+
+        creditGen.addParticle((int) (Constants.screenWidth/2.07), (int) (Constants.screenHeight/1.6), 0, false);
+        creditGen.update();
+        creditGen.draw(canvas);
+
+        Bitmap ship = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s2r);
+        Bitmap resizedShip = Bitmap.createScaledBitmap(ship, (int) (Constants.screenWidth / 4), Constants.screenHeight / 7, false);
+        canvas.drawBitmap(resizedShip, (int) (Constants.screenWidth/2.8), (int) (Constants.screenHeight/1.9), paint);
+
+    }
+    public void drawScores(Canvas canvas) {
+        Paint paint3 = new Paint();
+        paint3.setColor(Color.WHITE);
+        RectF shopPanel = new RectF();
+        shopPanel.set(Constants.screenWidth/9, Constants.screenHeight/5, Constants.screenWidth - Constants.screenWidth/9, Constants.screenHeight - (int) (Constants.screenHeight/9.7));
+        canvas.drawRoundRect(shopPanel, 10, 10, paint3);
+        Typeface typeface = Typeface.createFromAsset(Constants.currentContext.getAssets(), "spaceage.ttf");
+        Paint paint = new Paint();
+        paint.setTypeface(typeface);
+        paint.setColor(Color.DKGRAY);
+        paint.setTextSize(180 / Constants.currentContext.getResources().getDisplayMetrics().density);
+
+        BitmapFactory bf = new BitmapFactory();
+        Bitmap exit = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.exitbutton);
+        Bitmap resizedExit = Bitmap.createScaledBitmap(exit, (int) (Constants.screenWidth / 12), Constants.screenHeight / 20, false);
+        canvas.drawBitmap(resizedExit, (int) (Constants.screenWidth - Constants.screenWidth/7), Constants.screenHeight/14, paint);
     }
 
     @Override
@@ -620,7 +702,7 @@ public class MenuScene implements Scene {
         } else if (options) {
             drawOptions(canvas);
         } else if (highscore) {
-
+            drawScores(canvas);
         } else if (credits) {
             drawCredits(canvas);
         }
@@ -686,59 +768,60 @@ public class MenuScene implements Scene {
     public void recieveTouch(MotionEvent event) {
 
         switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                if (event.getX() > Constants.screenWidth/10 && event.getX() < Constants.screenWidth - Constants.screenWidth/10) {
+            case MotionEvent.ACTION_DOWN: {
 
-                    if (event.getY() > Constants.screenHeight/5 && event.getY() < Constants.screenHeight/5 + Constants.screenHeight/6 && menu) {
+                if (event.getX() > Constants.screenWidth / 10 && event.getX() < Constants.screenWidth - Constants.screenWidth / 10) {
+
+                    if (event.getY() > Constants.screenHeight / 5 && event.getY() < Constants.screenHeight / 5 + Constants.screenHeight / 6 && menu) {
                         play = true;
                         playPressed(canvas);
                     }
-                    if (event.getY() > Constants.screenHeight/2.65 && event.getY() < Constants.screenHeight/2.65 + Constants.screenHeight/11 && menu) {
+                    if (event.getY() > Constants.screenHeight / 2.65 && event.getY() < Constants.screenHeight / 2.65 + Constants.screenHeight / 11 && menu) {
                         store = true;
                         storePressed(canvas);
                     }
-                    if (event.getY() > Constants.screenHeight/2.05 && event.getY() < Constants.screenHeight/2.05 + Constants.screenHeight/11 && menu) {
+                    if (event.getY() > Constants.screenHeight / 2.05 && event.getY() < Constants.screenHeight / 2.05 + Constants.screenHeight / 11 && menu) {
                         options = true;
                         optionsPressed(canvas);
                     }
-                    if (event.getY() > Constants.screenHeight/1.69 && event.getY() < Constants.screenHeight/1.69 + Constants.screenHeight/11 && menu) {
+                    if (event.getY() > Constants.screenHeight / 1.69 && event.getY() < Constants.screenHeight / 1.69 + Constants.screenHeight / 11 && menu) {
                         highscore = true;
                         highscorePressed(canvas);
                     }
-                    if (event.getY() > Constants.screenHeight/1.44 && event.getY() < Constants.screenHeight/1.44 + Constants.screenHeight/11 && menu) {
+                    if (event.getY() > Constants.screenHeight / 1.44 && event.getY() < Constants.screenHeight / 1.44 + Constants.screenHeight / 11 && menu) {
                         credits = true;
                         creditsPressed(canvas);
                     }
-                    if (event.getY() > Constants.screenHeight/1.25 && event.getY() < Constants.screenHeight/1.25 + Constants.screenHeight/11 && menu) {
+                    if (event.getY() > Constants.screenHeight / 1.25 && event.getY() < Constants.screenHeight / 1.25 + Constants.screenHeight / 11 && menu) {
                         exit = true;
                         exitPressed(canvas);
                     }
 
                     //STORE CLICKS ----------
                     //ROW 1
-                    if (event.getY() > Constants.screenHeight / 4.7 && event.getY() < Constants.screenHeight / 4.7 + Constants.screenHeight/12
-                            && event.getX() > Constants.screenWidth / 8.2 && event.getX() < Constants.screenWidth/8.2 + (int) (Constants.screenWidth / 7.5) && store) {
+                    if (event.getY() > Constants.screenHeight / 4.7 && event.getY() < Constants.screenHeight / 4.7 + Constants.screenHeight / 12
+                            && event.getX() > Constants.screenWidth / 8.2 && event.getX() < Constants.screenWidth / 8.2 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[0]) {
                             ships[0] = true;
                         } else {
                             selectedShip = 0;
                         }
-                    } else if (event.getY() > Constants.screenHeight / 4.7 && event.getY() < Constants.screenHeight / 4.7 + Constants.screenHeight/12
-                            && event.getX() > Constants.screenWidth / 3.0 && event.getX() < Constants.screenWidth/3.0 + (int) (Constants.screenWidth / 7.5) && store) {
+                    } else if (event.getY() > Constants.screenHeight / 4.7 && event.getY() < Constants.screenHeight / 4.7 + Constants.screenHeight / 12
+                            && event.getX() > Constants.screenWidth / 3.0 && event.getX() < Constants.screenWidth / 3.0 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[1]) {
                             ships[1] = true;
                         } else {
                             selectedShip = 1;
                         }
-                    } else if (event.getY() > Constants.screenHeight / 4.7 && event.getY() < Constants.screenHeight / 4.7 + Constants.screenHeight/12
-                            && event.getX() > Constants.screenWidth / 1.9 && event.getX() < Constants.screenWidth/1.9 + (int) (Constants.screenWidth / 7.5) && store) {
+                    } else if (event.getY() > Constants.screenHeight / 4.7 && event.getY() < Constants.screenHeight / 4.7 + Constants.screenHeight / 12
+                            && event.getX() > Constants.screenWidth / 1.9 && event.getX() < Constants.screenWidth / 1.9 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[2]) {
                             ships[2] = true;
                         } else {
                             selectedShip = 2;
                         }
-                    } else if (event.getY() > Constants.screenHeight / 4.7 && event.getY() < Constants.screenHeight / 4.7 + Constants.screenHeight/12
-                            && event.getX() > Constants.screenWidth / 1.35 && event.getX() < Constants.screenWidth/1.35 + (int) (Constants.screenWidth / 7.5) && store) {
+                    } else if (event.getY() > Constants.screenHeight / 4.7 && event.getY() < Constants.screenHeight / 4.7 + Constants.screenHeight / 12
+                            && event.getX() > Constants.screenWidth / 1.35 && event.getX() < Constants.screenWidth / 1.35 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[3]) {
                             ships[3] = true;
                         } else {
@@ -746,29 +829,29 @@ public class MenuScene implements Scene {
                         }
                     }
                     //ROW 2
-                    else if (event.getY() > Constants.screenHeight / 3.2 && event.getY() < Constants.screenHeight / 3.2 + Constants.screenHeight/12
-                            && event.getX() > Constants.screenWidth / 8.2 && event.getX() < Constants.screenWidth/8.2 + (int) (Constants.screenWidth / 7.5) && store) {
+                    else if (event.getY() > Constants.screenHeight / 3.2 && event.getY() < Constants.screenHeight / 3.2 + Constants.screenHeight / 12
+                            && event.getX() > Constants.screenWidth / 8.2 && event.getX() < Constants.screenWidth / 8.2 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[4]) {
                             ships[4] = true;
                         } else {
                             selectedShip = 4;
                         }
-                    } else if (event.getY() > Constants.screenHeight / 3.2 && event.getY() < Constants.screenHeight / 3.2 + Constants.screenHeight/12
-                            && event.getX() > Constants.screenWidth / 3.0 && event.getX() < Constants.screenWidth/3.0 + (int) (Constants.screenWidth / 7.5) && store) {
+                    } else if (event.getY() > Constants.screenHeight / 3.2 && event.getY() < Constants.screenHeight / 3.2 + Constants.screenHeight / 12
+                            && event.getX() > Constants.screenWidth / 3.0 && event.getX() < Constants.screenWidth / 3.0 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[5]) {
                             ships[5] = true;
                         } else {
                             selectedShip = 5;
                         }
-                    } else if (event.getY() > Constants.screenHeight / 3.2 && event.getY() < Constants.screenHeight / 3.2 + Constants.screenHeight/12
-                            && event.getX() > Constants.screenWidth / 1.9 && event.getX() < Constants.screenWidth/1.9 + (int) (Constants.screenWidth / 7.5) && store) {
+                    } else if (event.getY() > Constants.screenHeight / 3.2 && event.getY() < Constants.screenHeight / 3.2 + Constants.screenHeight / 12
+                            && event.getX() > Constants.screenWidth / 1.9 && event.getX() < Constants.screenWidth / 1.9 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[6]) {
                             ships[6] = true;
                         } else {
                             selectedShip = 6;
                         }
-                    } else if (event.getY() > Constants.screenHeight / 3.2 && event.getY() < Constants.screenHeight / 3.2 + Constants.screenHeight/12
-                            && event.getX() > Constants.screenWidth / 1.35 && event.getX() < Constants.screenWidth/1.35 + (int) (Constants.screenWidth / 7.5) && store) {
+                    } else if (event.getY() > Constants.screenHeight / 3.2 && event.getY() < Constants.screenHeight / 3.2 + Constants.screenHeight / 12
+                            && event.getX() > Constants.screenWidth / 1.35 && event.getX() < Constants.screenWidth / 1.35 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[7]) {
                             ships[7] = true;
                         } else {
@@ -776,29 +859,29 @@ public class MenuScene implements Scene {
                         }
                     }
                     //ROW 3
-                    else if (event.getY() > Constants.screenHeight / 2.43 && event.getY() < Constants.screenHeight / 2.43 + Constants.screenHeight/12
-                            && event.getX() > Constants.screenWidth / 8.2 && event.getX() < Constants.screenWidth/8.2 + (int) (Constants.screenWidth / 7.5) && store) {
+                    else if (event.getY() > Constants.screenHeight / 2.43 && event.getY() < Constants.screenHeight / 2.43 + Constants.screenHeight / 12
+                            && event.getX() > Constants.screenWidth / 8.2 && event.getX() < Constants.screenWidth / 8.2 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[8]) {
                             ships[8] = true;
                         } else {
                             selectedShip = 8;
                         }
-                    } else if (event.getY() > Constants.screenHeight / 2.43 && event.getY() < Constants.screenHeight / 2.43 + Constants.screenHeight/12
-                            && event.getX() > Constants.screenWidth / 3.0 && event.getX() < Constants.screenWidth/3.0 + (int) (Constants.screenWidth / 7.5) && store) {
+                    } else if (event.getY() > Constants.screenHeight / 2.43 && event.getY() < Constants.screenHeight / 2.43 + Constants.screenHeight / 12
+                            && event.getX() > Constants.screenWidth / 3.0 && event.getX() < Constants.screenWidth / 3.0 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[9]) {
                             ships[9] = true;
                         } else {
                             selectedShip = 9;
                         }
-                    } else if (event.getY() > Constants.screenHeight / 2.43 && event.getY() < Constants.screenHeight / 2.43 + Constants.screenHeight/12
-                            && event.getX() > Constants.screenWidth / 1.9 && event.getX() < Constants.screenWidth/1.9 + (int) (Constants.screenWidth / 7.5) && store) {
+                    } else if (event.getY() > Constants.screenHeight / 2.43 && event.getY() < Constants.screenHeight / 2.43 + Constants.screenHeight / 12
+                            && event.getX() > Constants.screenWidth / 1.9 && event.getX() < Constants.screenWidth / 1.9 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[10]) {
                             ships[10] = true;
                         } else {
                             selectedShip = 10;
                         }
-                    } else if (event.getY() > Constants.screenHeight / 2.43 && event.getY() < Constants.screenHeight / 2.43 + Constants.screenHeight/12
-                            && event.getX() > Constants.screenWidth / 1.35 && event.getX() < Constants.screenWidth/1.35 + (int) (Constants.screenWidth / 7.5) && store) {
+                    } else if (event.getY() > Constants.screenHeight / 2.43 && event.getY() < Constants.screenHeight / 2.43 + Constants.screenHeight / 12
+                            && event.getX() > Constants.screenWidth / 1.35 && event.getX() < Constants.screenWidth / 1.35 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[11]) {
                             ships[11] = true;
                         } else {
@@ -806,29 +889,29 @@ public class MenuScene implements Scene {
                         }
                     }
                     //ROW 4
-                    else  if (event.getY() > Constants.screenHeight / 1.95 && event.getY() < Constants.screenHeight / 1.95 + Constants.screenHeight/12
-                            && event.getX() > Constants.screenWidth / 8.2 && event.getX() < Constants.screenWidth/8.2 + (int) (Constants.screenWidth / 7.5) && store) {
+                    else if (event.getY() > Constants.screenHeight / 1.95 && event.getY() < Constants.screenHeight / 1.95 + Constants.screenHeight / 12
+                            && event.getX() > Constants.screenWidth / 8.2 && event.getX() < Constants.screenWidth / 8.2 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[12]) {
                             ships[12] = true;
                         } else {
                             selectedShip = 12;
                         }
-                    } else if (event.getY() > Constants.screenHeight / 1.95 && event.getY() < Constants.screenHeight / 1.95 + Constants.screenHeight/12
-                            && event.getX() > Constants.screenWidth / 3.0 && event.getX() < Constants.screenWidth/3.0 + (int) (Constants.screenWidth / 7.5) && store) {
+                    } else if (event.getY() > Constants.screenHeight / 1.95 && event.getY() < Constants.screenHeight / 1.95 + Constants.screenHeight / 12
+                            && event.getX() > Constants.screenWidth / 3.0 && event.getX() < Constants.screenWidth / 3.0 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[13]) {
                             ships[13] = true;
                         } else {
                             selectedShip = 13;
                         }
-                    } else if (event.getY() > Constants.screenHeight / 1.95 && event.getY() < Constants.screenHeight / 1.95 + Constants.screenHeight/12
-                            && event.getX() > Constants.screenWidth / 1.9 && event.getX() < Constants.screenWidth/1.9 + (int) (Constants.screenWidth / 7.5) && store) {
+                    } else if (event.getY() > Constants.screenHeight / 1.95 && event.getY() < Constants.screenHeight / 1.95 + Constants.screenHeight / 12
+                            && event.getX() > Constants.screenWidth / 1.9 && event.getX() < Constants.screenWidth / 1.9 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[14]) {
                             ships[14] = true;
                         } else {
                             selectedShip = 14;
                         }
-                    } else if (event.getY() > Constants.screenHeight / 1.95 && event.getY() < Constants.screenHeight / 1.95 + Constants.screenHeight/12
-                            && event.getX() > Constants.screenWidth / 1.35 && event.getX() < Constants.screenWidth/1.35 + (int) (Constants.screenWidth / 7.5) && store) {
+                    } else if (event.getY() > Constants.screenHeight / 1.95 && event.getY() < Constants.screenHeight / 1.95 + Constants.screenHeight / 12
+                            && event.getX() > Constants.screenWidth / 1.35 && event.getX() < Constants.screenWidth / 1.35 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[15]) {
                             ships[15] = true;
                         } else {
@@ -836,29 +919,29 @@ public class MenuScene implements Scene {
                         }
                     }
                     //ROW 5
-                    else if (event.getY() > Constants.screenHeight / 1.65 && event.getY() < Constants.screenHeight / 1.65 + Constants.screenHeight/12
-                            && event.getX() > Constants.screenWidth / 8.2 && event.getX() < Constants.screenWidth/8.2 + (int) (Constants.screenWidth / 7.5) && store) {
+                    else if (event.getY() > Constants.screenHeight / 1.65 && event.getY() < Constants.screenHeight / 1.65 + Constants.screenHeight / 12
+                            && event.getX() > Constants.screenWidth / 8.2 && event.getX() < Constants.screenWidth / 8.2 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[16]) {
                             ships[16] = true;
                         } else {
                             selectedShip = 16;
                         }
-                    } else if (event.getY() > Constants.screenHeight / 1.65 && event.getY() < Constants.screenHeight / 1.65 + Constants.screenHeight/12
-                            && event.getX() > Constants.screenWidth / 3.0 && event.getX() < Constants.screenWidth/3.0 + (int) (Constants.screenWidth / 7.5) && store) {
+                    } else if (event.getY() > Constants.screenHeight / 1.65 && event.getY() < Constants.screenHeight / 1.65 + Constants.screenHeight / 12
+                            && event.getX() > Constants.screenWidth / 3.0 && event.getX() < Constants.screenWidth / 3.0 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[17]) {
                             ships[17] = true;
                         } else {
                             selectedShip = 17;
                         }
-                    } else if (event.getY() > Constants.screenHeight / 1.65 && event.getY() < Constants.screenHeight / 1.65 + Constants.screenHeight/12
-                            && event.getX() > Constants.screenWidth / 1.9 && event.getX() < Constants.screenWidth/1.9 + (int) (Constants.screenWidth / 7.5) && store) {
+                    } else if (event.getY() > Constants.screenHeight / 1.65 && event.getY() < Constants.screenHeight / 1.65 + Constants.screenHeight / 12
+                            && event.getX() > Constants.screenWidth / 1.9 && event.getX() < Constants.screenWidth / 1.9 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[18]) {
                             ships[18] = true;
                         } else {
                             selectedShip = 18;
                         }
-                    } else if (event.getY() > Constants.screenHeight / 1.65 && event.getY() < Constants.screenHeight / 1.65 + Constants.screenHeight/12
-                            && event.getX() > Constants.screenWidth / 1.35 && event.getX() < Constants.screenWidth/1.35 + (int) (Constants.screenWidth / 7.5) && store) {
+                    } else if (event.getY() > Constants.screenHeight / 1.65 && event.getY() < Constants.screenHeight / 1.65 + Constants.screenHeight / 12
+                            && event.getX() > Constants.screenWidth / 1.35 && event.getX() < Constants.screenWidth / 1.35 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[19]) {
                             ships[19] = true;
                         } else {
@@ -866,29 +949,29 @@ public class MenuScene implements Scene {
                         }
                     }
                     //ROW 6
-                    else if (event.getY() > Constants.screenHeight / 1.42 && event.getY() < Constants.screenHeight / 1.42 + Constants.screenHeight/12
-                            && event.getX() > Constants.screenWidth / 8.2 && event.getX() < Constants.screenWidth/8.2 + (int) (Constants.screenWidth / 7.5) && store) {
+                    else if (event.getY() > Constants.screenHeight / 1.42 && event.getY() < Constants.screenHeight / 1.42 + Constants.screenHeight / 12
+                            && event.getX() > Constants.screenWidth / 8.2 && event.getX() < Constants.screenWidth / 8.2 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[20]) {
                             ships[20] = true;
                         } else {
                             selectedShip = 20;
                         }
-                    } else if (event.getY() > Constants.screenHeight / 1.42 && event.getY() < Constants.screenHeight / 1.42 + Constants.screenHeight/12
-                            && event.getX() > Constants.screenWidth / 3.0 && event.getX() < Constants.screenWidth/3.0 + (int) (Constants.screenWidth / 7.5) && store) {
+                    } else if (event.getY() > Constants.screenHeight / 1.42 && event.getY() < Constants.screenHeight / 1.42 + Constants.screenHeight / 12
+                            && event.getX() > Constants.screenWidth / 3.0 && event.getX() < Constants.screenWidth / 3.0 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[21]) {
                             ships[21] = true;
                         } else {
                             selectedShip = 21;
                         }
-                    } else if (event.getY() > Constants.screenHeight / 1.42 && event.getY() < Constants.screenHeight / 1.42 + Constants.screenHeight/12
-                            && event.getX() > Constants.screenWidth / 1.9 && event.getX() < Constants.screenWidth/1.9 + (int) (Constants.screenWidth / 7.5) && store) {
+                    } else if (event.getY() > Constants.screenHeight / 1.42 && event.getY() < Constants.screenHeight / 1.42 + Constants.screenHeight / 12
+                            && event.getX() > Constants.screenWidth / 1.9 && event.getX() < Constants.screenWidth / 1.9 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[22]) {
                             ships[22] = true;
                         } else {
                             selectedShip = 22;
                         }
-                    } else if (event.getY() > Constants.screenHeight / 1.42 && event.getY() < Constants.screenHeight / 1.42 + Constants.screenHeight/12
-                            && event.getX() > Constants.screenWidth / 1.35 && event.getX() < Constants.screenWidth/1.35 + (int) (Constants.screenWidth / 7.5) && store) {
+                    } else if (event.getY() > Constants.screenHeight / 1.42 && event.getY() < Constants.screenHeight / 1.42 + Constants.screenHeight / 12
+                            && event.getX() > Constants.screenWidth / 1.35 && event.getX() < Constants.screenWidth / 1.35 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[23]) {
                             ships[23] = true;
                         } else {
@@ -896,29 +979,29 @@ public class MenuScene implements Scene {
                         }
                     }
                     //ROW 7
-                    else if (event.getY() > Constants.screenHeight / 1.25 && event.getY() < Constants.screenHeight / 1.25 + Constants.screenHeight/12
-                            && event.getX() > Constants.screenWidth / 8.2 && event.getX() < Constants.screenWidth/8.2 + (int) (Constants.screenWidth / 7.5) && store) {
+                    else if (event.getY() > Constants.screenHeight / 1.25 && event.getY() < Constants.screenHeight / 1.25 + Constants.screenHeight / 12
+                            && event.getX() > Constants.screenWidth / 8.2 && event.getX() < Constants.screenWidth / 8.2 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[24]) {
                             ships[24] = true;
-                        }  else {
+                        } else {
                             selectedShip = 24;
                         }
-                    } else if (event.getY() > Constants.screenHeight / 1.25 && event.getY() < Constants.screenHeight / 1.25 + Constants.screenHeight/12
-                            && event.getX() > Constants.screenWidth / 3.0 && event.getX() < Constants.screenWidth/3.0 + (int) (Constants.screenWidth / 7.5) && store) {
+                    } else if (event.getY() > Constants.screenHeight / 1.25 && event.getY() < Constants.screenHeight / 1.25 + Constants.screenHeight / 12
+                            && event.getX() > Constants.screenWidth / 3.0 && event.getX() < Constants.screenWidth / 3.0 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[25]) {
                             ships[25] = true;
                         } else {
                             selectedShip = 25;
                         }
-                    } else if (event.getY() > Constants.screenHeight / 1.25 && event.getY() < Constants.screenHeight / 1.25 + Constants.screenHeight/12
-                            && event.getX() > Constants.screenWidth / 1.9 && event.getX() < Constants.screenWidth/1.9 + (int) (Constants.screenWidth / 7.5) && store) {
+                    } else if (event.getY() > Constants.screenHeight / 1.25 && event.getY() < Constants.screenHeight / 1.25 + Constants.screenHeight / 12
+                            && event.getX() > Constants.screenWidth / 1.9 && event.getX() < Constants.screenWidth / 1.9 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[26]) {
                             ships[26] = true;
                         } else {
                             selectedShip = 26;
                         }
-                    } else if (event.getY() > Constants.screenHeight / 1.25 && event.getY() < Constants.screenHeight / 1.25 + Constants.screenHeight/12
-                            && event.getX() > Constants.screenWidth / 1.35 && event.getX() < Constants.screenWidth/1.35 + (int) (Constants.screenWidth / 7.5) && store) {
+                    } else if (event.getY() > Constants.screenHeight / 1.25 && event.getY() < Constants.screenHeight / 1.25 + Constants.screenHeight / 12
+                            && event.getX() > Constants.screenWidth / 1.35 && event.getX() < Constants.screenWidth / 1.35 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[27]) {
                             ships[27] = true;
                         } else {
@@ -926,32 +1009,77 @@ public class MenuScene implements Scene {
                         }
                     }
                     // STORE CLICKS END ---------
+                    if (event.getY() > (int) (Constants.screenHeight / 3.05) && event.getY() < (int) (Constants.screenHeight / 3.05 + Constants.screenWidth / 1) && options &&
+                            event.getX() > sliderX && event.getX() < sliderX + (int) (Constants.screenWidth / 19)) {
+                        sliderMoving = true;
+                    }
 
                 }
                 //EXIT CLICK STORE
-                if (event.getY() > Constants.screenHeight/14 && event.getY() < Constants.screenHeight/14 + Constants.screenHeight/20
-                        && event.getX() > Constants.screenWidth / 12 && event.getX() < Constants.screenWidth / 12 + Constants.screenWidth - Constants.screenWidth/7 && store) {
+                if (event.getY() > Constants.screenHeight / 14 && event.getY() < Constants.screenHeight / 14 + Constants.screenHeight / 20
+                        && event.getX() > Constants.screenWidth / 12 && event.getX() < Constants.screenWidth / 12 + Constants.screenWidth - Constants.screenWidth / 7 && store) {
                     menu = true;
                     store = false;
                 }
                 //END EXIT CLICK
                 //EXIT CLICK CREDITS
-                if (event.getY() > Constants.screenHeight/14 && event.getY() < Constants.screenHeight/14 + Constants.screenHeight/20
-                        && event.getX() > Constants.screenWidth / 12 && event.getX() < Constants.screenWidth / 12 + Constants.screenWidth - Constants.screenWidth/7 && credits) {
+                if (event.getY() > Constants.screenHeight / 14 && event.getY() < Constants.screenHeight / 14 + Constants.screenHeight / 20
+                        && event.getX() > Constants.screenWidth / 12 && event.getX() < Constants.screenWidth / 12 + Constants.screenWidth - Constants.screenWidth / 7 && credits) {
                     menu = true;
                     credits = false;
                 }
                 //END CREDITS CLICK
                 //EXIT CLICK OPTIONS
-                if (event.getY() > Constants.screenHeight/14 && event.getY() < Constants.screenHeight/14 + Constants.screenHeight/20
-                        && event.getX() > Constants.screenWidth / 12 && event.getX() < Constants.screenWidth / 12 + Constants.screenWidth - Constants.screenWidth/7 && options) {
+                if (event.getY() > Constants.screenHeight / 14 && event.getY() < Constants.screenHeight / 14 + Constants.screenHeight / 20
+                        && event.getX() > Constants.screenWidth / 12 && event.getX() < Constants.screenWidth / 12 + Constants.screenWidth - Constants.screenWidth / 7 && options) {
                     menu = true;
                     options = false;
                 }
                 //END OPTIONS CLICK
+                //SCORES CLICK OPTIONS
+                if (event.getY() > Constants.screenHeight / 14 && event.getY() < Constants.screenHeight / 14 + Constants.screenHeight / 20
+                        && event.getX() > Constants.screenWidth / 12 && event.getX() < Constants.screenWidth / 12 + Constants.screenWidth - Constants.screenWidth / 7 && highscore) {
+                    menu = true;
+                    highscore = false;
+                }
+                //END OPTIONS CLICK
+
+                //MUTE
+                if (event.getY() > Constants.screenHeight / 2.62 && event.getY() < Constants.screenHeight / 2.62 + Constants.screenWidth/11
+                        && event.getX() > Constants.screenWidth / 1.6 && event.getX() < Constants.screenWidth / 1.6 + Constants.screenWidth /10 && options) {
+                    if (!musicMuted) {
+                        musicMuted = true;
+                    } else {
+                        musicMuted = false;
+                    }
+                }
+                //MUTE END
+
+
+
 
                 break;
+            }
+
+            case MotionEvent.ACTION_UP: {
+                sliderMoving = false;
+                break;
+            }
+
+            case MotionEvent.ACTION_MOVE: {
+                if (sliderMoving) {
+                    if (event.getX() > sliderMin && event.getX() < sliderMax) {
+                        sliderX = (int) event.getX();
+                    } else if (event.getX() > sliderMax) {
+                        sliderX = sliderMax;
+                    } else if (event.getX() < sliderMin) {
+                        sliderX = sliderMin;
+                    }
+                }
+                break;
+            }
         }
+
 
     }
 

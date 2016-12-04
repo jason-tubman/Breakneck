@@ -11,8 +11,6 @@ import tech.jasontubman.game.R;
 
 public class MainActivity extends Activity {
 
-    MediaPlayer backgroundMusic;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,8 +24,6 @@ public class MainActivity extends Activity {
 
         setContentView(new GamePanel(this));
 
-        backgroundMusic = MediaPlayer.create(MainActivity.this, R.raw.fly1);
-        backgroundMusic.setLooping(true);
-        backgroundMusic.start();
+
     }
 }
