@@ -14,6 +14,8 @@ import java.util.ArrayList;
 public class SceneManager {
     private ArrayList<Scene> scenes = new ArrayList<>();
 
+    private boolean isPaused = false;
+
     MediaPlayer backgroundMusic;
 
     public static int activeScene;
@@ -31,11 +33,13 @@ public class SceneManager {
     }
 
     public void update(){
-        scenes.get(activeScene).update();
+        if (!isPaused) {
+            scenes.get(activeScene).update();
+        }
     }
 
     public void draw(Canvas canvas) {
-        scenes.get(activeScene).draw(canvas);
+            scenes.get(activeScene).draw(canvas);
     }
 
     public void addScene(Scene scene) {
@@ -44,6 +48,13 @@ public class SceneManager {
 
     public MediaPlayer getMediaPlayer(){
         return this.backgroundMusic;
+    }
+
+    public void setPaused(boolean paused) {
+        this.isPaused = paused;
+    }
+    public boolean getPaused() {
+        return this.isPaused;
     }
 
 }

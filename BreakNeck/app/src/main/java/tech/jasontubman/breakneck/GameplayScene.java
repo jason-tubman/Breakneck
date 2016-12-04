@@ -1,11 +1,13 @@
 package tech.jasontubman.breakneck;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
-
+import tech.jasontubman.game.R;
 import android.os.Parcelable;
 import android.view.MotionEvent;
 
@@ -26,6 +28,8 @@ public class GameplayScene implements Scene {
     private int score;
     private Rect r = new Rect();
 
+    private SceneManager sceneManager;
+
     private StarManager starManager;
     private boolean split;
     private boolean gameOver = false;
@@ -36,12 +40,13 @@ public class GameplayScene implements Scene {
     private ParticleGenerator particleGenerator1;
     private ParticleGenerator particleGenerator2;
 
-    public GameplayScene() {
+    public GameplayScene(SceneManager manager) {
         selector = new ShipSelector(18, 1);
         player = new Player(new Rect(100, 100, 235, 235), selector.getSprite(), selector.getSpeed());
         playerPoint = new Point(Constants.screenWidth/2, Constants.screenHeight-Constants.screenHeight/4);
         player.update(playerPoint);
 
+        this.sceneManager = manager;
         obstacleManager = new ObstacleManager(200, 650, 400, Color.LTGRAY, player);
 
         starManager = new StarManager(player.getSpeed(), false);
@@ -178,6 +183,15 @@ public class GameplayScene implements Scene {
         score.setColor(Color.WHITE);
         drawScore(canvas, score, Integer.toString(this.score));
 
+        //DRAW COG
+        Paint paint2 = new Paint();
+        BitmapFactory bf = new BitmapFactory();
+        Bitmap cog = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.gear);
+        Bitmap resizedCog = (Bitmap.createScaledBitmap(cog, Constants.screenWidth/12, Constants.screenWidth/12, false));
+        canvas.drawBitmap(resizedCog, (int) (Constants.screenWidth/40), Constants.screenHeight/40, paint2);
+
+        //END OF COG
+
 
 
         starManager.draw(canvas);
@@ -216,6 +230,16 @@ public class GameplayScene implements Scene {
                 if (!gameOver) {
                     numPoints = event.getPointerCount();
                     eventX = event.getX(0);
+                    if (event.getX() > Constants.screenWidth/40 && event.getX() < Constants.screenWidth/40 + Constants.screenWidth/12 &&
+                            event.getY() > Constants.screenHeight/40 && event.getY() < Constants.screenHeight/40 + Constants.screenWidth/12) {
+
+                        if (this.sceneManager.getPaused()) {
+                            this.sceneManager.setPaused(false);
+                        } else {
+                            this.sceneManager.setPaused(true);
+                        }
+                    }
+
                 }
                 if (gameOver && (System.currentTimeMillis() - timeEnded) >= 2000) {
                     reset();
@@ -358,7 +382,6 @@ public class GameplayScene implements Scene {
         float y = cHeight / 2f + r.height() / 2f - r.bottom;
         canvas.drawText(text, x, y, paint);
     }
-
 
 
 }

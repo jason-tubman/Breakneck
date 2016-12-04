@@ -711,7 +711,7 @@ public class MenuScene implements Scene {
 
     @Override
     public void terminate() {
-        sceneManager.addScene(new GameplayScene());
+        sceneManager.addScene(new GameplayScene(this.sceneManager));
         SceneManager.activeScene = 1;
     }
 
