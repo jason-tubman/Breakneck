@@ -82,7 +82,7 @@ public class ObstacleManager {
                 createObstacles();
                 this.countDown = false;
             }
-            this.speed = (float) (Math.sqrt(1 + (startTime - initTime) / 2000)) * player.getSpeed();
+            this.speed = (float) (Math.sqrt(1 + (startTime - initTime) / 4000)) * player.getSpeed();
             for (Obstacle obstacle : obstacles) {
                 obstacle.moveObstacle(speed * 20);
             }
