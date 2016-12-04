@@ -72,14 +72,15 @@ public class GameplayScene implements Scene {
     public void update() {
         if (!gameOver) {
 
-            particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, 0);
-            particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, 0);
-            particleGenerator1.update();
-
             if (player2.isVisible()) {
-                particleGenerator2.addParticle(player2.getX(), player2.getY() + player2.getHeight()-50, 0);
-                particleGenerator2.addParticle(player2.getX(), player2.getY() + player2.getHeight()-50, 0);
+                particleGenerator2.addParticle(player2.getX(), player2.getY() + player2.getHeight()-50, 0, true);
                 particleGenerator2.update();
+                particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, 0, true);
+                particleGenerator1.update();
+            } else {
+                particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, 0, false);
+                particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, 0, false);
+                particleGenerator1.update();
             }
 
             player.update(playerPoint);
@@ -104,12 +105,12 @@ public class GameplayScene implements Scene {
                     if (!(playerPoint.x < player.getRectangle().width())) {
                         if (obstacleManager.getSpeed() > 0) {
                             playerPoint.set((int) (playerPoint.x - 70 * obstacleManager.getSpeed()), playerPoint.y);
-                            particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, -5);
-                            particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, -5);
+                            particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, -5, false);
+                            particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, -5, false);
                         } else {
                                 playerPoint.set(playerPoint.x - 70, playerPoint.y);
-                                particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, -5);
-                                particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, -5);
+                                particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, -5, false);
+                                particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, -5, false);
                         }
                     } else {
                         if (!split) {
@@ -120,12 +121,12 @@ public class GameplayScene implements Scene {
                     if (!(playerPoint.x > Constants.screenWidth - player.getRectangle().width())) {
                         if (obstacleManager.getSpeed() > 0) {
                             playerPoint.set((int) (playerPoint.x + 70 * obstacleManager.getSpeed()), playerPoint.y);
-                            particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, 5);
-                            particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, 5);
+                            particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, 5, false);
+                            particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, 5, false);
                         } else {
                             playerPoint.set(playerPoint.x + 70, playerPoint.y);
-                            particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, 5);
-                            particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, 5);
+                            particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, 5, false);
+                            particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, 5, false);
                         }
                     }
                     else {

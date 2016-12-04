@@ -18,11 +18,19 @@ public class ParticleGenerator {
         particles = new ArrayList<Particle>();
     }
 
-    void addParticle(int xPos, int yPos, int xOffset) {
-        if (Math.random() < 0.5) {
-            xPos = xPos + (getRandomNumberInRange(0, 50)) * -1;
+    void addParticle(int xPos, int yPos, int xOffset, boolean split) {
+        if (!split) {
+            if (Math.random() < 0.5) {
+                xPos = xPos + (getRandomNumberInRange(0, 50)) * -1;
+            } else {
+                xPos = xPos + (getRandomNumberInRange(0, 50));
+            }
         } else {
-            xPos = xPos + (getRandomNumberInRange(0, 50));
+            if (Math.random() < 0.5) {
+                xPos = xPos + (getRandomNumberInRange(0, 30)) * -1;
+            } else {
+                xPos = xPos + (getRandomNumberInRange(0, 30));
+            }
         }
         particles.add(new Particle(xPos, yPos, xOffset));
     }
