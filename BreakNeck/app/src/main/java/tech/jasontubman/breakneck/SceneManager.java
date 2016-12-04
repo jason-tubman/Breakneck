@@ -16,8 +16,8 @@ public class SceneManager {
 
     public SceneManager() {
         activeScene = 0;
-        scenes.add(0, new MenuScene());
-        scenes.add(1, new GameplayScene());
+        scenes.add(0, new MenuScene(this));
+
     }
 
     public void recieveTouch(MotionEvent event) {
@@ -30,6 +30,10 @@ public class SceneManager {
 
     public void draw(Canvas canvas) {
         scenes.get(activeScene).draw(canvas);
+    }
+
+    public void addScene(Scene scene) {
+        scenes.add(scene);
     }
 
 }
