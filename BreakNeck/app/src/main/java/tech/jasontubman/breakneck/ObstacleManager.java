@@ -2,6 +2,9 @@ package tech.jasontubman.breakneck;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.Typeface;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -26,6 +29,7 @@ public class ObstacleManager {
     private Player player;
     private int elapsedTime;
     private boolean countDown = true;
+    private Rect r = new Rect();
 
     public ObstacleManager(int playerGap, int obstacleGap, int obstacleHeight, int color, Player player) {
         this.playerGap = playerGap;
@@ -77,7 +81,8 @@ public class ObstacleManager {
         elapsedTime += (int)(System.currentTimeMillis() - startTime);
         startTime = System.currentTimeMillis();
 
-        if (elapsedTime > 2500) {
+
+        if (elapsedTime > 4000) {
             if (countDown) {
                 createObstacles();
                 this.countDown = false;
@@ -120,8 +125,23 @@ public class ObstacleManager {
 
     public void draw(Canvas canvas) {
         for (Obstacle obstacle: obstacles){
-
             obstacle.draw(canvas);
+        }
+        Paint paint = new Paint();
+        Typeface typeface = Typeface.createFromAsset(Constants.currentContext.getAssets(), "spaceage.ttf");
+        paint.setTypeface(typeface);
+        paint.setTextSize(900 / Constants.currentContext.getResources().getDisplayMetrics().density);
+        paint.setColor(Color.LTGRAY);
+        if (elapsedTime < 1000) {
+            centreText(canvas, paint, "3");
+        } else if (elapsedTime < 2000 && elapsedTime >= 1000) {
+            centreText(canvas, paint, "2");
+        } else if (elapsedTime < 3000 && elapsedTime >= 2000) {
+            centreText(canvas, paint, "1");
+        } else if (elapsedTime < 4000 && elapsedTime >= 3000){
+            centreText(canvas, paint, "SURGE");
+        } else {
+
         }
 
     }
@@ -138,5 +158,17 @@ public class ObstacleManager {
     public boolean getcountDown(){
         return this.countDown;
     }
+
+    private void centreText(Canvas canvas, Paint paint, String text) {
+        paint.setTextAlign(Paint.Align.LEFT);
+        canvas.getClipBounds(r);
+        int cHeight = r.height();
+        int cWidth = r.width();
+        paint.getTextBounds(text, 0, text.length(), r);
+        float x = cWidth / 2f - r.width() / 2f - r.left;
+        float y = cHeight / 2f - r.height() / 2f - r.top;
+        canvas.drawText(text, x, y, paint);
+    }
+
 
 }

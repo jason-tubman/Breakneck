@@ -31,6 +31,14 @@ public class GameplayScene implements Scene {
     private int score;
     private Rect r = new Rect();
 
+
+    //GAME OVER PAINTS
+    Paint paint3 = new Paint();
+    private int opacity = 0;
+    private int opacity2 = 0;
+    Paint paint4 = new Paint();
+    //
+
     private SceneManager sceneManager;
 
     private StarManager starManager;
@@ -75,6 +83,9 @@ public class GameplayScene implements Scene {
         obstacleManager = new ObstacleManager(200, 950, 400, Color.LTGRAY, player);
         this.score = 0;
         numPoints  = 0;
+
+        opacity = 0;
+        opacity2 = 0;
 
     }
     @Override
@@ -177,6 +188,14 @@ public class GameplayScene implements Scene {
         }
     }
 
+    public void fades() {
+            if (opacity < 255) {
+                opacity+=15;
+            }
+            if (opacity2 < 210) {
+                opacity2+=15;
+            }
+    }
 
     @Override
     public void draw(Canvas canvas) {
@@ -189,8 +208,6 @@ public class GameplayScene implements Scene {
         Typeface typeface = Typeface.createFromAsset(Constants.currentContext.getAssets(), "spaceage.ttf");
         score.setTypeface(typeface);
         canvas.drawText(Integer.toString(this.score), Constants.screenWidth - Constants.screenWidth/30, Constants.screenHeight/20, score);
-
-
 
 
 
@@ -219,33 +236,40 @@ public class GameplayScene implements Scene {
 
 
         if (gameOver) {
+            fades();
             RectF gameOverScreen = new RectF();
             gameOverScreen.set(Constants.screenWidth/12, Constants.screenHeight/4, Constants.screenWidth - Constants.screenWidth/12, Constants.screenHeight-Constants.screenHeight/4);
-            Paint paint3 = new Paint();
+
+            Rect fade = new Rect();
+            fade.set(0, 0, Constants.screenWidth, Constants.screenHeight);
+            paint4.setColor(Color.BLACK);
+            paint4.setAlpha(opacity2);
+            canvas.drawRect(fade, paint4);
+
             paint3.setColor(Color.WHITE);
+            paint3.setAlpha(opacity);
             canvas.drawRoundRect(gameOverScreen, 10, 10, paint3);
             paint3.setTextSize(150);
             paint3.setColor(Color.DKGRAY);
             paint3.setTypeface(typeface);
-            centreText(canvas, paint3, "GAME OVER", Constants.screenHeight/2.7f);
+            centreText(canvas, paint3, "GAME OVER", Constants.screenHeight/3.0f);
             paint3.setTextSize(90);
-            centreText(canvas, paint3, "Your Score was: ", Constants.screenHeight/2.3f);
+            centreText(canvas, paint3, "Your Score was: ", Constants.screenHeight/2.5f);
             paint3.setTextSize(140);
-            centreText(canvas, paint3, Integer.toString(this.score), Constants.screenHeight/1.9f);
-
-            RectF black = new RectF();
-            black.set((int) (Constants.screenWidth/11),  (int) (Constants.screenHeight/3.8),
-                    (Constants.screenWidth/11) + (Constants.screenWidth / 12), (int) (Constants.screenHeight/3.8) + Constants.screenHeight / 20);
-            canvas.drawRoundRect(black, 5, 5, paint3);
+            centreText(canvas, paint3, Integer.toString(this.score), Constants.screenHeight/2.0f);
 
             BitmapFactory bf2 = new BitmapFactory();
-            Bitmap menu = bf2.decodeResource(Constants.currentContext.getResources(), R.drawable.home);
-            Bitmap resizedMenu = Bitmap.createScaledBitmap(menu, (int) (Constants.screenWidth / 12), Constants.screenHeight / 20, false);
-            canvas.drawBitmap(resizedMenu, (int) (Constants.screenWidth/11), (int) (Constants.screenHeight/3.8), paint3);
 
             Bitmap playAgain = bf2.decodeResource(Constants.currentContext.getResources(), R.drawable.playbutton);
-            Bitmap resizedplayAgain = Bitmap.createScaledBitmap(playAgain, (int) (Constants.screenWidth / 1.3), Constants.screenHeight / 10, false);
-            canvas.drawBitmap(resizedplayAgain, (int) (Constants.screenWidth/9), (int) (Constants.screenHeight/1.9), paint3);
+            Bitmap resizedplayAgain = Bitmap.createScaledBitmap(playAgain, (int) (Constants.screenWidth / 1.3), Constants.screenHeight / 12, false);
+            canvas.drawBitmap(resizedplayAgain, (int) (Constants.screenWidth/9), (int) (Constants.screenHeight/1.8), paint3);
+            paint3.setTextSize(100);
+            centreText(canvas, paint3, "PLAY AGAIN", Constants.screenHeight/1.66f);
+
+            Bitmap store = bf2.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_button03);
+            Bitmap resizedstore = Bitmap.createScaledBitmap(store, (int) (Constants.screenWidth / 1.3), Constants.screenHeight / 12, false);
+            canvas.drawBitmap(resizedstore, (int) (Constants.screenWidth/9), (int) (Constants.screenHeight/1.53), paint3);
+            centreText(canvas, paint3, "MENU", Constants.screenHeight/1.42f);
         }
     }
 
@@ -272,9 +296,13 @@ public class GameplayScene implements Scene {
                     }
 
                 }
-                if (gameOver && (System.currentTimeMillis() - timeEnded) >= 2000) {
+                if (gameOver && event.getY() > Constants.screenHeight/1.8 && event.getY() < Constants.screenHeight/1.8 + Constants.screenHeight / 12 &&
+                        event.getX() > Constants.screenWidth/9 && event.getX() < Constants.screenWidth/9 + Constants.screenWidth / 1.3) {
                     reset();
                     gameOver = false;
+                } else if (gameOver && event.getY() > Constants.screenHeight/1.53 && event.getY() < Constants.screenHeight/1.53 + Constants.screenHeight / 12 &&
+                        event.getX() > Constants.screenWidth/9 && event.getX() < Constants.screenWidth/9 + Constants.screenWidth / 1.3) {
+                    terminate();
                 }
                 break;
             }
@@ -282,10 +310,6 @@ public class GameplayScene implements Scene {
                 if (!gameOver) {
                     numPoints = event.getPointerCount();
                     eventX = event.getX(0);
-                }
-                if (gameOver && (System.currentTimeMillis() - timeEnded) >= 2000) {
-                    reset();
-                    gameOver = false;
                 }
                 break;
             }
