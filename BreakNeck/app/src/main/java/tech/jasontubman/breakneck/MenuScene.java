@@ -470,8 +470,8 @@ public class MenuScene implements Scene {
             case 6:selected.set((int) (Constants.screenWidth / 1.9) - 5, (int) (Constants.screenHeight / 3.2) - 5,
                     (int) (Constants.screenWidth/1.9) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/3.2) + Constants.screenHeight / 12 + 5);
                 break;
-            case 7:selected.set((int) (Constants.screenWidth / 1.35) - 5, (int) (Constants.screenHeight / 3.2) - 5,
-                    (int) (Constants.screenWidth/1.35) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/3.2) + Constants.screenHeight / 12 + 5);
+            case 7:selected.set((int) (Constants.screenWidth / 1.35) - 5, (int) (Constants.screenHeight / 3.2) - 20,
+                    (int) (Constants.screenWidth/1.35) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/3.2) + Constants.screenHeight / 12 -2);
                 break;
             case 8:selected.set((int) (Constants.screenWidth / 8.2) - 5, (int) (Constants.screenHeight / 2.43) - 5,
                     (int) (Constants.screenWidth/8.2) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/2.43) + Constants.screenHeight / 12 + 5);

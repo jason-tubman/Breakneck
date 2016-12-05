@@ -197,6 +197,11 @@ public class SceneManager {
                     activeScene = 0;
                     isPaused = false;
                     this.scenes.remove(1);
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+
+                    }
                 }
 
                 break;
