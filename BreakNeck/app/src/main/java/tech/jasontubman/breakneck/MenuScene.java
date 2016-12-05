@@ -44,6 +44,7 @@ public class MenuScene implements Scene {
     private boolean menu = true;
 
     private boolean musicMuted = false;
+    private ShipSelector shipSel;
 
     private ParticleGenerator creditGen;
 
@@ -54,6 +55,7 @@ public class MenuScene implements Scene {
         Arrays.fill(ships, Boolean.FALSE);
         ships[0] = true;
         creditGen = new ParticleGenerator();
+        shipSel = new ShipSelector(this.sceneManager.shipChosen+1, 1);
     }
 
     @Override
@@ -667,7 +669,7 @@ public class MenuScene implements Scene {
         creditGen.update();
         creditGen.draw(canvas);
 
-        Bitmap ship = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s2r);
+        Bitmap ship = shipSel.getSprite();
         Bitmap resizedShip = Bitmap.createScaledBitmap(ship, (int) (Constants.screenWidth / 4), Constants.screenHeight / 7, false);
         canvas.drawBitmap(resizedShip, (int) (Constants.screenWidth/2.8), (int) (Constants.screenHeight/1.9), paint);
 
