@@ -609,8 +609,13 @@ public class MenuScene implements Scene {
     public void drawOptions(Canvas canvas) {
         if (!musicMuted) {
             this.sceneManager.backgroundMusic.setVolume((float) sliderX / sliderMax, (float) sliderX / sliderMax);
+            this.sceneManager.currentVolume = (float) sliderX / sliderMax;
         } else {
             this.sceneManager.backgroundMusic.setVolume(0, 0);
+            this.sceneManager.currentVolume = 0;
+            if (this.sceneManager.currentVolume == 0) {
+                sliderX = sliderMin;
+            }
         }
         Paint paint3 = new Paint();
         paint3.setColor(Color.WHITE);
