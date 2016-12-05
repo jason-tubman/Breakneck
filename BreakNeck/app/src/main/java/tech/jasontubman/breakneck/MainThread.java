@@ -8,7 +8,7 @@ import android.view.SurfaceHolder;
  */
 
 public class MainThread extends Thread {
-    public static final int MAX_FPS = 60;
+    public static final int MAX_FPS = 30;
 
     private double averageFPS;
 

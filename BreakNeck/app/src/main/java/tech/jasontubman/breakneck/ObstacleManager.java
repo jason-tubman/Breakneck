@@ -50,7 +50,7 @@ public class ObstacleManager {
     }
 
     private void createObstacles() {
-        int obstacleY = -6*Constants.screenHeight/4;
+        int obstacleY = -5*Constants.screenHeight/4;
         while (obstacleY < 0) {
             int random = getRandomNumberInRange(1, 3);
             switch (random) {
@@ -77,14 +77,15 @@ public class ObstacleManager {
         elapsedTime += (int)(System.currentTimeMillis() - startTime);
         startTime = System.currentTimeMillis();
 
-        if (elapsedTime > 4000) {
+        if (elapsedTime > 2500) {
             if (countDown) {
                 createObstacles();
                 this.countDown = false;
             }
-            this.speed = (float) (Math.sqrt(1 + (startTime - initTime) / 3000)) * player.getSpeed();
+            this.speed = (float) (Math.sqrt(1.25 + (startTime - initTime) / 1500)) * player.getSpeed();
             for (Obstacle obstacle : obstacles) {
                 obstacle.moveObstacle(speed * 20);
+                obstacle.update();
             }
             if (obstacles.get(obstacles.size() - 1).getTop() >= Constants.screenHeight) {
                 int obstacleY = obstacles.get(0).getTop() - obstacleHeight - obstacleGap;
@@ -119,6 +120,7 @@ public class ObstacleManager {
 
     public void draw(Canvas canvas) {
         for (Obstacle obstacle: obstacles){
+
             obstacle.draw(canvas);
         }
 

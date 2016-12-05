@@ -61,18 +61,17 @@ public class LeftTriangle implements Obstacle {
 
     @Override
     public void draw(Canvas canvas) {
-        path.reset();
         Paint paint = new Paint();
         paint.setColor(color);
-        path.moveTo(point1.x, point1.y);
-        path.lineTo(point2.x, point2.y);
-        path.lineTo(point3.x, point3.y);
         canvas.drawPath(path, paint);
     }
 
     @Override
     public void update() {
-
+        path.reset();
+        path.moveTo(point1.x, point1.y);
+        path.lineTo(point2.x, point2.y);
+        path.lineTo(point3.x, point3.y);
     }
 
     @Override

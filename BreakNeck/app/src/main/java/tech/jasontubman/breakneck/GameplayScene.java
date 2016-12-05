@@ -51,7 +51,7 @@ public class GameplayScene implements Scene {
         player.update(playerPoint);
 
 
-        obstacleManager = new ObstacleManager(200, 650, 400, Color.LTGRAY, player);
+        obstacleManager = new ObstacleManager(200, 950, 400, Color.LTGRAY, player);
 
         starManager = new StarManager(player.getSpeed(), false);
 
@@ -72,7 +72,7 @@ public class GameplayScene implements Scene {
         player2.update(playerPoint2);
         player2.setVisible(false);
 
-        obstacleManager = new ObstacleManager(200, 650, 400, Color.LTGRAY, player);
+        obstacleManager = new ObstacleManager(200, 950, 400, Color.LTGRAY, player);
         this.score = 0;
         numPoints  = 0;
 
@@ -369,7 +369,7 @@ public class GameplayScene implements Scene {
 
     public void addToScore(int score){
         if (!gameOver) {
-            this.score += score;
+            this.score += score*player.getSpeed();
         }
     }
 

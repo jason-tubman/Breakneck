@@ -81,21 +81,21 @@ public class Diamond implements Obstacle {
     public void draw(Canvas canvas) {
         Paint paint = new Paint();
         paint.setColor(color);
-        path.reset();
-        path.moveTo(point1.x, point1.y);
-        path.lineTo(point2.x, point2.y);
-        path.lineTo(point3.x, point3.y);
         canvas.drawPath(path, paint);
-        path2.reset();
-        path2.moveTo(point4.x, point4.y);
-        path2.lineTo(point5.x, point5.y);
-        path2.lineTo(point6.x, point6.y);
         canvas.drawPath(path2, paint);
     }
 
     @Override
     public void update() {
+        path.reset();
+        path.moveTo(point1.x, point1.y);
+        path.lineTo(point2.x, point2.y);
+        path.lineTo(point3.x, point3.y);
 
+        path2.reset();
+        path2.moveTo(point4.x, point4.y);
+        path2.lineTo(point5.x, point5.y);
+        path2.lineTo(point6.x, point6.y);
     }
 
     @Override
