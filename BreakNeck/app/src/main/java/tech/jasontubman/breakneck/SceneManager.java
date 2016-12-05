@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 
 public class SceneManager {
     private ArrayList<Scene> scenes = new ArrayList<>();
-
+    private Rect r = new Rect();
     private boolean isPaused = false;
     ParticleGenerator cogGen;
 
@@ -92,6 +93,11 @@ public class SceneManager {
     public void drawOptions(Canvas canvas) {
         if (firstRun == 0) {
             sliderX = (int) currentVolume * sliderMax;
+            if (sliderX < sliderMin) {
+                sliderX = sliderMin;
+            } else if (sliderX > sliderMax) {
+                sliderX = sliderMax;
+            }
             if (currentVolume == 0) {
                 sliderX = sliderMin;
             }
@@ -113,13 +119,13 @@ public class SceneManager {
         Bitmap resizedExit = Bitmap.createScaledBitmap(exit, (int) (Constants.screenWidth / 12), Constants.screenHeight / 20, false);
         canvas.drawBitmap(resizedExit, (int) (Constants.screenWidth - Constants.screenWidth/7), Constants.screenHeight/6, paint);
 
-        canvas.drawText("PAUSED", (int)(Constants.screenWidth/7.5), (int) (Constants.screenHeight/3.7), paint);
+
+        centreText4(canvas, paint, "PAUSED", Constants.screenHeight/3.7f);
+
         paint.setTextSize(180 / Constants.currentContext.getResources().getDisplayMetrics().density);
 
-
-        canvas.drawText("VOLUME", (int)(Constants.screenWidth/7), (int)(Constants.screenHeight/3.0), paint);
-
-        canvas.drawText("MUTE MUSIC:", (int)(Constants.screenWidth/7), (int)(Constants.screenHeight/2.2), paint);
+        centreText4(canvas, paint, "VOLUME", Constants.screenHeight/3.0f);
+        centreText4(canvas, paint, "MUTE MUSIC :", Constants.screenHeight/2.13f);
 
         Bitmap slider = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.slider);
         Bitmap resizedSlider = Bitmap.createScaledBitmap(slider, (int) (Constants.screenWidth / 1.4), Constants.screenWidth/100, false);
@@ -133,9 +139,9 @@ public class SceneManager {
         Bitmap resizednotmute = Bitmap.createScaledBitmap(notmute, (int) (Constants.screenWidth /10), Constants.screenWidth/11, false);
 
         if (this.mute) {
-            canvas.drawBitmap(resizedmute, (int) (Constants.screenWidth/1.6), (int) (Constants.screenHeight/2.42), paint);
+            canvas.drawBitmap(resizedmute, (int) (Constants.screenWidth/1.3), (int) (Constants.screenHeight/2.3), paint);
         } else {
-            canvas.drawBitmap(resizednotmute, (int) (Constants.screenWidth/1.6), (int) (Constants.screenHeight/2.42), paint);
+            canvas.drawBitmap(resizednotmute, (int) (Constants.screenWidth/1.3), (int) (Constants.screenHeight/2.3), paint);
         }
 
         Bitmap sliderUp = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.sliderup);
@@ -171,10 +177,11 @@ public class SceneManager {
                 if (event.getY() > Constants.screenHeight/6 && event.getY() < Constants.screenHeight/6 + Constants.screenHeight / 20 &&
                         event.getX() > Constants.screenWidth - Constants.screenWidth/7 && event.getX() < Constants.screenWidth - Constants.screenWidth/7 + Constants.screenWidth / 12) {
                     isPaused = false;
+                    firstRun = 0;
                     break;
                 }
-                if (event.getY() > (Constants.screenHeight/2.42) && event.getY() < (Constants.screenHeight/2.42) + Constants.screenWidth/11 &&
-                        event.getX() > (Constants.screenWidth/1.6) && event.getX() < (Constants.screenWidth/1.6) + Constants.screenWidth /10) {
+                if (event.getY() > (Constants.screenHeight/2.3) && event.getY() < (Constants.screenHeight/2.3) + Constants.screenWidth/11 &&
+                        event.getX() > (Constants.screenWidth/1.3) && event.getX() < (Constants.screenWidth/1.3) + Constants.screenWidth /10) {
                     if (currentVolume != 0) {
                         mute = true;
                         sliderX = sliderMin;
@@ -196,6 +203,7 @@ public class SceneManager {
                         event.getX() > Constants.screenWidth/12 && event.getX() < Constants.screenWidth/12 + Constants.screenWidth / 12) {
                     activeScene = 0;
                     isPaused = false;
+                    firstRun = 0;
                     this.scenes.remove(1);
                     try {
                         Thread.sleep(100);
@@ -228,6 +236,16 @@ public class SceneManager {
         }
 
 
+    }
+
+    private void centreText4(Canvas canvas, Paint paint, String text, float y) {
+        paint.setTextAlign(Paint.Align.LEFT);
+        canvas.getClipBounds(r);
+        int cHeight = r.height();
+        int cWidth = r.width();
+        paint.getTextBounds(text, 0, text.length(), r);
+        float x = cWidth / 2f - r.width() / 2f - r.left - 10;
+        canvas.drawText(text, x, y-10, paint);
     }
 
 }

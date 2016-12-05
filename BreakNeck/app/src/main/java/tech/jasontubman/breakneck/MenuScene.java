@@ -117,8 +117,17 @@ public class MenuScene implements Scene {
             Bitmap resizedPlayButton = Bitmap.createScaledBitmap(playButton, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 6, false);
             canvas.drawBitmap(resizedPlayButton, Constants.screenWidth / 8, Constants.screenHeight / 5, paint);
         }
-        canvas.drawText("PLAY", (int) (Constants.screenWidth/4.45), (int) (Constants.screenHeight/3.24), paint2);
-        canvas.drawText("PLAY", (int) (Constants.screenWidth/4.35), (int) (Constants.screenHeight/3.2), paint);
+
+
+        canvas.getClipBounds(r);
+        int cWidth = r.width();
+        paint.getTextBounds("PLAY", 0, 4, r);
+        paint.setTextAlign(Paint.Align.CENTER);
+        paint2.getTextBounds("PLAY", 0, 4, r);
+        paint2.setTextAlign(Paint.Align.CENTER);
+        float x = cWidth / 2f - r.width() / 2f - r.left;
+        centreText4(canvas, paint2, "PLAY", Constants.screenHeight/3.2f);
+        centreText3(canvas, paint, "PLAY", Constants.screenHeight/3.2f);
 
         //STORE
         paint.setTextSize(300 / Constants.currentContext.getResources().getDisplayMetrics().density);
@@ -136,7 +145,7 @@ public class MenuScene implements Scene {
             Bitmap resizedStoreButton = Bitmap.createScaledBitmap(storeButton, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 11, false);
             canvas.drawBitmap(resizedStoreButton, Constants.screenWidth / 8, (int) (Constants.screenHeight / 2.65), paint);
         }
-        canvas.drawText("STORE", (int) (Constants.screenWidth/3.6), (int) (Constants.screenHeight/2.27), paint);
+        canvas.drawText(" STORE", (int) (x), (int) (Constants.screenHeight/2.27), paint);
         //OPTIONS
         paint.setTextSize(300 / Constants.currentContext.getResources().getDisplayMetrics().density);
         paint2.setTextSize(300 / Constants.currentContext.getResources().getDisplayMetrics().density);
@@ -153,7 +162,7 @@ public class MenuScene implements Scene {
             Bitmap resizedStoreButton = Bitmap.createScaledBitmap(storeButton, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 11, false);
             canvas.drawBitmap(resizedStoreButton, Constants.screenWidth / 8, (int) (Constants.screenHeight / 2.05), paint);
         }
-        canvas.drawText("OPTIONS", (int) (Constants.screenWidth/4.3), (int) (Constants.screenHeight/1.83), paint);
+        canvas.drawText("OPTIONS", (int) (x), (int) (Constants.screenHeight/1.83), paint);
         //SCORES
         paint.setTypeface(typeface);
         paint.setColor(Color.DKGRAY);
@@ -168,7 +177,7 @@ public class MenuScene implements Scene {
             Bitmap resizedStoreButton = Bitmap.createScaledBitmap(storeButton, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 11, false);
             canvas.drawBitmap(resizedStoreButton, Constants.screenWidth / 8, (int) (Constants.screenHeight / 1.69), paint);
         }
-        canvas.drawText(" SCORES", (int) (Constants.screenWidth/4.98), (int) (Constants.screenHeight/1.53), paint);
+        canvas.drawText("SCORES", (int) (x), (int) (Constants.screenHeight/1.53), paint);
         //CREDITS
         paint.setTypeface(typeface);
         paint.setColor(Color.DKGRAY);
@@ -183,7 +192,7 @@ public class MenuScene implements Scene {
             Bitmap resizedStoreButton = Bitmap.createScaledBitmap(storeButton, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 11, false);
             canvas.drawBitmap(resizedStoreButton, Constants.screenWidth / 8, (int) (Constants.screenHeight / 1.44), paint);
         }
-        canvas.drawText("CREDITS", (int) (Constants.screenWidth/4.4), (int) (Constants.screenHeight/1.32), paint);
+        canvas.drawText("CREDITS", (int) (x), (int) (Constants.screenHeight/1.32), paint);
         //EXIT
         paint.setTypeface(typeface);
         paint.setColor(Color.DKGRAY);
@@ -198,7 +207,7 @@ public class MenuScene implements Scene {
             Bitmap resizedStoreButton = Bitmap.createScaledBitmap(storeButton, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 11, false);
             canvas.drawBitmap(resizedStoreButton, Constants.screenWidth / 8, (int) (Constants.screenHeight / 1.25), paint);
         }
-        canvas.drawText("EXIT", (int) (Constants.screenWidth/2.8), (int) (Constants.screenHeight/1.16), paint);
+        canvas.drawText("   EXIT", (int) (x), (int) (Constants.screenHeight/1.16), paint);
     }
 
     public void drawShopPanels(Canvas canvas) {
@@ -470,8 +479,8 @@ public class MenuScene implements Scene {
             case 6:selected.set((int) (Constants.screenWidth / 1.9) - 5, (int) (Constants.screenHeight / 3.2) - 5,
                     (int) (Constants.screenWidth/1.9) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/3.2) + Constants.screenHeight / 12 + 5);
                 break;
-            case 7:selected.set((int) (Constants.screenWidth / 1.35) - 5, (int) (Constants.screenHeight / 3.2) - 20,
-                    (int) (Constants.screenWidth/1.35) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/3.2) + Constants.screenHeight / 12 -2);
+            case 7:selected.set((int) (Constants.screenWidth / 1.35) - 5, (int) (Constants.screenHeight / 3.2) - 25,
+                    (int) (Constants.screenWidth/1.35) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/3.2) + Constants.screenHeight / 12 -5);
                 break;
             case 8:selected.set((int) (Constants.screenWidth / 8.2) - 5, (int) (Constants.screenHeight / 2.43) - 5,
                     (int) (Constants.screenWidth/8.2) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/2.43) + Constants.screenHeight / 12 + 5);
@@ -564,6 +573,9 @@ public class MenuScene implements Scene {
     }
 
     public void drawCredits(Canvas canvas) {
+
+
+
         Paint paint3 = new Paint();
         paint3.setColor(Color.WHITE);
         RectF shopPanel = new RectF();
@@ -574,24 +586,30 @@ public class MenuScene implements Scene {
         paint.setTypeface(typeface);
         paint.setColor(Color.DKGRAY);
         paint.setTextSize(180 / Constants.currentContext.getResources().getDisplayMetrics().density);
-        canvas.drawText("ASSETS DRAWN BY", (int)(Constants.screenWidth/6.3), Constants.screenHeight/4, paint);
-        canvas.drawText("KENNEY", (int)(Constants.screenWidth/3), (int) (Constants.screenHeight/3.5), paint);
+
+        centreText4(canvas, paint, "ASSETS DRAWN BY", Constants.screenHeight/4);
+
+        paint.setTextAlign(Paint.Align.CENTER);
+        centreText4(canvas, paint, "KENNEY", Constants.screenHeight/3.5f);
+
         paint.setTextSize(100 / Constants.currentContext.getResources().getDisplayMetrics().density);
-        canvas.drawText("www.kenney.nl", (int) (Constants.screenWidth/3.2), (int) (Constants.screenHeight/3), paint);
+        centreText4(canvas, paint, "www.kenney.nl", Constants.screenHeight/3f);
 
         paint.setTextSize(150 / Constants.currentContext.getResources().getDisplayMetrics().density);
-        canvas.drawText("MUSIC BY" , (int) (Constants.screenWidth/2.9), (int) (Constants.screenHeight/2.4), paint);
-        canvas.drawText("Alexandr Zhelanov" , Constants.screenWidth/6, (int) (Constants.screenHeight/2.25), paint);
+
+        centreText4(canvas, paint, "MUSIC BY", Constants.screenHeight/2.4f);
+        centreText4(canvas, paint, "Alexandr Zhelanov", Constants.screenHeight/2.25f);
 
         paint.setTextSize(100 / Constants.currentContext.getResources().getDisplayMetrics().density);
-        canvas.drawText("soundcloud.com/",(int) (Constants.screenWidth/3.5), (int) (Constants.screenHeight/2.05), paint);
-        canvas.drawText("alexandr-zhelanov", Constants.screenWidth/4, (int) (Constants.screenHeight/1.95), paint);
+        centreText4(canvas, paint, "soundcloud.com/", Constants.screenHeight/2.05f);
+        centreText4(canvas, paint, "alexandr-zhelanov", Constants.screenHeight/1.95f);
 
         paint.setTextSize(150 / Constants.currentContext.getResources().getDisplayMetrics().density);
-        canvas.drawText("SOFTWARE DEVELOPED", (int) (Constants.screenWidth/6.8), (int) (Constants.screenHeight/1.7), paint);
-        canvas.drawText("BY JASON TUBMAN", (int) (Constants.screenWidth/4.9), (int) (Constants.screenHeight/1.6), paint);
+        centreText4(canvas, paint, "SOFTWARE DEVELOPED", Constants.screenHeight/1.7f);
+        centreText4(canvas, paint, "BY JASON TUBMAN", Constants.screenHeight/1.6f);
+
         paint.setTextSize(100 / Constants.currentContext.getResources().getDisplayMetrics().density);
-        canvas.drawText("www.jasontubman.tech", (int) (Constants.screenWidth/4.6), (int) (Constants.screenHeight/1.5), paint);
+        centreText4(canvas, paint, "www.jasontubman.tech", Constants.screenHeight/1.5f);
 
         BitmapFactory bf = new BitmapFactory();
         Bitmap exit = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.exitbutton);
@@ -636,11 +654,11 @@ public class MenuScene implements Scene {
         Bitmap resizedExit = Bitmap.createScaledBitmap(exit, (int) (Constants.screenWidth / 12), Constants.screenHeight / 20, false);
         canvas.drawBitmap(resizedExit, (int) (Constants.screenWidth - Constants.screenWidth/7), Constants.screenHeight/14, paint);
 
-        canvas.drawText("OPTIONS", (int)(Constants.screenWidth/3.8), Constants.screenHeight/4, paint);
+        centreText4(canvas, paint, "OPTIONS", Constants.screenHeight/4);
         paint.setTextSize(180 / Constants.currentContext.getResources().getDisplayMetrics().density);
-        canvas.drawText("VOLUME", (int)(Constants.screenWidth/7), (int)(Constants.screenHeight/3.3), paint);
+        centreText4(canvas, paint, "CHANGE VOLUME", Constants.screenHeight/3.3f);
 
-        canvas.drawText("MUTE MUSIC:", (int)(Constants.screenWidth/7), (int)(Constants.screenHeight/2.4), paint);
+        centreText4(canvas, paint, "MUTE MUSIC :", Constants.screenHeight/2.23f);
 
         Bitmap slider = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.slider);
         Bitmap resizedSlider = Bitmap.createScaledBitmap(slider, (int) (Constants.screenWidth / 1.4), Constants.screenWidth/100, false);
@@ -654,9 +672,9 @@ public class MenuScene implements Scene {
         Bitmap resizednotmute = Bitmap.createScaledBitmap(notmute, (int) (Constants.screenWidth /10), Constants.screenWidth/11, false);
 
         if (musicMuted) {
-            canvas.drawBitmap(resizedmute, (int) (Constants.screenWidth/1.6), (int) (Constants.screenHeight/2.62), paint);
+            canvas.drawBitmap(resizedmute, (int) (Constants.screenWidth/1.3), (int) (Constants.screenHeight/2.45), paint);
         } else {
-            canvas.drawBitmap(resizednotmute, (int) (Constants.screenWidth/1.6), (int) (Constants.screenHeight/2.62), paint);
+            canvas.drawBitmap(resizednotmute, (int) (Constants.screenWidth/1.3), (int) (Constants.screenHeight/2.45), paint);
         }
 
 
@@ -1053,8 +1071,8 @@ public class MenuScene implements Scene {
                 //END OPTIONS CLICK
 
                 //MUTE
-                if (event.getY() > Constants.screenHeight / 2.62 && event.getY() < Constants.screenHeight / 2.62 + Constants.screenWidth/11
-                        && event.getX() > Constants.screenWidth / 1.6 && event.getX() < Constants.screenWidth / 1.6 + Constants.screenWidth /10 && options) {
+                if (event.getY() > Constants.screenHeight / 2.45 && event.getY() < Constants.screenHeight / 2.45 + Constants.screenWidth/11
+                        && event.getX() > Constants.screenWidth / 1.3 && event.getX() < Constants.screenWidth / 1.3 + Constants.screenWidth /10 && options) {
                     if (!musicMuted) {
                         musicMuted = true;
                         this.sceneManager.mute = true;
@@ -1116,5 +1134,26 @@ public class MenuScene implements Scene {
         float y = (cHeight / 2f + r.height() / 2f - r.bottom) / 3.05f;
         canvas.drawText(text, x, y, paint);
     }
+
+    private void centreText3(Canvas canvas, Paint paint, String text, float y) {
+        paint.setTextAlign(Paint.Align.LEFT);
+        canvas.getClipBounds(r);
+        int cHeight = r.height();
+        int cWidth = r.width();
+        paint.getTextBounds(text, 0, text.length(), r);
+        float x = cWidth / 2f - r.width() / 2f - r.left;
+        canvas.drawText(text, x, y, paint);
+    }
+
+    private void centreText4(Canvas canvas, Paint paint, String text, float y) {
+        paint.setTextAlign(Paint.Align.LEFT);
+        canvas.getClipBounds(r);
+        int cHeight = r.height();
+        int cWidth = r.width();
+        paint.getTextBounds(text, 0, text.length(), r);
+        float x = cWidth / 2f - r.width() / 2f - r.left - 10;
+        canvas.drawText(text, x, y-10, paint);
+    }
+
 
 }

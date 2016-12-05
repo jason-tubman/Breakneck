@@ -43,7 +43,7 @@ public class StarManager {
                 planets.add(i, new Planet(radius, planetStyle, x, y));
             }
         } else {
-            for (int i = 0; i < 150; i++) {
+            for (int i = 0; i < 50; i++) {
                 int x = getRandomNumberInRange(20, Constants.screenWidth - 20);
                 int y = getRandomNumberInRange(-500, Constants.screenHeight - 20);
                 int radius = getRandomNumberInRange(2, 50);
