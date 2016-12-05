@@ -185,7 +185,10 @@ public class GameplayScene implements Scene {
         Paint score = new Paint();
         score.setTextSize(50);
         score.setColor(Color.WHITE);
-        drawScore(canvas, score, Integer.toString(this.score));
+        score.setTextAlign(Paint.Align.RIGHT);
+        Typeface typeface = Typeface.createFromAsset(Constants.currentContext.getAssets(), "spaceage.ttf");
+        score.setTypeface(typeface);
+        canvas.drawText(Integer.toString(this.score), Constants.screenWidth - Constants.screenWidth/30, Constants.screenHeight/20, score);
 
 
 
@@ -223,7 +226,6 @@ public class GameplayScene implements Scene {
             canvas.drawRoundRect(gameOverScreen, 10, 10, paint3);
             paint3.setTextSize(150);
             paint3.setColor(Color.DKGRAY);
-            Typeface typeface = Typeface.createFromAsset(Constants.currentContext.getAssets(), "spaceage.ttf");
             paint3.setTypeface(typeface);
             centreText(canvas, paint3, "GAME OVER", Constants.screenHeight/2.7f);
             paint3.setTextSize(90);
