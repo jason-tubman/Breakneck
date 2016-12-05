@@ -8,6 +8,9 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import tech.jasontubman.game.R;
+
+import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.os.Parcelable;
 import android.view.MotionEvent;
 
@@ -95,7 +98,7 @@ public class GameplayScene implements Scene {
             obstacleManager.update();
 
             if (!obstacleManager.getcountDown()) {
-                addToScore(1);
+                addToScore(100);
             }
 
             starManager.update();
@@ -213,10 +216,34 @@ public class GameplayScene implements Scene {
 
 
         if (gameOver) {
-            Paint paint = new Paint();
-            paint.setTextSize(100);
-            paint.setColor(Color.RED);
-            centreText(canvas, paint, "GAME OVER");
+            RectF gameOverScreen = new RectF();
+            gameOverScreen.set(Constants.screenWidth/12, Constants.screenHeight/4, Constants.screenWidth - Constants.screenWidth/12, Constants.screenHeight-Constants.screenHeight/4);
+            Paint paint3 = new Paint();
+            paint3.setColor(Color.WHITE);
+            canvas.drawRoundRect(gameOverScreen, 10, 10, paint3);
+            paint3.setTextSize(150);
+            paint3.setColor(Color.DKGRAY);
+            Typeface typeface = Typeface.createFromAsset(Constants.currentContext.getAssets(), "spaceage.ttf");
+            paint3.setTypeface(typeface);
+            centreText(canvas, paint3, "GAME OVER", Constants.screenHeight/2.7f);
+            paint3.setTextSize(90);
+            centreText(canvas, paint3, "Your Score was: ", Constants.screenHeight/2.3f);
+            paint3.setTextSize(140);
+            centreText(canvas, paint3, Integer.toString(this.score), Constants.screenHeight/1.9f);
+
+            RectF black = new RectF();
+            black.set((int) (Constants.screenWidth/11),  (int) (Constants.screenHeight/3.8),
+                    (Constants.screenWidth/11) + (Constants.screenWidth / 12), (int) (Constants.screenHeight/3.8) + Constants.screenHeight / 20);
+            canvas.drawRoundRect(black, 5, 5, paint3);
+
+            BitmapFactory bf2 = new BitmapFactory();
+            Bitmap menu = bf2.decodeResource(Constants.currentContext.getResources(), R.drawable.home);
+            Bitmap resizedMenu = Bitmap.createScaledBitmap(menu, (int) (Constants.screenWidth / 12), Constants.screenHeight / 20, false);
+            canvas.drawBitmap(resizedMenu, (int) (Constants.screenWidth/11), (int) (Constants.screenHeight/3.8), paint3);
+
+            Bitmap playAgain = bf2.decodeResource(Constants.currentContext.getResources(), R.drawable.playbutton);
+            Bitmap resizedplayAgain = Bitmap.createScaledBitmap(playAgain, (int) (Constants.screenWidth / 1.3), Constants.screenHeight / 10, false);
+            canvas.drawBitmap(resizedplayAgain, (int) (Constants.screenWidth/9), (int) (Constants.screenHeight/1.9), paint3);
         }
     }
 
@@ -329,6 +356,8 @@ public class GameplayScene implements Scene {
     }
 
     private void drawScore(Canvas canvas, Paint paint, String text) {
+        Typeface typeface = Typeface.createFromAsset(Constants.currentContext.getAssets(), "spaceage.ttf");
+        paint.setTypeface(typeface);
         paint.setTextAlign(Paint.Align.LEFT);
         canvas.getClipBounds(r);
         int cWidth = r.width();
@@ -374,14 +403,15 @@ public class GameplayScene implements Scene {
         }
     }
 
-    private void centreText(Canvas canvas, Paint paint, String text) {
+    private void centreText(Canvas canvas, Paint paint, String text, float y) {
+        Typeface typeface = Typeface.createFromAsset(Constants.currentContext.getAssets(), "spaceage.ttf");
+        paint.setTypeface(typeface);
         paint.setTextAlign(Paint.Align.LEFT);
         canvas.getClipBounds(r);
         int cHeight = r.height();
         int cWidth = r.width();
         paint.getTextBounds(text, 0, text.length(), r);
         float x = cWidth / 2f - r.width() / 2f - r.left;
-        float y = cHeight / 2f + r.height() / 2f - r.bottom;
         canvas.drawText(text, x, y, paint);
     }
 

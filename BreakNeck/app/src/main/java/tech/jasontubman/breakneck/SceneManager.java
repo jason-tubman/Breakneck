@@ -206,7 +206,7 @@ public class SceneManager {
                     firstRun = 0;
                     this.scenes.remove(1);
                     try {
-                        Thread.sleep(100);
+                        Thread.sleep(250);
                     } catch (InterruptedException e) {
 
                     }
