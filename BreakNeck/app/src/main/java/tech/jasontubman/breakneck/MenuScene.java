@@ -460,83 +460,83 @@ public class MenuScene implements Scene {
                     (int) (Constants.screenWidth/1.35) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/4.7) + Constants.screenHeight / 12 + 5);
                 break;
             case 4:selected.set((int) (Constants.screenWidth / 8.2) - 5, (int) (Constants.screenHeight / 3.2) - 5,
-                    (int) (Constants.screenWidth/8.2) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/4.7) + Constants.screenHeight / 12 + 5);
+                    (int) (Constants.screenWidth/8.2) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/3.2) + Constants.screenHeight / 12 + 5);
                 break;
             case 5:selected.set((int) (Constants.screenWidth / 3.0) - 5, (int) (Constants.screenHeight / 3.2) - 5,
-                    (int) (Constants.screenWidth/3.0) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/4.7) + Constants.screenHeight / 12 + 5);
+                    (int) (Constants.screenWidth/3.0) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/3.2) + Constants.screenHeight / 12 + 5);
                 break;
             case 6:selected.set((int) (Constants.screenWidth / 1.9) - 5, (int) (Constants.screenHeight / 3.2) - 5,
-                    (int) (Constants.screenWidth/1.9) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/4.7) + Constants.screenHeight / 12 + 5);
+                    (int) (Constants.screenWidth/1.9) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/3.2) + Constants.screenHeight / 12 + 5);
                 break;
             case 7:selected.set((int) (Constants.screenWidth / 1.35) - 5, (int) (Constants.screenHeight / 3.2) - 5,
-                    (int) (Constants.screenWidth/1.35) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/4.7) + Constants.screenHeight / 12 + 5);
+                    (int) (Constants.screenWidth/1.35) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/3.2) + Constants.screenHeight / 12 + 5);
                 break;
             case 8:selected.set((int) (Constants.screenWidth / 8.2) - 5, (int) (Constants.screenHeight / 2.43) - 5,
-                    (int) (Constants.screenWidth/8.2) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/4.7) + Constants.screenHeight / 12 + 5);
+                    (int) (Constants.screenWidth/8.2) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/2.43) + Constants.screenHeight / 12 + 5);
                 break;
             case 9:selected.set((int) (Constants.screenWidth / 3.0) - 5, (int) (Constants.screenHeight / 2.43) - 5,
-                    (int) (Constants.screenWidth/3.0) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/4.7) + Constants.screenHeight / 12 + 5);
-                break;
+                    (int) (Constants.screenWidth/3.0) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/2.43) + Constants.screenHeight / 12 + 5);
+            break;
             case 10:selected.set((int) (Constants.screenWidth / 1.9) - 5, (int) (Constants.screenHeight / 2.43) - 5,
-                    (int) (Constants.screenWidth/1.9) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/4.7) + Constants.screenHeight / 12 + 5);
+                    (int) (Constants.screenWidth/1.9) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/2.43) + Constants.screenHeight / 12 + 5);
                 break;
             case 11:selected.set((int) (Constants.screenWidth / 1.35) - 5, (int) (Constants.screenHeight / 2.43) - 5,
-                    (int) (Constants.screenWidth/1.35) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/4.7) + Constants.screenHeight / 12 + 5);
+                    (int) (Constants.screenWidth/1.35) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/2.43) + Constants.screenHeight / 12 + 5);
                 break;
 
             case 12:selected.set((int) (Constants.screenWidth / 8.2) - 5, (int) (Constants.screenHeight / 1.95) - 5,
-                    (int) (Constants.screenWidth/8.2) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/4.7) + Constants.screenHeight / 12 + 5);
+                    (int) (Constants.screenWidth/8.2) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/1.95) + Constants.screenHeight / 12 + 5);
                 break;
             case 13:selected.set((int) (Constants.screenWidth / 3.0) - 5, (int) (Constants.screenHeight / 1.95) - 5,
-                    (int) (Constants.screenWidth/3.0) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/4.7) + Constants.screenHeight / 12 + 5);
+                    (int) (Constants.screenWidth/3.0) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/1.95) + Constants.screenHeight / 12 + 5);
                 break;
             case 14:selected.set((int) (Constants.screenWidth / 1.9) - 5, (int) (Constants.screenHeight / 1.95) - 5,
-                    (int) (Constants.screenWidth/1.9) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/4.7) + Constants.screenHeight / 12 + 5);
+                    (int) (Constants.screenWidth/1.9) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/1.95) + Constants.screenHeight / 12 + 5);
                 break;
             case 15:selected.set((int) (Constants.screenWidth / 1.35) - 5, (int) (Constants.screenHeight / 1.95) - 5,
-                    (int) (Constants.screenWidth/1.35) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/4.7) + Constants.screenHeight / 12 + 5);
+                    (int) (Constants.screenWidth/1.35) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/1.95) + Constants.screenHeight / 12 + 5);
                 break;
 
             case 16:selected.set((int) (Constants.screenWidth / 8.2) - 5, (int) (Constants.screenHeight / 1.65) - 5,
-                    (int) (Constants.screenWidth/8.2) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/4.7) + Constants.screenHeight / 12 + 5);
+                    (int) (Constants.screenWidth/8.2) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/1.65) + Constants.screenHeight / 12 + 5);
                 break;
             case 17:selected.set((int) (Constants.screenWidth / 3.0) - 5, (int) (Constants.screenHeight / 1.65) - 5,
-                    (int) (Constants.screenWidth/3.0) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/4.7) + Constants.screenHeight / 12 + 5);
+                    (int) (Constants.screenWidth/3.0) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/1.65) + Constants.screenHeight / 12 + 5);
                 break;
             case 18:selected.set((int) (Constants.screenWidth / 1.9) - 5, (int) (Constants.screenHeight / 1.65) - 5,
-                    (int) (Constants.screenWidth/1.9) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/4.7) + Constants.screenHeight / 12 + 5);
+                    (int) (Constants.screenWidth/1.9) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/1.65) + Constants.screenHeight / 12 + 5);
                 break;
             case 19:selected.set((int) (Constants.screenWidth / 1.35) - 5, (int) (Constants.screenHeight / 1.65) - 5,
-                    (int) (Constants.screenWidth/1.35) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/4.7) + Constants.screenHeight / 12 + 5);
+                    (int) (Constants.screenWidth/1.35) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/1.65) + Constants.screenHeight / 12 + 5);
                 break;
 
             case 20:selected.set((int) (Constants.screenWidth / 8.2) - 5, (int) (Constants.screenHeight / 1.42) - 5,
-                    (int) (Constants.screenWidth/8.2) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/4.7) + Constants.screenHeight / 12 + 5);
+                    (int) (Constants.screenWidth/8.2) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/1.42) + Constants.screenHeight / 12 + 5);
                 break;
             case 21:selected.set((int) (Constants.screenWidth / 3.0) - 5, (int) (Constants.screenHeight / 1.42) - 5,
-                    (int) (Constants.screenWidth/3.0) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/4.7) + Constants.screenHeight / 12 + 5);
+                    (int) (Constants.screenWidth/3.0) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/1.42) + Constants.screenHeight / 12 + 5);
                 break;
             case 22:selected.set((int) (Constants.screenWidth / 1.9) - 5, (int) (Constants.screenHeight / 1.42) - 5,
-                    (int) (Constants.screenWidth/1.9) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/4.7) + Constants.screenHeight / 12 + 5);
+                    (int) (Constants.screenWidth/1.9) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/1.42) + Constants.screenHeight / 12 + 5);
                 break;
             case 23:selected.set((int) (Constants.screenWidth / 1.35) - 5, (int) (Constants.screenHeight / 1.42) - 5,
-                    (int) (Constants.screenWidth/1.35) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/4.7) + Constants.screenHeight / 12 + 5);
+                    (int) (Constants.screenWidth/1.35) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/1.42) + Constants.screenHeight / 12 + 5);
                 break;
 
             case 24:selected.set((int) (Constants.screenWidth / 8.2) - 5, (int) (Constants.screenHeight / 1.25) - 5,
-                    (int) (Constants.screenWidth/8.2) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/4.7) + Constants.screenHeight / 12 + 5);
+                    (int) (Constants.screenWidth/8.2) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/1.25) + Constants.screenHeight / 12 + 5);
                 break;
             case 25:selected.set((int) (Constants.screenWidth / 3.0) - 5, (int) (Constants.screenHeight / 1.25) - 5,
-                    (int) (Constants.screenWidth/3.0) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/4.7) + Constants.screenHeight / 12 + 5);
+                    (int) (Constants.screenWidth/3.0) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/1.25) + Constants.screenHeight / 12 + 5);
                 break;
-            case 26:selected.set((int) (Constants.screenWidth / 1.9) - 5, (int) (Constants.screenHeight / 1.25) - 5,
-                    (int) (Constants.screenWidth/1.9) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/4.7) + Constants.screenHeight / 12 + 5);
+            case 26: selected.set((int) (Constants.screenWidth / 1.9) - 5, (int) (Constants.screenHeight / 1.25) - 5,
+                    (int) (Constants.screenWidth/1.9) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/1.25) + Constants.screenHeight / 12 + 5);
                 break;
-            case 27:selected.set((int) (Constants.screenWidth / 1.35) - 5, (int) (Constants.screenHeight / 1.25) - 5,
-                    (int) (Constants.screenWidth/1.35) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/4.7) + Constants.screenHeight / 12 + 5);
+            case 27: selected.set((int) (Constants.screenWidth / 1.35) - 5, (int) (Constants.screenHeight / 1.25) - 5,
+                    (int) (Constants.screenWidth/1.35) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/1.25) + Constants.screenHeight / 12 + 5);
                 break;
         }
-
+        this.sceneManager.shipChosen = selectedShip;
         canvas.drawRoundRect(selected, 8, 8, paint);
 
     }
@@ -608,6 +608,7 @@ public class MenuScene implements Scene {
 
     public void drawOptions(Canvas canvas) {
         if (!musicMuted) {
+            sliderX = this.sceneManager.sliderX;
             this.sceneManager.backgroundMusic.setVolume((float) sliderX / sliderMax, (float) sliderX / sliderMax);
             this.sceneManager.currentVolume = (float) sliderX / sliderMax;
         } else {
@@ -1054,6 +1055,7 @@ public class MenuScene implements Scene {
                         && event.getX() > Constants.screenWidth / 1.6 && event.getX() < Constants.screenWidth / 1.6 + Constants.screenWidth /10 && options) {
                     if (!musicMuted) {
                         musicMuted = true;
+                        this.sceneManager.mute = true;
                     } else {
                         musicMuted = false;
                     }
@@ -1075,10 +1077,13 @@ public class MenuScene implements Scene {
                 if (sliderMoving) {
                     if (event.getX() > sliderMin && event.getX() < sliderMax) {
                         sliderX = (int) event.getX();
+                        this.sceneManager.sliderX = sliderX;
                     } else if (event.getX() > sliderMax) {
                         sliderX = sliderMax;
+                        this.sceneManager.sliderX = sliderX;
                     } else if (event.getX() < sliderMin) {
                         sliderX = sliderMin;
+                        this.sceneManager.sliderX = sliderX;
                     }
                 }
                 break;

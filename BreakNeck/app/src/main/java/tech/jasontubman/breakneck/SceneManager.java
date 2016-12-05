@@ -22,12 +22,16 @@ public class SceneManager {
 
     private boolean isPaused = false;
     ParticleGenerator cogGen;
+
+    int shipChosen = 0;
     MediaPlayer backgroundMusic;
     private int sliderMin = (int) (Constants.screenWidth/7.9);
     private int sliderMax = (int) (Constants.screenWidth / 1.22);
-    private int sliderX = (int) sliderMax;
+    int sliderX = (int) sliderMax;
     private int firstRun = 0;
-    private boolean mute = false;
+    boolean mute = false;
+
+    private ShipSelector shipSel;
 
     private boolean sliderMoving = false;
     float currentVolume = 1;
@@ -41,6 +45,7 @@ public class SceneManager {
         activeScene = 0;
         scenes.add(0, new MenuScene(this));
         cogGen = new ParticleGenerator();
+        shipSel = new ShipSelector(shipChosen+1, 1);
     }
 
     public void recieveTouch(MotionEvent event) {
@@ -60,6 +65,7 @@ public class SceneManager {
     public void draw(Canvas canvas) {
         scenes.get(activeScene).draw(canvas);
         if (isPaused) {
+            shipSel.selectSprite(shipChosen+1, 1);
             drawOptions(canvas);
             if (!mute) {
                 currentVolume = (float) sliderX / sliderMax;
@@ -140,7 +146,9 @@ public class SceneManager {
         cogGen.update();
         cogGen.draw(canvas);
 
-        Bitmap ship = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s4b);
+
+
+        Bitmap ship = shipSel.getSprite();
         Bitmap resizedShip = Bitmap.createScaledBitmap(ship, (int) (Constants.screenWidth / 4), Constants.screenHeight / 7, false);
         canvas.drawBitmap(resizedShip, (int) (Constants.screenWidth/2.8), (int) (Constants.screenHeight/1.9), paint);
 

@@ -41,12 +41,13 @@ public class GameplayScene implements Scene {
     private ParticleGenerator particleGenerator2;
 
     public GameplayScene(SceneManager manager) {
-        selector = new ShipSelector(18, 1);
+        this.sceneManager = manager;
+        selector = new ShipSelector(this.sceneManager.shipChosen + 1, 1);
         player = new Player(new Rect(100, 100, 235, 235), selector.getSprite(), selector.getSpeed());
         playerPoint = new Point(Constants.screenWidth/2, Constants.screenHeight-Constants.screenHeight/4);
         player.update(playerPoint);
 
-        this.sceneManager = manager;
+
         obstacleManager = new ObstacleManager(200, 650, 400, Color.LTGRAY, player);
 
         starManager = new StarManager(player.getSpeed(), false);
@@ -144,7 +145,7 @@ public class GameplayScene implements Scene {
                 player2.setVisible(true);
                 if (!split) {
                     split = true;
-                    selector.selectSprite(18, 0.5);
+                    selector.selectSprite(this.sceneManager.shipChosen + 1, 0.5);
                     player.halfRect(player.getX() - player.getWidth()/2, player.getY());
                     player2.halfRect(player2.getX() - player2.getWidth()/2, player2.getY());
                     playerPoint.y += player.getHeight();
@@ -275,7 +276,7 @@ public class GameplayScene implements Scene {
             }
             if (playerPoint.x <= (Constants.screenWidth / 2)) {
                 playerPoint.set(Constants.screenWidth/2, playerPoint.y);
-                selector.selectSprite(18, 1);
+                selector.selectSprite(this.sceneManager.shipChosen + 1, 1);
                 player.updateSprite(selector.getSprite());
                 player2.updateSprite(selector.getSprite());
             }
@@ -287,7 +288,7 @@ public class GameplayScene implements Scene {
             }
             if (playerPoint.x >= (Constants.screenWidth / 2)) {
                 playerPoint.set(Constants.screenWidth/2, playerPoint.y);
-                selector.selectSprite(18, 1);
+                selector.selectSprite(this.sceneManager.shipChosen + 1, 1);
                 player.updateSprite(selector.getSprite());
                 player2.updateSprite(selector.getSprite());
             }
@@ -306,7 +307,7 @@ public class GameplayScene implements Scene {
                 split = false;
                 playerPoint.set(playerPoint.x, Constants.screenHeight - Constants.screenHeight/4);
                 playerPoint2.set(playerPoint.x, Constants.screenHeight - Constants.screenHeight/4);
-                selector.selectSprite(18, 1);
+                selector.selectSprite(this.sceneManager.shipChosen + 1, 1);
                 player.updateSprite(selector.getSprite());
                 player2.updateSprite(selector.getSprite());
             }
@@ -320,7 +321,7 @@ public class GameplayScene implements Scene {
                 split = false;
                 playerPoint.set(playerPoint.x, Constants.screenHeight - Constants.screenHeight/4);
                 playerPoint2.set(playerPoint.x, Constants.screenHeight - Constants.screenHeight/4);
-                selector.selectSprite(18, 1);
+                selector.selectSprite(this.sceneManager.shipChosen + 1, 1);
                 player.updateSprite(selector.getSprite());
                 player2.updateSprite(selector.getSprite());
             }
