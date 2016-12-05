@@ -26,7 +26,10 @@ public class SceneManager {
     private int sliderMin = (int) (Constants.screenWidth/7.9);
     private int sliderMax = (int) (Constants.screenWidth / 1.22);
     private int sliderX = (int) sliderMax;
+    private int firstRun = 0;
+    private boolean mute = false;
 
+    private boolean sliderMoving = false;
     float currentVolume = 1;
 
     public static int activeScene;
@@ -41,7 +44,11 @@ public class SceneManager {
     }
 
     public void recieveTouch(MotionEvent event) {
+        if (isPaused) {
+            recieveTouchOptions(event);
+        }
         scenes.get(activeScene).recieveTouch(event);
+
     }
 
     public void update() {
@@ -54,15 +61,19 @@ public class SceneManager {
         scenes.get(activeScene).draw(canvas);
         if (isPaused) {
             drawOptions(canvas);
+            if (!mute) {
+                currentVolume = (float) sliderX / sliderMax;
+                backgroundMusic.setVolume(currentVolume, currentVolume);
+            }
+            else {
+                currentVolume = 0;
+                backgroundMusic.setVolume(0, 0);
+            }
         }
     }
 
     public void addScene(Scene scene) {
         scenes.add(scene);
-    }
-
-    public MediaPlayer getMediaPlayer(){
-        return this.backgroundMusic;
     }
 
     public void setPaused(boolean paused) {
@@ -73,11 +84,13 @@ public class SceneManager {
     }
 
     public void drawOptions(Canvas canvas) {
-        sliderX = (int) currentVolume;
-        if (currentVolume == 0) {
-            sliderX = sliderMin;
+        if (firstRun == 0) {
+            sliderX = (int) currentVolume * sliderMax;
+            if (currentVolume == 0) {
+                sliderX = sliderMin;
+            }
+            firstRun++;
         }
-
         Paint paint3 = new Paint();
         paint3.setColor(Color.WHITE);
         RectF shopPanel = new RectF();
@@ -113,7 +126,7 @@ public class SceneManager {
         Bitmap notmute = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_box);
         Bitmap resizednotmute = Bitmap.createScaledBitmap(notmute, (int) (Constants.screenWidth /10), Constants.screenWidth/11, false);
 
-        if (currentVolume == 0) {
+        if (this.mute) {
             canvas.drawBitmap(resizedmute, (int) (Constants.screenWidth/1.6), (int) (Constants.screenHeight/2.42), paint);
         } else {
             canvas.drawBitmap(resizednotmute, (int) (Constants.screenWidth/1.6), (int) (Constants.screenHeight/2.42), paint);
@@ -130,6 +143,60 @@ public class SceneManager {
         Bitmap ship = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s4b);
         Bitmap resizedShip = Bitmap.createScaledBitmap(ship, (int) (Constants.screenWidth / 4), Constants.screenHeight / 7, false);
         canvas.drawBitmap(resizedShip, (int) (Constants.screenWidth/2.8), (int) (Constants.screenHeight/1.9), paint);
+
+    }
+
+    public void recieveTouchOptions(MotionEvent event) {
+
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN: {
+                if (event.getY() > Constants.screenHeight/6 && event.getY() < Constants.screenHeight/6 + Constants.screenHeight / 20 &&
+                        event.getX() > Constants.screenWidth - Constants.screenWidth/7 && event.getX() < Constants.screenWidth - Constants.screenWidth/7 + Constants.screenWidth / 12) {
+                    isPaused = false;
+                    break;
+                }
+                if (event.getY() > (Constants.screenHeight/2.42) && event.getY() < (Constants.screenHeight/2.42) + Constants.screenWidth/11 &&
+                        event.getX() > (Constants.screenWidth/1.6) && event.getX() < (Constants.screenWidth/1.6) + Constants.screenWidth /10) {
+                    if (currentVolume != 0) {
+                        mute = true;
+                        sliderX = sliderMin;
+                        break;
+                    } else {
+                        sliderX = sliderMin;
+                        mute = false;
+                        currentVolume = sliderMin/sliderMax;
+                        backgroundMusic.setVolume(currentVolume, currentVolume);
+                        break;
+                    }
+                }
+                if (event.getY() > Constants.screenHeight/2.75 && event.getY() < Constants.screenHeight/2.75 + Constants.screenWidth/13 &&
+                        event.getX() > sliderX && event.getX() < sliderX + Constants.screenWidth / 19) {
+                    sliderMoving = true;
+                    break;
+                }
+                break;
+            }
+
+            case MotionEvent.ACTION_UP: {
+                sliderMoving = false;
+                break;
+            }
+
+            case MotionEvent.ACTION_MOVE: {
+                if (sliderMoving) {
+                    if (event.getX() > sliderMin && event.getX() < sliderMax) {
+                        sliderX = (int) event.getX();
+                    } else if (event.getX() > sliderMax) {
+                        sliderX = sliderMax;
+                    } else if (event.getX() < sliderMin) {
+                        sliderX = sliderMin;
+                    }
+                    currentVolume = sliderX/sliderMax;
+                }
+                break;
+            }
+        }
+
 
     }
 

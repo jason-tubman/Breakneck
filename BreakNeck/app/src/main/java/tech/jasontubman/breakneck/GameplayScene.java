@@ -183,14 +183,7 @@ public class GameplayScene implements Scene {
         score.setColor(Color.WHITE);
         drawScore(canvas, score, Integer.toString(this.score));
 
-        //DRAW COG
-        Paint paint2 = new Paint();
-        BitmapFactory bf = new BitmapFactory();
-        Bitmap cog = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.gear);
-        Bitmap resizedCog = (Bitmap.createScaledBitmap(cog, Constants.screenWidth/12, Constants.screenWidth/12, false));
-        canvas.drawBitmap(resizedCog, (int) (Constants.screenWidth/40), Constants.screenHeight/40, paint2);
 
-        //END OF COG
 
 
 
@@ -208,6 +201,14 @@ public class GameplayScene implements Scene {
 
         obstacleManager.draw(canvas);
 
+        //DRAW COG
+        Paint paint2 = new Paint();
+        BitmapFactory bf = new BitmapFactory();
+        Bitmap cog = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.gear);
+        Bitmap resizedCog = (Bitmap.createScaledBitmap(cog, Constants.screenWidth/12, Constants.screenWidth/12, false));
+        canvas.drawBitmap(resizedCog, (int) (Constants.screenWidth/40), Constants.screenHeight/40, paint2);
+
+        //END OF COG
 
 
         if (gameOver) {
