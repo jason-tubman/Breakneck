@@ -144,6 +144,16 @@ public class SceneManager {
         Bitmap resizedShip = Bitmap.createScaledBitmap(ship, (int) (Constants.screenWidth / 4), Constants.screenHeight / 7, false);
         canvas.drawBitmap(resizedShip, (int) (Constants.screenWidth/2.8), (int) (Constants.screenHeight/1.9), paint);
 
+
+        RectF black = new RectF();
+        black.set((int) (Constants.screenWidth/12),  Constants.screenHeight/6,
+                (Constants.screenWidth/12) + (Constants.screenWidth / 12), Constants.screenHeight/6 + Constants.screenHeight / 20);
+        canvas.drawRoundRect(black, 5, 5, paint);
+
+        Bitmap menu = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.home);
+        Bitmap resizedMenu = Bitmap.createScaledBitmap(menu, (int) (Constants.screenWidth / 12), Constants.screenHeight / 20, false);
+        canvas.drawBitmap(resizedMenu, (int) (Constants.screenWidth/12), Constants.screenHeight/6, paint);
+
     }
 
     public void recieveTouchOptions(MotionEvent event) {
@@ -174,6 +184,13 @@ public class SceneManager {
                     sliderMoving = true;
                     break;
                 }
+                if (event.getY() > Constants.screenHeight/6 && event.getY() < Constants.screenHeight/6 + Constants.screenHeight / 20 &&
+                        event.getX() > Constants.screenWidth/12 && event.getX() < Constants.screenWidth/12 + Constants.screenWidth / 12) {
+                    activeScene = 0;
+                    isPaused = false;
+                    this.scenes.remove(1);
+                }
+
                 break;
             }
 
