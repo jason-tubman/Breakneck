@@ -27,42 +27,41 @@ public class Planet {
         this.style = style;
         this.x = x;
         this.y = y;
-        BitmapFactory bf = new BitmapFactory();
         switch(style) {
             case 0: {
-                planet = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.p1);
+                planet = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.p1);
                 break;
             }
             case 1: {
-                planet = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.p2);
+                planet = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.p2);
                 break;
             }
             case 2: {
-                planet = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.p6);
+                planet = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.p6);
                 break;
             }
             case 3: {
-                planet = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.p7);
+                planet = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.p7);
                 break;
             }
             case 4: {
-                planet = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.p9);
+                planet = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.p9);
                 break;
             }
             case 5: {
-                planet = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.p10);
+                planet = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.p10);
                 break;
             }
             case 6: {
-                planet = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.p3);
+                planet = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.p3);
                 break;
             }
             case 7: {
-                planet = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.p4);
+                planet = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.p4);
                 break;
             }
             case 8: {
-                planet = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.p8);
+                planet = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.p8);
                 break;
             }
         }

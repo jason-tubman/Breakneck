@@ -39,6 +39,21 @@ public class SceneManager {
 
     public static int activeScene;
 
+    private Bitmap exit;
+    private Bitmap resizedExit;
+    private Bitmap slider;
+    private Bitmap resizedSlider;
+    private Bitmap muteButton;
+    private Bitmap resizedmute;
+    private Bitmap notmute;
+    private Bitmap resizednotmute;
+    private Bitmap sliderUp;
+    private Bitmap resizedSliderUp;
+    private Bitmap ship;
+    private Bitmap resizedShip;
+    private Bitmap menu;
+    private Bitmap resizedMenu;
+
     public SceneManager() {
         backgroundMusic = MediaPlayer.create(Constants.currentContext, R.raw.fly1);
         backgroundMusic.setLooping(true);
@@ -47,6 +62,21 @@ public class SceneManager {
         scenes.add(0, new MenuScene(this));
         cogGen = new ParticleGenerator();
         shipSel = new ShipSelector(shipChosen+1, 1);
+
+        exit = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.exitbutton);
+        resizedExit = Bitmap.createScaledBitmap(exit, (int) (Constants.screenWidth / 12), Constants.screenHeight / 20, false);
+        slider = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.slider);
+        resizedSlider = Bitmap.createScaledBitmap(slider, (int) (Constants.screenWidth / 1.4), Constants.screenWidth/100, false);
+        muteButton = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_boxcross);
+        resizedmute = Bitmap.createScaledBitmap(muteButton, (int) (Constants.screenWidth / 10), Constants.screenWidth/11, false);
+        notmute = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_box);
+        resizednotmute = Bitmap.createScaledBitmap(notmute, (int) (Constants.screenWidth /10), Constants.screenWidth/11, false);
+        sliderUp = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.sliderup);
+        resizedSliderUp = Bitmap.createScaledBitmap(sliderUp, (int) (Constants.screenWidth / 19), Constants.screenWidth/13, false);
+        ship = shipSel.getSprite();
+        resizedShip = Bitmap.createScaledBitmap(ship, (int) (Constants.screenWidth / 4), Constants.screenHeight / 7, false);
+        menu = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.home);
+        resizedMenu = Bitmap.createScaledBitmap(menu, (int) (Constants.screenWidth / 12), Constants.screenHeight / 20, false);
     }
 
     public void recieveTouch(MotionEvent event) {
@@ -113,10 +143,8 @@ public class SceneManager {
         paint.setTypeface(typeface);
         paint.setColor(Color.DKGRAY);
         paint.setTextSize(450 / Constants.currentContext.getResources().getDisplayMetrics().density);
+        
 
-        BitmapFactory bf = new BitmapFactory();
-        Bitmap exit = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.exitbutton);
-        Bitmap resizedExit = Bitmap.createScaledBitmap(exit, (int) (Constants.screenWidth / 12), Constants.screenHeight / 20, false);
         canvas.drawBitmap(resizedExit, (int) (Constants.screenWidth - Constants.screenWidth/7), Constants.screenHeight/6, paint);
 
 
@@ -127,16 +155,8 @@ public class SceneManager {
         centreText4(canvas, paint, "VOLUME", Constants.screenHeight/3.0f);
         centreText4(canvas, paint, "MUTE MUSIC :", Constants.screenHeight/2.13f);
 
-        Bitmap slider = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.slider);
-        Bitmap resizedSlider = Bitmap.createScaledBitmap(slider, (int) (Constants.screenWidth / 1.4), Constants.screenWidth/100, false);
         canvas.drawBitmap(resizedSlider, (int) (Constants.screenWidth/7), (int) (Constants.screenHeight/2.8), paint);
 
-
-        Bitmap mute = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_boxcross);
-        Bitmap resizedmute = Bitmap.createScaledBitmap(mute, (int) (Constants.screenWidth / 10), Constants.screenWidth/11, false);
-
-        Bitmap notmute = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_box);
-        Bitmap resizednotmute = Bitmap.createScaledBitmap(notmute, (int) (Constants.screenWidth /10), Constants.screenWidth/11, false);
 
         if (this.mute) {
             canvas.drawBitmap(resizedmute, (int) (Constants.screenWidth/1.3), (int) (Constants.screenHeight/2.3), paint);
@@ -144,18 +164,12 @@ public class SceneManager {
             canvas.drawBitmap(resizednotmute, (int) (Constants.screenWidth/1.3), (int) (Constants.screenHeight/2.3), paint);
         }
 
-        Bitmap sliderUp = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.sliderup);
-        Bitmap resizedSliderUp = Bitmap.createScaledBitmap(sliderUp, (int) (Constants.screenWidth / 19), Constants.screenWidth/13, false);
         canvas.drawBitmap(resizedSliderUp, (int) (this.sliderX), (int) (Constants.screenHeight/2.75), paint);
 
         cogGen.addParticle((int) (Constants.screenWidth/2.07), (int) (Constants.screenHeight/1.5), 0, false);
         cogGen.update();
         cogGen.draw(canvas);
 
-
-
-        Bitmap ship = shipSel.getSprite();
-        Bitmap resizedShip = Bitmap.createScaledBitmap(ship, (int) (Constants.screenWidth / 4), Constants.screenHeight / 7, false);
         canvas.drawBitmap(resizedShip, (int) (Constants.screenWidth/2.8), (int) (Constants.screenHeight/1.9), paint);
 
 
@@ -164,8 +178,6 @@ public class SceneManager {
                 (Constants.screenWidth/12) + (Constants.screenWidth / 12), Constants.screenHeight/6 + Constants.screenHeight / 20);
         canvas.drawRoundRect(black, 5, 5, paint);
 
-        Bitmap menu = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.home);
-        Bitmap resizedMenu = Bitmap.createScaledBitmap(menu, (int) (Constants.screenWidth / 12), Constants.screenHeight / 20, false);
         canvas.drawBitmap(resizedMenu, (int) (Constants.screenWidth/12), Constants.screenHeight/6, paint);
 
     }

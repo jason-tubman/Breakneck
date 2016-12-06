@@ -28,8 +28,8 @@ public class Star {
         this.colour = color;
         this.x = x;
         this.y = y;
-        BitmapFactory bf = new BitmapFactory();
-        star = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.star2);
+
+        star = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.star2);
         resizedStar = Bitmap.createScaledBitmap(star, radius, radius, false);
 
     }

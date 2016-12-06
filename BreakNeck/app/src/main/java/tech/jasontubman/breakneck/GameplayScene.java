@@ -1,7 +1,6 @@
 package tech.jasontubman.breakneck;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -11,7 +10,6 @@ import tech.jasontubman.game.R;
 
 import android.graphics.RectF;
 import android.graphics.Typeface;
-import android.os.Parcelable;
 import android.view.MotionEvent;
 
 import java.util.Timer;
@@ -31,6 +29,7 @@ public class GameplayScene implements Scene {
     private int score;
     private Rect r = new Rect();
 
+    private int coins;
 
     //GAME OVER PAINTS
     Paint paint3 = new Paint();
@@ -51,6 +50,13 @@ public class GameplayScene implements Scene {
     private ParticleGenerator particleGenerator1;
     private ParticleGenerator particleGenerator2;
 
+    private Bitmap cog;
+    private Bitmap resizedCog;
+    private Bitmap store;
+    private Bitmap resizedstore;
+    private Bitmap playAgain;
+    private Bitmap resizedplayAgain;
+
     public GameplayScene(SceneManager manager) {
         this.sceneManager = manager;
         selector = new ShipSelector(this.sceneManager.shipChosen + 1, 1);
@@ -70,6 +76,17 @@ public class GameplayScene implements Scene {
         playerPoint2 = new Point(Constants.screenWidth/2, Constants.screenHeight-Constants.screenHeight/4);
         player2.update(playerPoint2);
         player2.setVisible(false);
+
+
+        cog = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.gear);
+        resizedCog = (Bitmap.createScaledBitmap(cog, Constants.screenWidth/12, Constants.screenWidth/12, false));
+
+        store = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_button03);
+        resizedstore = Bitmap.createScaledBitmap(store, (int) (Constants.screenWidth / 1.3), Constants.screenHeight / 12, false);
+
+        playAgain = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.playbutton);
+        resizedplayAgain = Bitmap.createScaledBitmap(playAgain, (int) (Constants.screenWidth / 1.3), Constants.screenHeight / 12, false);
+
     }
 
     public void reset() {
@@ -227,12 +244,14 @@ public class GameplayScene implements Scene {
 
         //DRAW COG
         Paint paint2 = new Paint();
-        BitmapFactory bf = new BitmapFactory();
-        Bitmap cog = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.gear);
-        Bitmap resizedCog = (Bitmap.createScaledBitmap(cog, Constants.screenWidth/12, Constants.screenWidth/12, false));
         canvas.drawBitmap(resizedCog, (int) (Constants.screenWidth/40), Constants.screenHeight/40, paint2);
-
         //END OF COG
+
+        //Draw Coins
+        //Bitmap coin = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.coin);
+        //Bitmap resizedCoin = (Bitmap.createScaledBitmap(coin, Constants.screenWidth/25, Constants.screenWidth/25, false));
+        //canvas.drawBitmap(resizedCoin, (int) (Constants.screenWidth/2), Constants.screenHeight/40, paint2);
+        //End of Coins
 
 
         if (gameOver) {
@@ -249,25 +268,19 @@ public class GameplayScene implements Scene {
             paint3.setColor(Color.WHITE);
             paint3.setAlpha(opacity);
             canvas.drawRoundRect(gameOverScreen, 10, 10, paint3);
-            paint3.setTextSize(150);
+            paint3.setTextSize(150*2/ Constants.currentContext.getResources().getDisplayMetrics().density);
             paint3.setColor(Color.DKGRAY);
             paint3.setTypeface(typeface);
             centreText(canvas, paint3, "GAME OVER", Constants.screenHeight/3.0f);
-            paint3.setTextSize(90);
+            paint3.setTextSize(90*2  / Constants.currentContext.getResources().getDisplayMetrics().density);
             centreText(canvas, paint3, "Your Score was: ", Constants.screenHeight/2.5f);
-            paint3.setTextSize(140);
+            paint3.setTextSize(140*2  / Constants.currentContext.getResources().getDisplayMetrics().density);
             centreText(canvas, paint3, Integer.toString(this.score), Constants.screenHeight/2.0f);
 
-            BitmapFactory bf2 = new BitmapFactory();
-
-            Bitmap playAgain = bf2.decodeResource(Constants.currentContext.getResources(), R.drawable.playbutton);
-            Bitmap resizedplayAgain = Bitmap.createScaledBitmap(playAgain, (int) (Constants.screenWidth / 1.3), Constants.screenHeight / 12, false);
             canvas.drawBitmap(resizedplayAgain, (int) (Constants.screenWidth/9), (int) (Constants.screenHeight/1.8), paint3);
-            paint3.setTextSize(100);
+            paint3.setTextSize(100*2  / Constants.currentContext.getResources().getDisplayMetrics().density);
             centreText(canvas, paint3, "PLAY AGAIN", Constants.screenHeight/1.66f);
 
-            Bitmap store = bf2.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_button03);
-            Bitmap resizedstore = Bitmap.createScaledBitmap(store, (int) (Constants.screenWidth / 1.3), Constants.screenHeight / 12, false);
             canvas.drawBitmap(resizedstore, (int) (Constants.screenWidth/9), (int) (Constants.screenHeight/1.53), paint3);
             centreText(canvas, paint3, "MENU", Constants.screenHeight/1.42f);
         }

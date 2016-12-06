@@ -20,9 +20,9 @@ public class ShipSelector {
     }
 
     public void selectSprite(int ship, double shrink) {
-        BitmapFactory bf = new BitmapFactory();
 
-        chooseSprite(bf, ship);
+
+        chooseSprite(Constants.bf, ship);
 
         shipSprite = Bitmap.createScaledBitmap(sprite, (int) (200*shrink), (int) (200*shrink), false);
     }

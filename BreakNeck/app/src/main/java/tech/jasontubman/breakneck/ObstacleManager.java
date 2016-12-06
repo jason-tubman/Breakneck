@@ -9,6 +9,7 @@ import android.graphics.Typeface;
 import java.util.ArrayList;
 import java.util.Random;
 
+import tech.jasontubman.breakneck.Triangles.Coin;
 import tech.jasontubman.breakneck.Triangles.Diamond;
 import tech.jasontubman.breakneck.Triangles.LeftTriangle;
 import tech.jasontubman.breakneck.Triangles.RightTriangle;
@@ -19,6 +20,7 @@ import tech.jasontubman.breakneck.Triangles.RightTriangle;
 
 public class ObstacleManager {
     private ArrayList<Obstacle> obstacles;
+    private ArrayList<Obstacle> coins;
     private int playerGap;
     private int obstacleGap;
     private int obstacleHeight;
@@ -41,7 +43,7 @@ public class ObstacleManager {
         startTime = initTime = System.currentTimeMillis();
 
         obstacles = new ArrayList<>();
-
+        coins = new ArrayList<>();
     }
 
     public boolean playerCollided(Player player) {
@@ -92,28 +94,61 @@ public class ObstacleManager {
                 obstacle.moveObstacle(speed * 20);
                 obstacle.update();
             }
+            for (Obstacle coin : coins) {
+                coin.moveObstacle(speed * 20);
+                coin.update();
+            }
             if (obstacles.get(obstacles.size() - 1).getTop() >= Constants.screenHeight) {
                 int obstacleY = obstacles.get(0).getTop() - obstacleHeight - obstacleGap;
                 int random = getRandomNumberInRange(1, 5);
+                double coinProb = Math.random();
+                double coinProb2 = Math.random();
+
                 switch (random) {
                     case 1: {
                         obstacles.add(0, new LeftTriangle(this.color, 0, obstacleY));
+                        if (coinProb > 0.5) {
+                            coins.add(new Coin(Constants.screenWidth - Constants.screenWidth / 9, obstacleY + 150));
+                        }  if (coinProb2 > 0.5) {
+                            coins.add(new Coin(Constants.screenWidth/2 - Constants.screenWidth/40, obstacleY + 850));
+                        }
                         break;
                     }
                     case 2: {
                         obstacles.add(0, new RightTriangle(this.color, Constants.screenWidth / 4, obstacleY));
+                        if (coinProb > 0.5) {
+                            coins.add(new Coin(Constants.screenWidth / 12, obstacleY + 150));
+                        }  if (coinProb2 > 0.5) {
+                            coins.add(new Coin(Constants.screenWidth/2 - Constants.screenWidth/40, obstacleY + 850));
+                        }
                         break;
                     }
                     case 3: {
                         obstacles.add(0, new Diamond(this.color, Constants.screenWidth / 2, obstacleY));
+                        if (coinProb > 0.5) {
+                            coins.add(new Coin(Constants.screenWidth - Constants.screenWidth / 15, obstacleY + 150));
+                            coins.add(new Coin(Constants.screenWidth / 35, obstacleY + 150));
+                        }  if (coinProb2 > 0.5) {
+                            coins.add(new Coin(Constants.screenWidth/2 - Constants.screenWidth/40, obstacleY + 850));
+                        }
                         break;
                     }
                     case 4: {
                         obstacles.add(0, new LeftTriangle(this.color, 0, obstacleY));
+                        if (coinProb > 0.5) {
+                            coins.add(new Coin(Constants.screenWidth - Constants.screenWidth / 9, obstacleY + 150));
+                        } if (coinProb2 > 0.5) {
+                            coins.add(new Coin(Constants.screenWidth/2 - Constants.screenWidth/40, obstacleY + 850));
+                        }
                         break;
                     }
                     case 5: {
                         obstacles.add(0, new RightTriangle(this.color, Constants.screenWidth / 4, obstacleY));
+                        if (coinProb > 0.5) {
+                            coins.add(new Coin(Constants.screenWidth / 12, obstacleY + 150));
+                        } if (coinProb2 > 0.5) {
+                            coins.add(new Coin(Constants.screenWidth/2 - Constants.screenWidth/40, obstacleY + 850));
+                        }
                         break;
                     }
                 }
@@ -126,6 +161,14 @@ public class ObstacleManager {
     public void draw(Canvas canvas) {
         for (Obstacle obstacle: obstacles){
             obstacle.draw(canvas);
+        }
+        if (coins.size() > 0) {
+            if (coins.get(coins.size() - 1).getTop() >= Constants.screenHeight) {
+                coins.remove(coins.size() - 1);
+            }
+        }
+        for (Obstacle coin: coins){
+            coin.draw(canvas);
         }
         Paint paint = new Paint();
         Typeface typeface = Typeface.createFromAsset(Constants.currentContext.getAssets(), "spaceage.ttf");

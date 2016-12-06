@@ -1,6 +1,7 @@
 package tech.jasontubman.breakneck;
 
 import android.graphics.Bitmap;
+
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -48,6 +49,106 @@ public class MenuScene implements Scene {
 
     private ParticleGenerator creditGen;
 
+    private Bitmap playButton;
+    private Bitmap resizedPlayButton;
+    private Bitmap playButton2;
+    private Bitmap resizedPlayButton2;
+    private Bitmap storeButton2;
+    private Bitmap resizedStoreButton2;
+    private Bitmap storeButton3;
+    private Bitmap resizedStoreButton3;
+    private Bitmap storeButton4;
+    private Bitmap resizedStoreButton4;
+    private Bitmap storeButton5;
+    private Bitmap resizedStoreButton5;
+    private Bitmap storeButton6;
+    private Bitmap resizedStoreButton6;
+    private Bitmap storeButton7;
+    private Bitmap resizedStoreButton7;
+    private Bitmap storeButton8;
+    private Bitmap resizedStoreButton8;
+    private Bitmap storeButton9;
+    private Bitmap resizedStoreButton9;
+    private Bitmap storeButton10;
+    private Bitmap resizedStoreButton10;
+    private Bitmap storeButton;
+    private Bitmap resizedStoreButton;
+    private Bitmap exitButton;
+    private Bitmap resizedExit;
+    private Bitmap shipButton;
+    private Bitmap resizedshipButton;
+    private Bitmap lock;
+    private Bitmap resizedlock;
+
+    private Bitmap ship1;
+    private Bitmap  resizedship1;
+    private Bitmap ship2;
+    private Bitmap  resizedship2;
+    private Bitmap ship3;
+    private Bitmap  resizedship3;
+    private Bitmap ship4;
+    private Bitmap  resizedship4;
+    private Bitmap ship5;
+    private Bitmap  resizedship5;
+    private Bitmap ship6;
+    private Bitmap  resizedship6;
+    private Bitmap ship7;
+    private Bitmap  resizedship7;
+    private Bitmap ship8;
+    private Bitmap  resizedship8;
+    private Bitmap ship9;
+    private Bitmap  resizedship9;
+    private Bitmap ship10;
+    private Bitmap  resizedship10;
+    private Bitmap ship11;
+    private Bitmap  resizedship11;
+    private Bitmap ship12;
+    private Bitmap  resizedship12;
+    private Bitmap ship13;
+    private Bitmap  resizedship13;
+    private Bitmap ship14;
+    private Bitmap  resizedship14;
+    private Bitmap ship15;
+    private Bitmap  resizedship15;
+    private Bitmap ship16;
+    private Bitmap  resizedship16;
+    private Bitmap ship17;
+    private Bitmap  resizedship17;
+    private Bitmap ship18;
+    private Bitmap  resizedship18;
+    private Bitmap ship19;
+    private Bitmap  resizedship19;
+    private Bitmap ship20;
+    private Bitmap  resizedship20;
+    private Bitmap ship21;
+    private Bitmap  resizedship21;
+    private Bitmap ship22;
+    private Bitmap  resizedship22;
+    private Bitmap ship23;
+    private Bitmap  resizedship23;
+    private Bitmap ship24;
+    private Bitmap  resizedship24;
+    private Bitmap ship25;
+    private Bitmap  resizedship25;
+    private Bitmap ship26;
+    private Bitmap  resizedship26;
+    private Bitmap ship27;
+    private Bitmap  resizedship27;
+    private Bitmap ship28;
+    private Bitmap  resizedship28;
+    private Bitmap shipCred;
+    private Bitmap resizedShipCred;
+    private Bitmap mute;
+    private Bitmap resizedmute;
+    private Bitmap notmute;
+    private Bitmap resizednotmute;
+    private Bitmap sliderUp;
+    private Bitmap resizedSliderUp;
+    private Bitmap slider;
+    private Bitmap resizedSlider;
+    private Bitmap ship;
+    private Bitmap resizedShip;
+
     public MenuScene(SceneManager sceneManager) {
         this.sceneManager = sceneManager;
 
@@ -56,6 +157,142 @@ public class MenuScene implements Scene {
         ships[0] = true;
         creditGen = new ParticleGenerator();
         shipSel = new ShipSelector(this.sceneManager.shipChosen+1, 1);
+
+        ship = shipSel.getSprite();
+        resizedShip = Bitmap.createScaledBitmap(ship, (int) (Constants.screenWidth / 4), Constants.screenHeight / 7, false);
+
+        sliderUp = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.sliderup);
+        resizedSliderUp = Bitmap.createScaledBitmap(sliderUp, (int) (Constants.screenWidth / 19), Constants.screenWidth/13, false);
+        slider = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.slider);
+        resizedSlider = Bitmap.createScaledBitmap(slider, (int) (Constants.screenWidth / 1.4), Constants.screenWidth/100, false);
+
+        shipCred = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s7bl);
+        resizedShipCred = Bitmap.createScaledBitmap(shipCred, (int) (Constants.screenWidth / 4), Constants.screenHeight / 7, false);
+
+        mute = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_boxcross);
+        resizedmute = Bitmap.createScaledBitmap(mute, (int) (Constants.screenWidth / 10), Constants.screenWidth/11, false);
+
+        notmute = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_box);
+        resizednotmute = Bitmap.createScaledBitmap(notmute, (int) (Constants.screenWidth /10), Constants.screenWidth/11, false);
+
+        playButton = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.playpushed);
+        resizedPlayButton = Bitmap.createScaledBitmap(playButton, (int) (Constants.screenWidth/1.35), Constants.screenHeight/6, false);
+        playButton2 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.playbutton);
+        resizedPlayButton2 = Bitmap.createScaledBitmap(playButton2, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 6, false);
+        storeButton = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_button03);
+        resizedStoreButton = Bitmap.createScaledBitmap(storeButton, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 11, false);
+        storeButton2 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_button04);
+        resizedStoreButton2 = Bitmap.createScaledBitmap(storeButton2, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 11, false);
+        storeButton3 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_button03);
+        resizedStoreButton3 = Bitmap.createScaledBitmap(storeButton3, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 11, false);
+        storeButton4 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_button04);
+        resizedStoreButton4 = Bitmap.createScaledBitmap(storeButton4, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 11, false);
+        storeButton5 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_button03);
+        resizedStoreButton5 = Bitmap.createScaledBitmap(storeButton5, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 11, false);
+        storeButton6 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_button04);
+        resizedStoreButton6 = Bitmap.createScaledBitmap(storeButton6, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 11, false);
+        storeButton7 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_button03);
+        resizedStoreButton7 = Bitmap.createScaledBitmap(storeButton7, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 11, false);
+        storeButton8 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_button04);
+        resizedStoreButton8 = Bitmap.createScaledBitmap(storeButton8, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 11, false);
+        storeButton9 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_button03);
+        resizedStoreButton9 = Bitmap.createScaledBitmap(storeButton9, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 11, false);
+        storeButton10 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_button04);
+        resizedStoreButton10 = Bitmap.createScaledBitmap(storeButton, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 11, false);
+        exitButton = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.exitbutton);
+        resizedExit = Bitmap.createScaledBitmap(exitButton, (int) (Constants.screenWidth / 12), Constants.screenHeight / 20, false);
+        shipButton = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_button10);
+        resizedshipButton = Bitmap.createScaledBitmap(shipButton, (int) (Constants.screenWidth / 7.5), Constants.screenHeight / 12, false);
+        lock = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.locked);
+        resizedlock = Bitmap.createScaledBitmap(lock, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
+
+         ship1 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s1b);
+         resizedship1 = Bitmap.createScaledBitmap(ship1, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
+
+         ship2 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s1g);
+         resizedship2 = Bitmap.createScaledBitmap(ship2, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
+
+         ship3 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s1o);
+         resizedship3 = Bitmap.createScaledBitmap(ship3, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
+
+         ship4 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s1r);
+         resizedship4 = Bitmap.createScaledBitmap(ship4, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
+
+         ship5 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s2b);
+         resizedship5 = Bitmap.createScaledBitmap(ship5, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
+
+         ship6 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s2g);
+         resizedship6 = Bitmap.createScaledBitmap(ship6, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
+
+         ship7 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s2o);
+         resizedship7 = Bitmap.createScaledBitmap(ship7, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
+
+         ship8 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s2r);
+         resizedship8 = Bitmap.createScaledBitmap(ship8, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
+
+
+         ship9 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s3b);
+         resizedship9 = Bitmap.createScaledBitmap(ship9, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
+
+         ship10 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s3g);
+         resizedship10 = Bitmap.createScaledBitmap(ship10, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
+
+         ship11 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s3o);
+         resizedship11 = Bitmap.createScaledBitmap(ship11, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
+
+         ship12 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s3r);
+         resizedship12 = Bitmap.createScaledBitmap(ship12, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
+
+
+         ship13 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s4b);
+         resizedship13 = Bitmap.createScaledBitmap(ship13, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
+
+         ship14 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s4g);
+         resizedship14 = Bitmap.createScaledBitmap(ship14, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
+
+         ship15 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s4y);
+         resizedship15 = Bitmap.createScaledBitmap(ship15, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
+
+         ship16 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s4r);
+         resizedship16 = Bitmap.createScaledBitmap(ship16, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
+
+         ship17 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s5b);
+         resizedship17 = Bitmap.createScaledBitmap(ship17, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
+
+         ship18 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s5g);
+         resizedship18 = Bitmap.createScaledBitmap(ship18, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
+
+         ship19 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s5o);
+         resizedship19 = Bitmap.createScaledBitmap(ship19, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
+
+         ship20 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s5bl);
+         resizedship20 = Bitmap.createScaledBitmap(ship20, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
+
+
+         ship21 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s6b);
+         resizedship21 = Bitmap.createScaledBitmap(ship21, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
+
+         ship22 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s6g);
+         resizedship22 = Bitmap.createScaledBitmap(ship22, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
+
+         ship23 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s6o);
+         resizedship23 = Bitmap.createScaledBitmap(ship23, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
+
+         ship24 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s6bl);
+         resizedship24 = Bitmap.createScaledBitmap(ship24, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
+
+         ship25 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s7b);
+         resizedship25 = Bitmap.createScaledBitmap(ship25, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
+
+         ship26 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s7g);
+         resizedship26 = Bitmap.createScaledBitmap(ship26, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
+
+         ship27 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s7o);
+         resizedship27 = Bitmap.createScaledBitmap(ship27, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
+
+         ship28 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s7bl);
+         resizedship28 = Bitmap.createScaledBitmap(ship28, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
+
     }
 
     @Override
@@ -107,15 +344,10 @@ public class MenuScene implements Scene {
         paint2.setTypeface(typeface);
         paint2.setColor(Color.BLACK);
         paint2.setTextSize(520 / Constants.currentContext.getResources().getDisplayMetrics().density);
-        BitmapFactory bf = new BitmapFactory();
         if (play) {
-            Bitmap playButton = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.playpushed);
-            Bitmap resizedPlayButton = Bitmap.createScaledBitmap(playButton, (int) (Constants.screenWidth/1.35), Constants.screenHeight/6, false);
             canvas.drawBitmap(resizedPlayButton, Constants.screenWidth / 8, Constants.screenHeight / 5, paint);
         } else {
-            Bitmap playButton = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.playbutton);
-            Bitmap resizedPlayButton = Bitmap.createScaledBitmap(playButton, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 6, false);
-            canvas.drawBitmap(resizedPlayButton, Constants.screenWidth / 8, Constants.screenHeight / 5, paint);
+            canvas.drawBitmap(resizedPlayButton2, Constants.screenWidth / 8, Constants.screenHeight / 5, paint);
         }
 
 
@@ -137,13 +369,9 @@ public class MenuScene implements Scene {
         paint2.setTypeface(typeface);
         paint2.setColor(Color.BLACK);
         if (!store) {
-            Bitmap storeButton = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_button03);
-            Bitmap resizedStoreButton = Bitmap.createScaledBitmap(storeButton, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 11, false);
             canvas.drawBitmap(resizedStoreButton, Constants.screenWidth / 8, (int) (Constants.screenHeight / 2.65), paint);
         } else {
-            Bitmap storeButton = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_button04);
-            Bitmap resizedStoreButton = Bitmap.createScaledBitmap(storeButton, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 11, false);
-            canvas.drawBitmap(resizedStoreButton, Constants.screenWidth / 8, (int) (Constants.screenHeight / 2.65), paint);
+            canvas.drawBitmap(resizedStoreButton2, Constants.screenWidth / 8, (int) (Constants.screenHeight / 2.65), paint);
         }
         canvas.drawText(" STORE", (int) (x), (int) (Constants.screenHeight/2.27), paint);
         //OPTIONS
@@ -154,13 +382,9 @@ public class MenuScene implements Scene {
         paint2.setTypeface(typeface);
         paint2.setColor(Color.BLACK);
         if (!options) {
-            Bitmap storeButton = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_button03);
-            Bitmap resizedStoreButton = Bitmap.createScaledBitmap(storeButton, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 11, false);
-            canvas.drawBitmap(resizedStoreButton, Constants.screenWidth / 8, (int) (Constants.screenHeight / 2.05), paint);
+            canvas.drawBitmap(resizedStoreButton3, Constants.screenWidth / 8, (int) (Constants.screenHeight / 2.05), paint);
         } else {
-            Bitmap storeButton = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_button04);
-            Bitmap resizedStoreButton = Bitmap.createScaledBitmap(storeButton, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 11, false);
-            canvas.drawBitmap(resizedStoreButton, Constants.screenWidth / 8, (int) (Constants.screenHeight / 2.05), paint);
+            canvas.drawBitmap(resizedStoreButton4, Constants.screenWidth / 8, (int) (Constants.screenHeight / 2.05), paint);
         }
         canvas.drawText("OPTIONS", (int) (x), (int) (Constants.screenHeight/1.83), paint);
         //SCORES
@@ -169,13 +393,9 @@ public class MenuScene implements Scene {
         paint2.setTypeface(typeface);
         paint2.setColor(Color.BLACK);
         if (!highscore) {
-            Bitmap storeButton = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_button03);
-            Bitmap resizedStoreButton = Bitmap.createScaledBitmap(storeButton, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 11, false);
-            canvas.drawBitmap(resizedStoreButton, Constants.screenWidth / 8, (int) (Constants.screenHeight / 1.69), paint);
+            canvas.drawBitmap(resizedStoreButton5, Constants.screenWidth / 8, (int) (Constants.screenHeight / 1.69), paint);
         } else {
-            Bitmap storeButton = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_button04);
-            Bitmap resizedStoreButton = Bitmap.createScaledBitmap(storeButton, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 11, false);
-            canvas.drawBitmap(resizedStoreButton, Constants.screenWidth / 8, (int) (Constants.screenHeight / 1.69), paint);
+            canvas.drawBitmap(resizedStoreButton6, Constants.screenWidth / 8, (int) (Constants.screenHeight / 1.69), paint);
         }
         canvas.drawText("SCORES", (int) (x), (int) (Constants.screenHeight/1.53), paint);
         //CREDITS
@@ -184,13 +404,9 @@ public class MenuScene implements Scene {
         paint2.setTypeface(typeface);
         paint2.setColor(Color.BLACK);
         if (!credits) {
-            Bitmap storeButton = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_button03);
-            Bitmap resizedStoreButton = Bitmap.createScaledBitmap(storeButton, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 11, false);
-            canvas.drawBitmap(resizedStoreButton, Constants.screenWidth / 8, (int) (Constants.screenHeight / 1.44), paint);
+            canvas.drawBitmap(resizedStoreButton7, Constants.screenWidth / 8, (int) (Constants.screenHeight / 1.44), paint);
         } else {
-            Bitmap storeButton = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_button04);
-            Bitmap resizedStoreButton = Bitmap.createScaledBitmap(storeButton, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 11, false);
-            canvas.drawBitmap(resizedStoreButton, Constants.screenWidth / 8, (int) (Constants.screenHeight / 1.44), paint);
+            canvas.drawBitmap(resizedStoreButton8, Constants.screenWidth / 8, (int) (Constants.screenHeight / 1.44), paint);
         }
         canvas.drawText("CREDITS", (int) (x), (int) (Constants.screenHeight/1.32), paint);
         //EXIT
@@ -199,29 +415,19 @@ public class MenuScene implements Scene {
         paint2.setTypeface(typeface);
         paint2.setColor(Color.BLACK);
         if (!exit) {
-            Bitmap storeButton = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_button03);
-            Bitmap resizedStoreButton = Bitmap.createScaledBitmap(storeButton, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 11, false);
-            canvas.drawBitmap(resizedStoreButton, Constants.screenWidth / 8, (int) (Constants.screenHeight / 1.25), paint);
+            canvas.drawBitmap(resizedStoreButton9, Constants.screenWidth / 8, (int) (Constants.screenHeight / 1.25), paint);
         } else {
-            Bitmap storeButton = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_button04);
-            Bitmap resizedStoreButton = Bitmap.createScaledBitmap(storeButton, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 11, false);
-            canvas.drawBitmap(resizedStoreButton, Constants.screenWidth / 8, (int) (Constants.screenHeight / 1.25), paint);
+            canvas.drawBitmap(resizedStoreButton10, Constants.screenWidth / 8, (int) (Constants.screenHeight / 1.25), paint);
         }
         canvas.drawText("   EXIT", (int) (x), (int) (Constants.screenHeight/1.16), paint);
     }
 
     public void drawShopPanels(Canvas canvas) {
         drawSelected(canvas);
-        BitmapFactory bf = new BitmapFactory();
         Paint paint = new Paint();
-        Bitmap exit = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.exitbutton);
-        Bitmap resizedExit = Bitmap.createScaledBitmap(exit, (int) (Constants.screenWidth / 12), Constants.screenHeight / 20, false);
+
         canvas.drawBitmap(resizedExit, (int) (Constants.screenWidth - Constants.screenWidth/7), Constants.screenHeight/14, paint);
 
-        //10 then 11
-
-        Bitmap shipButton = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_button10);
-        Bitmap resizedshipButton = Bitmap.createScaledBitmap(shipButton, (int) (Constants.screenWidth / 7.5), Constants.screenHeight / 12, false);
         //ROW 1
         canvas.drawBitmap(resizedshipButton, (int) (Constants.screenWidth / 8.2), (int) (Constants.screenHeight / 4.7), paint);
         canvas.drawBitmap(resizedshipButton, (int) (Constants.screenWidth / 3.0), (int) (Constants.screenHeight / 4.7), paint);
@@ -261,100 +467,35 @@ public class MenuScene implements Scene {
     }
 
     public void drawShips(Canvas canvas) {
-        BitmapFactory bf = new BitmapFactory();
+       
         Paint paint = new Paint();
-        Bitmap ship1 = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s1b);
-        Bitmap resizedship1 = Bitmap.createScaledBitmap(ship1, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
         canvas.drawBitmap(resizedship1, (int) (Constants.screenWidth / 7.2), (int) (Constants.screenHeight / 4.5), paint);
-        Bitmap ship2 = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s1g);
-        Bitmap resizedship2 = Bitmap.createScaledBitmap(ship2, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
         canvas.drawBitmap(resizedship2, (int) (Constants.screenWidth / 2.85), (int) (Constants.screenHeight / 4.5), paint);
-        Bitmap ship3 = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s1o);
-        Bitmap resizedship3 = Bitmap.createScaledBitmap(ship3, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
         canvas.drawBitmap(resizedship3, (int) (Constants.screenWidth / 1.85), (int) (Constants.screenHeight / 4.5), paint);
-        Bitmap ship4 = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s1r);
-        Bitmap resizedship4 = Bitmap.createScaledBitmap(ship4, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
         canvas.drawBitmap(resizedship4, (int) (Constants.screenWidth / 1.32), (int) (Constants.screenHeight / 4.5), paint);
-
-
-        Bitmap ship5 = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s2b);
-        Bitmap resizedship5 = Bitmap.createScaledBitmap(ship5, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
         canvas.drawBitmap(resizedship5, (int) (Constants.screenWidth / 7.2), (int) (Constants.screenHeight / 3.1), paint);
-        Bitmap ship6 = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s2g);
-        Bitmap resizedship6 = Bitmap.createScaledBitmap(ship6, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
         canvas.drawBitmap(resizedship6, (int) (Constants.screenWidth / 2.85), (int) (Constants.screenHeight / 3.1), paint);
-        Bitmap ship7 = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s2o);
-        Bitmap resizedship7 = Bitmap.createScaledBitmap(ship7, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
         canvas.drawBitmap(resizedship7, (int) (Constants.screenWidth / 1.85), (int) (Constants.screenHeight / 3.1), paint);
-        Bitmap ship8 = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s2r);
-        Bitmap resizedship8 = Bitmap.createScaledBitmap(ship8, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
         canvas.drawBitmap(resizedship8, (int) (Constants.screenWidth / 1.32), (int) (Constants.screenHeight / 3.1), paint);
-
-        Bitmap ship9 = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s3b);
-        Bitmap resizedship9 = Bitmap.createScaledBitmap(ship9, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
         canvas.drawBitmap(resizedship9, (int) (Constants.screenWidth / 7.2), (int) (Constants.screenHeight / 2.37), paint);
-        Bitmap ship10 = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s3g);
-        Bitmap resizedship10 = Bitmap.createScaledBitmap(ship10, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
         canvas.drawBitmap(resizedship10, (int) (Constants.screenWidth / 2.85), (int) (Constants.screenHeight / 2.37), paint);
-        Bitmap ship11 = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s3o);
-        Bitmap resizedship11 = Bitmap.createScaledBitmap(ship11, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
         canvas.drawBitmap(resizedship11, (int) (Constants.screenWidth / 1.85), (int) (Constants.screenHeight / 2.37), paint);
-        Bitmap ship12 = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s3r);
-        Bitmap resizedship12 = Bitmap.createScaledBitmap(ship12, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
         canvas.drawBitmap(resizedship12, (int) (Constants.screenWidth / 1.32), (int) (Constants.screenHeight / 2.37), paint);
-
-        Bitmap ship13 = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s4b);
-        Bitmap resizedship13 = Bitmap.createScaledBitmap(ship13, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
         canvas.drawBitmap(resizedship13, (int) (Constants.screenWidth / 7.2), (int) (Constants.screenHeight / 1.93), paint);
-        Bitmap ship14 = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s4g);
-        Bitmap resizedship14 = Bitmap.createScaledBitmap(ship14, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
         canvas.drawBitmap(resizedship14, (int) (Constants.screenWidth / 2.85), (int) (Constants.screenHeight / 1.93), paint);
-        Bitmap ship15 = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s4y);
-        Bitmap resizedship15 = Bitmap.createScaledBitmap(ship15, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
         canvas.drawBitmap(resizedship15, (int) (Constants.screenWidth / 1.85), (int) (Constants.screenHeight / 1.93), paint);
-        Bitmap ship16 = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s4r);
-        Bitmap resizedship16 = Bitmap.createScaledBitmap(ship16, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
         canvas.drawBitmap(resizedship16, (int) (Constants.screenWidth / 1.32), (int) (Constants.screenHeight / 1.93), paint);
-
-        Bitmap ship17 = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s5b);
-        Bitmap resizedship17 = Bitmap.createScaledBitmap(ship17, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
         canvas.drawBitmap(resizedship17, (int) (Constants.screenWidth / 7.2), (int) (Constants.screenHeight / 1.63), paint);
-        Bitmap ship18 = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s5g);
-        Bitmap resizedship18 = Bitmap.createScaledBitmap(ship18, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
         canvas.drawBitmap(resizedship18, (int) (Constants.screenWidth / 2.85), (int) (Constants.screenHeight / 1.63), paint);
-        Bitmap ship19 = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s5o);
-        Bitmap resizedship19 = Bitmap.createScaledBitmap(ship19, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
         canvas.drawBitmap(resizedship19, (int) (Constants.screenWidth / 1.85), (int) (Constants.screenHeight / 1.63), paint);
-        Bitmap ship20 = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s5bl);
-        Bitmap resizedship20 = Bitmap.createScaledBitmap(ship20, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
         canvas.drawBitmap(resizedship20, (int) (Constants.screenWidth / 1.32), (int) (Constants.screenHeight / 1.63), paint);
-
-        Bitmap ship21 = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s6b);
-        Bitmap resizedship21 = Bitmap.createScaledBitmap(ship21, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
         canvas.drawBitmap(resizedship21, (int) (Constants.screenWidth / 7.2), (int) (Constants.screenHeight / 1.41), paint);
-        Bitmap ship22 = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s6g);
-        Bitmap resizedship22 = Bitmap.createScaledBitmap(ship22, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
         canvas.drawBitmap(resizedship22, (int) (Constants.screenWidth / 2.85), (int) (Constants.screenHeight / 1.41), paint);
-        Bitmap ship23 = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s6o);
-        Bitmap resizedship23 = Bitmap.createScaledBitmap(ship23, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
         canvas.drawBitmap(resizedship23, (int) (Constants.screenWidth / 1.85), (int) (Constants.screenHeight / 1.41), paint);
-        Bitmap ship24 = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s6bl);
-        Bitmap resizedship24 = Bitmap.createScaledBitmap(ship24, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
         canvas.drawBitmap(resizedship24, (int) (Constants.screenWidth / 1.32), (int) (Constants.screenHeight / 1.41), paint);
-
-
-
-        Bitmap ship25 = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s7b);
-        Bitmap resizedship25 = Bitmap.createScaledBitmap(ship25, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
         canvas.drawBitmap(resizedship25, (int) (Constants.screenWidth / 7.2), (int) (Constants.screenHeight / 1.24), paint);
-        Bitmap ship26 = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s7g);
-        Bitmap resizedship26 = Bitmap.createScaledBitmap(ship26, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
         canvas.drawBitmap(resizedship26, (int) (Constants.screenWidth / 2.85), (int) (Constants.screenHeight / 1.24), paint);
-        Bitmap ship27 = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s7o);
-        Bitmap resizedship27 = Bitmap.createScaledBitmap(ship27, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
         canvas.drawBitmap(resizedship27, (int) (Constants.screenWidth / 1.85), (int) (Constants.screenHeight / 1.24), paint);
-        Bitmap ship28 = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s7bl);
-        Bitmap resizedship28 = Bitmap.createScaledBitmap(ship28, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
         canvas.drawBitmap(resizedship28, (int) (Constants.screenWidth / 1.32), (int) (Constants.screenHeight / 1.24), paint);
 
         drawLocks(canvas);
@@ -362,10 +503,9 @@ public class MenuScene implements Scene {
     }
 
     public void drawLocks(Canvas canvas) {
-        BitmapFactory bf = new BitmapFactory();
+        
         Paint paint = new Paint();
-        Bitmap lock = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.locked);
-        Bitmap resizedlock = Bitmap.createScaledBitmap(lock, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
+
         if (!ships[0]) {
             canvas.drawBitmap(resizedlock, (int) (Constants.screenWidth / 7.2), (int) (Constants.screenHeight / 4.5), paint);
         }
@@ -611,18 +751,17 @@ public class MenuScene implements Scene {
         paint.setTextSize(100 / Constants.currentContext.getResources().getDisplayMetrics().density);
         centreText4(canvas, paint, "www.jasontubman.tech", Constants.screenHeight/1.5f);
 
-        BitmapFactory bf = new BitmapFactory();
-        Bitmap exit = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.exitbutton);
-        Bitmap resizedExit = Bitmap.createScaledBitmap(exit, (int) (Constants.screenWidth / 12), Constants.screenHeight / 20, false);
+
+        //Bitmap exit = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.exitbutton);
+        //Bitmap resizedExit = Bitmap.createScaledBitmap(exit, (int) (Constants.screenWidth / 12), Constants.screenHeight / 20, false);
         canvas.drawBitmap(resizedExit, (int) (Constants.screenWidth - Constants.screenWidth/7), Constants.screenHeight/14, paint);
 
         creditGen.addParticle((int) (Constants.screenWidth/2.07), (int) (Constants.screenHeight/1.2), 0, false);
         creditGen.update();
         creditGen.draw(canvas);
 
-        Bitmap ship = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s7bl);
-        Bitmap resizedShip = Bitmap.createScaledBitmap(ship, (int) (Constants.screenWidth / 4), Constants.screenHeight / 7, false);
-        canvas.drawBitmap(resizedShip, (int) (Constants.screenWidth/2.8), (int) (Constants.screenHeight/1.4), paint);
+
+        canvas.drawBitmap(resizedShipCred, (int) (Constants.screenWidth/2.8), (int) (Constants.screenHeight/1.4), paint);
 
     }
 
@@ -649,9 +788,9 @@ public class MenuScene implements Scene {
         paint.setColor(Color.DKGRAY);
         paint.setTextSize(260 / Constants.currentContext.getResources().getDisplayMetrics().density);
 
-        BitmapFactory bf = new BitmapFactory();
-        Bitmap exit = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.exitbutton);
-        Bitmap resizedExit = Bitmap.createScaledBitmap(exit, (int) (Constants.screenWidth / 12), Constants.screenHeight / 20, false);
+        
+       // Bitmap exit = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.exitbutton);
+        //Bitmap resizedExit = Bitmap.createScaledBitmap(exit, (int) (Constants.screenWidth / 12), Constants.screenHeight / 20, false);
         canvas.drawBitmap(resizedExit, (int) (Constants.screenWidth - Constants.screenWidth/7), Constants.screenHeight/14, paint);
 
         centreText4(canvas, paint, "OPTIONS", Constants.screenHeight/4);
@@ -660,16 +799,8 @@ public class MenuScene implements Scene {
 
         centreText4(canvas, paint, "MUTE MUSIC :", Constants.screenHeight/2.23f);
 
-        Bitmap slider = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.slider);
-        Bitmap resizedSlider = Bitmap.createScaledBitmap(slider, (int) (Constants.screenWidth / 1.4), Constants.screenWidth/100, false);
         canvas.drawBitmap(resizedSlider, (int) (Constants.screenWidth/7), (int) (Constants.screenHeight/3.1), paint);
 
-
-        Bitmap mute = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_boxcross);
-        Bitmap resizedmute = Bitmap.createScaledBitmap(mute, (int) (Constants.screenWidth / 10), Constants.screenWidth/11, false);
-
-        Bitmap notmute = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_box);
-        Bitmap resizednotmute = Bitmap.createScaledBitmap(notmute, (int) (Constants.screenWidth /10), Constants.screenWidth/11, false);
 
         if (musicMuted) {
             canvas.drawBitmap(resizedmute, (int) (Constants.screenWidth/1.3), (int) (Constants.screenHeight/2.45), paint);
@@ -678,8 +809,7 @@ public class MenuScene implements Scene {
         }
 
 
-        Bitmap sliderUp = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.sliderup);
-        Bitmap resizedSliderUp = Bitmap.createScaledBitmap(sliderUp, (int) (Constants.screenWidth / 19), Constants.screenWidth/13, false);
+
         canvas.drawBitmap(resizedSliderUp, (int) (this.sliderX), (int) (Constants.screenHeight/3.05), paint);
 
 
@@ -687,8 +817,7 @@ public class MenuScene implements Scene {
         creditGen.update();
         creditGen.draw(canvas);
 
-        Bitmap ship = shipSel.getSprite();
-        Bitmap resizedShip = Bitmap.createScaledBitmap(ship, (int) (Constants.screenWidth / 4), Constants.screenHeight / 7, false);
+
         canvas.drawBitmap(resizedShip, (int) (Constants.screenWidth/2.8), (int) (Constants.screenHeight/1.9), paint);
 
     }
@@ -703,10 +832,9 @@ public class MenuScene implements Scene {
         paint.setTypeface(typeface);
         paint.setColor(Color.DKGRAY);
         paint.setTextSize(180 / Constants.currentContext.getResources().getDisplayMetrics().density);
-
-        BitmapFactory bf = new BitmapFactory();
-        Bitmap exit = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.exitbutton);
-        Bitmap resizedExit = Bitmap.createScaledBitmap(exit, (int) (Constants.screenWidth / 12), Constants.screenHeight / 20, false);
+        
+        //Bitmap exit = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.exitbutton);
+        //Bitmap resizedExit = Bitmap.createScaledBitmap(exit, (int) (Constants.screenWidth / 12), Constants.screenHeight / 20, false);
         canvas.drawBitmap(resizedExit, (int) (Constants.screenWidth - Constants.screenWidth/7), Constants.screenHeight/14, paint);
     }
 
