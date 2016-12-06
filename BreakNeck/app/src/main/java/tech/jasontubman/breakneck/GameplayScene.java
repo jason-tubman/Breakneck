@@ -28,8 +28,9 @@ public class GameplayScene implements Scene {
     private ObstacleManager obstacleManager;
     private int score;
     private Rect r = new Rect();
+    private int justReset = 1;
 
-    private int coins;
+    private int coins = 0;
 
     //GAME OVER PAINTS
     Paint paint3 = new Paint();
@@ -56,6 +57,8 @@ public class GameplayScene implements Scene {
     private Bitmap resizedstore;
     private Bitmap playAgain;
     private Bitmap resizedplayAgain;
+    private Bitmap coin;
+    private Bitmap resizedCoin;
 
     public GameplayScene(SceneManager manager) {
         this.sceneManager = manager;
@@ -83,6 +86,9 @@ public class GameplayScene implements Scene {
 
         store = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_button03);
         resizedstore = Bitmap.createScaledBitmap(store, (int) (Constants.screenWidth / 1.3), Constants.screenHeight / 12, false);
+
+        coin = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.coin);
+        resizedCoin = (Bitmap.createScaledBitmap(coin, Constants.screenWidth/25, Constants.screenWidth/25, false));
 
         playAgain = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.playbutton);
         resizedplayAgain = Bitmap.createScaledBitmap(playAgain, (int) (Constants.screenWidth / 1.3), Constants.screenHeight / 12, false);
@@ -175,8 +181,8 @@ public class GameplayScene implements Scene {
             if(!gameOver && numPoints >1) {
                 player2.setVisible(true);
                 if (!split) {
-                    split = true;
                     selector.selectSprite(this.sceneManager.shipChosen + 1, 0.5);
+                    split = true;
                     player.halfRect(player.getX() - player.getWidth()/2, player.getY());
                     player2.halfRect(player2.getX() - player2.getWidth()/2, player2.getY());
                     playerPoint.y += player.getHeight();
@@ -195,6 +201,7 @@ public class GameplayScene implements Scene {
                 }
                 if (playerPoint2.x == playerPoint.x) {
                     player2.setVisible(false);
+                    justReset =1;
                 }
             }
 
@@ -224,7 +231,7 @@ public class GameplayScene implements Scene {
         score.setTextAlign(Paint.Align.RIGHT);
         Typeface typeface = Typeface.createFromAsset(Constants.currentContext.getAssets(), "spaceage.ttf");
         score.setTypeface(typeface);
-        canvas.drawText(Integer.toString(this.score), Constants.screenWidth - Constants.screenWidth/30, Constants.screenHeight/20, score);
+        canvas.drawText(Integer.toString(this.score), Constants.screenWidth - Constants.screenWidth/30, (int)(Constants.screenHeight/17.7), score);
 
 
 
@@ -244,13 +251,16 @@ public class GameplayScene implements Scene {
 
         //DRAW COG
         Paint paint2 = new Paint();
+        paint2.setTypeface(typeface);
+        paint2.setColor(Color.LTGRAY);
+        paint2.setTextAlign(Paint.Align.LEFT);
+        paint2.setTextSize(40);
         canvas.drawBitmap(resizedCog, (int) (Constants.screenWidth/40), Constants.screenHeight/40, paint2);
         //END OF COG
 
         //Draw Coins
-        //Bitmap coin = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.coin);
-        //Bitmap resizedCoin = (Bitmap.createScaledBitmap(coin, Constants.screenWidth/25, Constants.screenWidth/25, false));
-        //canvas.drawBitmap(resizedCoin, (int) (Constants.screenWidth/2), Constants.screenHeight/40, paint2);
+        canvas.drawBitmap(resizedCoin, (int) (Constants.screenWidth/2) - Constants.screenWidth/15, Constants.screenHeight/25, paint2);
+        canvas.drawText(Integer.toString(coins), (int) (Constants.screenWidth/2), (int)(Constants.screenHeight/16.5), paint2);
         //End of Coins
 
 
@@ -373,7 +383,9 @@ public class GameplayScene implements Scene {
                 split = false;
                 playerPoint.set(playerPoint.x, Constants.screenHeight - Constants.screenHeight/4);
                 playerPoint2.set(playerPoint.x, Constants.screenHeight - Constants.screenHeight/4);
-                selector.selectSprite(this.sceneManager.shipChosen + 1, 1);
+                if (justReset == 1) {
+                    selector.selectSprite(this.sceneManager.shipChosen + 1, 1);
+                }
                 player.updateSprite(selector.getSprite());
                 player2.updateSprite(selector.getSprite());
             }
@@ -387,11 +399,14 @@ public class GameplayScene implements Scene {
                 split = false;
                 playerPoint.set(playerPoint.x, Constants.screenHeight - Constants.screenHeight/4);
                 playerPoint2.set(playerPoint.x, Constants.screenHeight - Constants.screenHeight/4);
-                selector.selectSprite(this.sceneManager.shipChosen + 1, 1);
+                if (justReset == 1) {
+                    selector.selectSprite(this.sceneManager.shipChosen + 1, 1);
+                }
                 player.updateSprite(selector.getSprite());
                 player2.updateSprite(selector.getSprite());
             }
         }
+        justReset++;
     }
 
     private void drawScore(Canvas canvas, Paint paint, String text) {
@@ -402,7 +417,7 @@ public class GameplayScene implements Scene {
         int cWidth = r.width();
         paint.getTextBounds(text, 0, text.length(), r);
         float x = cWidth / 1.1f - r.width() / 2f - r.left;
-        float y = 80;
+        float y = 140;
         canvas.drawText(text, x, y, paint);
     }
 

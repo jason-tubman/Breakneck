@@ -27,8 +27,8 @@ public class Coin implements Obstacle {
         this.x = x;
         this.y = y;
 
-        //coin = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.coin);
-        //resizedCoin = (Bitmap.createScaledBitmap(coin, Constants.screenWidth/21, Constants.screenWidth/21, false));
+        coin = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.coin);
+        resizedCoin = (Bitmap.createScaledBitmap(coin, Constants.screenWidth/24, Constants.screenWidth/24, false));
     }
 
 
@@ -52,14 +52,14 @@ public class Coin implements Obstacle {
         paint.setColor(Color.YELLOW);
         canvas.drawRect(coinRect, paint);
 
-        //canvas.drawBitmap(resizedCoin, (int) (x), y, paint);
+        canvas.drawBitmap(resizedCoin, x, y, paint);
 
     }
 
     @Override
     public void update() {
 
-        coinRect.set(x, y, x + Constants.screenWidth/21, y + Constants.screenWidth/21);
+        coinRect.set(x, y, x + Constants.screenWidth/21, y);
     }
 
     @Override
