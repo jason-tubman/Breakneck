@@ -67,9 +67,9 @@ public class GameplayScene implements Scene {
         playerPoint = new Point(Constants.screenWidth/2, Constants.screenHeight-Constants.screenHeight/4);
         player.update(playerPoint);
 
-
         obstacleManager = new ObstacleManager(200, 950, 400, Color.LTGRAY, player);
 
+        coins = obstacleManager.getCoins();
         starManager = new StarManager(player.getSpeed(), false);
 
         particleGenerator1 = new ParticleGenerator();
@@ -114,7 +114,7 @@ public class GameplayScene implements Scene {
     @Override
     public void update() {
         if (!gameOver) {
-
+            coins = obstacleManager.getCoins();
             if (player2.isVisible()) {
                 particleGenerator2.addParticle(player2.getX(), player2.getY() + player2.getHeight()-50, 0, true);
                 particleGenerator2.update();
@@ -254,13 +254,13 @@ public class GameplayScene implements Scene {
         paint2.setTypeface(typeface);
         paint2.setColor(Color.LTGRAY);
         paint2.setTextAlign(Paint.Align.LEFT);
-        paint2.setTextSize(40);
+        paint2.setTextSize(50);
         canvas.drawBitmap(resizedCog, (int) (Constants.screenWidth/40), Constants.screenHeight/40, paint2);
         //END OF COG
 
         //Draw Coins
         canvas.drawBitmap(resizedCoin, (int) (Constants.screenWidth/2) - Constants.screenWidth/15, Constants.screenHeight/25, paint2);
-        canvas.drawText(Integer.toString(coins), (int) (Constants.screenWidth/2), (int)(Constants.screenHeight/16.5), paint2);
+        canvas.drawText(Integer.toString(coins), (int) (Constants.screenWidth/2), (int)(Constants.screenHeight/17.7), paint2);
         //End of Coins
 
 

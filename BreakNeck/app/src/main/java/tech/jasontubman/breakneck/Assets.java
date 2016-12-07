@@ -34,6 +34,9 @@ public class Assets {
     public static Bitmap planet4;
     public static Bitmap planet5;
     public static Bitmap planet6;
+    public static Bitmap coin;
+    public static Bitmap resizedCoin;
+
     public static Bitmap planet7;
     public static Bitmap planet8;
     
@@ -59,6 +62,9 @@ public class Assets {
          planet6 = bf.decodeResource( currentContext.getResources(), R.drawable.p8);
          planet7 = bf.decodeResource( currentContext.getResources(), R.drawable.p9);
          planet8 = bf.decodeResource( currentContext.getResources(), R.drawable.p10);
+
+        coin = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.coin);
+        resizedCoin = (Bitmap.createScaledBitmap(coin, Constants.screenWidth/24, Constants.screenWidth/24, false));
 
     }
 

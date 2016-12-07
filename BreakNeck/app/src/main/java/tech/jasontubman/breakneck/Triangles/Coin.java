@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
+import tech.jasontubman.breakneck.Assets;
 import tech.jasontubman.breakneck.Constants;
 import tech.jasontubman.breakneck.Obstacle;
 import tech.jasontubman.breakneck.Player;
@@ -20,15 +21,11 @@ public class Coin implements Obstacle {
     private int x;
     private int y;
 
-    private Bitmap coin;
-    private Bitmap resizedCoin;
-
     public Coin(int x, int y) {
         this.x = x;
         this.y = y;
 
-        coin = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.coin);
-        resizedCoin = (Bitmap.createScaledBitmap(coin, Constants.screenWidth/24, Constants.screenWidth/24, false));
+
     }
 
 
@@ -52,7 +49,7 @@ public class Coin implements Obstacle {
         paint.setColor(Color.YELLOW);
         canvas.drawRect(coinRect, paint);
 
-        canvas.drawBitmap(resizedCoin, x, y, paint);
+        canvas.drawBitmap(Assets.resizedCoin, x, y, paint);
 
     }
 

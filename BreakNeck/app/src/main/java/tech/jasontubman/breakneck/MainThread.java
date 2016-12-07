@@ -42,7 +42,6 @@ public class MainThread extends Thread {
         while(running) {
             startTime = System.nanoTime();
             canvas = null;
-            System.out.println(averageFPS);
             try {
                 canvas = this.surfaceHolder.lockCanvas();
                 synchronized (surfaceHolder) {
