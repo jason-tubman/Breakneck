@@ -437,7 +437,7 @@ public class MenuScene implements Scene {
         canvas.drawBitmap(resizedshipButton, (int) (Constants.screenWidth / 8.2), (int) (Constants.screenHeight / 3.2), paint);
         canvas.drawBitmap(resizedshipButton, (int) (Constants.screenWidth / 3.0), (int) (Constants.screenHeight / 3.2), paint);
         canvas.drawBitmap(resizedshipButton, (int) (Constants.screenWidth / 1.9), (int) (Constants.screenHeight / 3.2), paint);
-        canvas.drawBitmap(resizedshipButton, (int) (Constants.screenWidth / 1.35), (int) (Constants.screenHeight / 3.27), paint);
+        canvas.drawBitmap(resizedshipButton, (int) (Constants.screenWidth / 1.35), (int) (Constants.screenHeight / 3.2), paint);
         //ROW 3
         canvas.drawBitmap(resizedshipButton, (int) (Constants.screenWidth / 8.2), (int) (Constants.screenHeight / 2.43), paint);
         canvas.drawBitmap(resizedshipButton, (int) (Constants.screenWidth / 3.0), (int) (Constants.screenHeight / 2.43), paint);
@@ -832,9 +832,7 @@ public class MenuScene implements Scene {
         paint.setTypeface(typeface);
         paint.setColor(Color.DKGRAY);
         paint.setTextSize(180 / Constants.currentContext.getResources().getDisplayMetrics().density);
-        
-        //Bitmap exit = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.exitbutton);
-        //Bitmap resizedExit = Bitmap.createScaledBitmap(exit, (int) (Constants.screenWidth / 12), Constants.screenHeight / 20, false);
+
         canvas.drawBitmap(resizedExit, (int) (Constants.screenWidth - Constants.screenWidth/7), Constants.screenHeight/14, paint);
     }
 
@@ -929,26 +927,32 @@ public class MenuScene implements Scene {
                     if (event.getY() > Constants.screenHeight / 5 && event.getY() < Constants.screenHeight / 5 + Constants.screenHeight / 6 && menu) {
                         play = true;
                         playPressed(canvas);
+                        break;
                     }
                     if (event.getY() > Constants.screenHeight / 2.65 && event.getY() < Constants.screenHeight / 2.65 + Constants.screenHeight / 11 && menu) {
                         store = true;
                         storePressed(canvas);
+                        break;
                     }
                     if (event.getY() > Constants.screenHeight / 2.05 && event.getY() < Constants.screenHeight / 2.05 + Constants.screenHeight / 11 && menu) {
                         options = true;
                         optionsPressed(canvas);
+                        break;
                     }
                     if (event.getY() > Constants.screenHeight / 1.69 && event.getY() < Constants.screenHeight / 1.69 + Constants.screenHeight / 11 && menu) {
                         highscore = true;
                         highscorePressed(canvas);
+                        break;
                     }
                     if (event.getY() > Constants.screenHeight / 1.44 && event.getY() < Constants.screenHeight / 1.44 + Constants.screenHeight / 11 && menu) {
                         credits = true;
                         creditsPressed(canvas);
+                        break;
                     }
                     if (event.getY() > Constants.screenHeight / 1.25 && event.getY() < Constants.screenHeight / 1.25 + Constants.screenHeight / 11 && menu) {
                         exit = true;
                         exitPressed(canvas);
+                        break;
                     }
 
                     //STORE CLICKS ----------

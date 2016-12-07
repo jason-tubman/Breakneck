@@ -260,7 +260,7 @@ public class GameplayScene implements Scene {
 
         //Draw Coins
         canvas.drawBitmap(resizedCoin, (int) (Constants.screenWidth/2) - Constants.screenWidth/15, Constants.screenHeight/25, paint2);
-        canvas.drawText(Integer.toString(coins), (int) (Constants.screenWidth/2), (int)(Constants.screenHeight/17.7), paint2);
+        canvas.drawText(Integer.toString(coins), (int) (Constants.screenWidth/2), (int)(Constants.screenHeight/17.5), paint2);
         //End of Coins
 
 
