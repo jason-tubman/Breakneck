@@ -1,6 +1,7 @@
 package tech.jasontubman.breakneck;
 
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
@@ -13,7 +14,7 @@ import tech.jasontubman.game.R;
 public class Assets {
 
     public static BitmapFactory bf = new BitmapFactory();
-    
+    public static Context currentContext;
     public static Bitmap star;
    
     public static Bitmap resizedStar1;
@@ -37,7 +38,7 @@ public class Assets {
     public static Bitmap planet8;
     
     public Assets() {
-        star = bf.decodeResource(Constants.currentContext.getResources(), R.drawable.star2);
+        star = bf.decodeResource(currentContext.getResources(), R.drawable.star2);
 
         resizedStar1 = Bitmap.createScaledBitmap(star, 2, 2, false);
         resizedStar2 = Bitmap.createScaledBitmap(star, 5, 5, false);
@@ -50,14 +51,14 @@ public class Assets {
          resizedStar9 = Bitmap.createScaledBitmap(star, 22, 22, false);
 
 
-         planet1 = bf.decodeResource( Constants.currentContext.getResources(), R.drawable.p1);
-         planet2 = bf.decodeResource( Constants.currentContext.getResources(), R.drawable.p2);
-         planet3 = bf.decodeResource( Constants.currentContext.getResources(), R.drawable.p3);
-         planet4 = bf.decodeResource( Constants.currentContext.getResources(), R.drawable.p6);
-         planet5 = bf.decodeResource( Constants.currentContext.getResources(), R.drawable.p7);
-         planet6 = bf.decodeResource( Constants.currentContext.getResources(), R.drawable.p8);
-         planet7 = bf.decodeResource( Constants.currentContext.getResources(), R.drawable.p9);
-         planet8 = bf.decodeResource( Constants.currentContext.getResources(), R.drawable.p10);
+         planet1 = bf.decodeResource( currentContext.getResources(), R.drawable.p1);
+         planet2 = bf.decodeResource( currentContext.getResources(), R.drawable.p2);
+         planet3 = bf.decodeResource( currentContext.getResources(), R.drawable.p3);
+         planet4 = bf.decodeResource( currentContext.getResources(), R.drawable.p6);
+         planet5 = bf.decodeResource( currentContext.getResources(), R.drawable.p7);
+         planet6 = bf.decodeResource( currentContext.getResources(), R.drawable.p8);
+         planet7 = bf.decodeResource( currentContext.getResources(), R.drawable.p9);
+         planet8 = bf.decodeResource( currentContext.getResources(), R.drawable.p10);
 
     }
 

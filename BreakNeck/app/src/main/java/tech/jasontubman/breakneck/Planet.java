@@ -72,8 +72,9 @@ public class Planet {
         paint.setDither(true);
         paint.setAntiAlias(true);
 
-
-        canvas.drawBitmap(resizedPlanet, x, y, paint);
+        if (resizedPlanet != null) {
+            canvas.drawBitmap(resizedPlanet, x, y, paint);
+        }
 
     }
 

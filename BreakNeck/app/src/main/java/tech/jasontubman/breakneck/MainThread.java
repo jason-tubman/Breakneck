@@ -8,7 +8,7 @@ import android.view.SurfaceHolder;
  */
 
 public class MainThread extends Thread {
-    public static final int MAX_FPS = 50;
+    public static final int MAX_FPS = 35;
 
     private double averageFPS;
 
@@ -42,7 +42,7 @@ public class MainThread extends Thread {
         while(running) {
             startTime = System.nanoTime();
             canvas = null;
-
+            System.out.println(averageFPS);
             try {
                 canvas = this.surfaceHolder.lockCanvas();
                 synchronized (surfaceHolder) {
