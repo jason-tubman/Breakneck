@@ -18,7 +18,6 @@ public class Planet {
     public int style;
     public int x;
     public int y;
-    private Bitmap planet;
     private Bitmap resizedPlanet;
 
     public Planet(int radius, int style, int x, int y) {
@@ -29,43 +28,39 @@ public class Planet {
         this.y = y;
         switch(style) {
             case 0: {
-                planet = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.p1);
+                resizedPlanet = Bitmap.createScaledBitmap(Assets.planet1, radius, radius, false);
                 break;
             }
             case 1: {
-                planet = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.p2);
+                resizedPlanet = Bitmap.createScaledBitmap(Assets.planet2, radius, radius, false);
                 break;
             }
             case 2: {
-                planet = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.p6);
+                resizedPlanet = Bitmap.createScaledBitmap(Assets.planet3, radius, radius, false);
                 break;
             }
             case 3: {
-                planet = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.p7);
+                resizedPlanet = Bitmap.createScaledBitmap(Assets.planet4, radius, radius, false);
                 break;
             }
             case 4: {
-                planet = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.p9);
+                resizedPlanet = Bitmap.createScaledBitmap(Assets.planet5, radius, radius, false);
                 break;
             }
             case 5: {
-                planet = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.p10);
+                resizedPlanet = Bitmap.createScaledBitmap(Assets.planet6, radius, radius, false);
                 break;
             }
             case 6: {
-                planet = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.p3);
+                resizedPlanet = Bitmap.createScaledBitmap(Assets.planet7, radius, radius, false);
                 break;
             }
             case 7: {
-                planet = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.p4);
-                break;
-            }
-            case 8: {
-                planet = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.p8);
+                resizedPlanet = Bitmap.createScaledBitmap(Assets.planet8, radius, radius, false);
                 break;
             }
         }
-     resizedPlanet = Bitmap.createScaledBitmap(planet, radius, radius, false);
+
 
     }
 

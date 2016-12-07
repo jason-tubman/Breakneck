@@ -32,8 +32,7 @@ public class StarManager {
             for (int i = 0; i < 100; i++) {
                 int x = getRandomNumberInRange(20, Constants.screenWidth - 20);
                 int y = getRandomNumberInRange(-500, Constants.screenHeight - 20);
-                int radius = getRandomNumberInRange(2, 25);
-                stars.add(i, new Star(radius, Color.WHITE, x, y));
+                stars.add(i, new Star(Color.WHITE, x, y));
             }
             for (int i = 0; i < 5; i++) {
                 int x = getRandomNumberInRange(20, Constants.screenWidth - 20);
@@ -46,8 +45,7 @@ public class StarManager {
             for (int i = 0; i < 50; i++) {
                 int x = getRandomNumberInRange(20, Constants.screenWidth - 20);
                 int y = getRandomNumberInRange(-500, Constants.screenHeight - 20);
-                int radius = getRandomNumberInRange(2, 50);
-                stars.add(i, new Star(radius, Color.WHITE, x, y));
+                stars.add(i, new Star(Color.WHITE, x, y));
             }
             for (int i = 0; i < 5; i++) {
                 int x = getRandomNumberInRange(20, Constants.screenWidth - 20);
