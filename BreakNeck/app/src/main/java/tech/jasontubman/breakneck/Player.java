@@ -19,14 +19,22 @@ public class Player implements Entity{
     private boolean visible = true;
     private float speed;
 
+    private boolean shieldSize;
+    private boolean shieldStatus;
+
     public Player(Rect rectangle, Bitmap sprite, double speed) {
         this.rectangle = rectangle;
         this.sprite = sprite;
         this.speed = Constants.screenHeight/5000.0f * (float) speed;
+
     }
 
     public Rect getRectangle() {
         return this.rectangle;
+    }
+
+    public void setShieldSize(Boolean bool) {
+        this.shieldSize = bool;
     }
 
     @Override
@@ -37,6 +45,13 @@ public class Player implements Entity{
             int x = rectangle.centerX() - (rectangle.width()/2);
             int y = rectangle.centerY() - (rectangle.height()/2);
             canvas.drawBitmap(sprite, x, y, paint);
+            if (this.shieldStatus) {
+                if (!this.shieldSize) {
+                canvas.drawBitmap(Assets.resizedShipShield, x- 30, y - 80, paint); }
+                else {
+                    canvas.drawBitmap(Assets.resizedShipShield2, x- 15, y - 40, paint);
+                }
+            }
         }
     }
 
@@ -86,6 +101,14 @@ public class Player implements Entity{
     public void resetRect(int x, int y) {
         this.rectangle.set(x, y, x+205, y+205);
     }
+
+    public boolean getShieldStatus() {
+        return this.shieldStatus;
+    }
+    public void setShieldStatus(boolean bool) {
+        this.shieldStatus = bool;
+    }
+
 
     public boolean isVisible () {
         return this.visible;

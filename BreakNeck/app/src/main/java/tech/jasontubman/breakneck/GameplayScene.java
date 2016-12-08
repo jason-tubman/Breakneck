@@ -61,6 +61,8 @@ public class GameplayScene implements Scene {
     private Bitmap coin;
     private Bitmap resizedCoin;
 
+    private Boolean justHit = false;
+
     public GameplayScene(SceneManager manager) {
         this.sceneManager = manager;
         selector = new ShipSelector(this.sceneManager.shipChosen + 1, 1);
@@ -115,6 +117,9 @@ public class GameplayScene implements Scene {
     @Override
     public void update() {
         if (!gameOver) {
+            if (player.getShieldStatus() && !player2.getShieldStatus()) {
+                player2.setShieldStatus(true);
+            }
             coins = obstacleManager.getCoins();
             if (player2.isVisible()) {
                 particleGenerator2.addParticle(player2.getX(), player2.getY() + player2.getHeight()-50, 0, true);
@@ -186,6 +191,8 @@ public class GameplayScene implements Scene {
                     split = true;
                     player.halfRect(player.getX() - player.getWidth()/2, player.getY());
                     player2.halfRect(player2.getX() - player2.getWidth()/2, player2.getY());
+                    player.setShieldSize(true);
+                    player2.setShieldSize(true);
                     playerPoint.y += player.getHeight();
                     playerPoint2.y += player2.getHeight();
                     player.updateSprite(selector.getSprite());
@@ -203,13 +210,25 @@ public class GameplayScene implements Scene {
                 if (playerPoint2.x == playerPoint.x) {
                     player2.setVisible(false);
                     justReset =1;
+                    player.setShieldSize(false);
+                    player2.setShieldSize(false);
                 }
             }
 
         }
         if (obstacleManager.playerCollided(player) && !gameOver || obstacleManager.playerCollided(player2) && !gameOver) {
-            gameOver = true;
-            timeEnded = System.currentTimeMillis();
+            if (player.getShieldStatus()) {
+                justHit = true;
+            } else {
+                gameOver = true;
+                timeEnded = System.currentTimeMillis();
+            }
+
+        } else {
+            if (justHit) {
+                player.setShieldStatus(false);
+                player2.setShieldStatus(false);
+            }
         }
     }
 

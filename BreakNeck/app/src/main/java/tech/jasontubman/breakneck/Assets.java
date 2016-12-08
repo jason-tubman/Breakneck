@@ -37,6 +37,12 @@ public class Assets {
     public static Bitmap coin;
     public static Bitmap resizedCoin;
 
+    public static Bitmap resizedShield;
+
+    public static Bitmap shipShield;
+    public static Bitmap resizedShipShield;
+    public static Bitmap resizedShipShield2;
+    public static Bitmap shield;
     public static Bitmap planet7;
     public static Bitmap planet8;
     
@@ -66,6 +72,12 @@ public class Assets {
         coin = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.coin);
         resizedCoin = (Bitmap.createScaledBitmap(coin, Constants.screenWidth/24, Constants.screenWidth/24, false));
 
+        shield = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.shield_bronze);
+        resizedShield = (Bitmap.createScaledBitmap(shield, Constants.screenWidth/24, Constants.screenWidth/24, false));
+
+        shipShield = bf.decodeResource( currentContext.getResources(), R.drawable.shield1);
+        resizedShipShield = (Bitmap.createScaledBitmap(shipShield, (int) (Constants.screenWidth/5.5), (int) (Constants.screenWidth/7.5), false));
+        resizedShipShield2 = (Bitmap.createScaledBitmap(shipShield, (int) (Constants.screenWidth/11), (int) (Constants.screenWidth/15), false));
     }
 
 }

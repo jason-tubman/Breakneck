@@ -23,6 +23,7 @@ import tech.jasontubman.breakneck.Triangles.RightTriangle;
 public class ObstacleManager {
     private ArrayList<Obstacle> obstacles;
     private ArrayList<Obstacle> coins;
+    private ArrayList<Obstacle> shields;
     private int playerGap;
     private int obstacleGap;
     private int obstacleHeight;
@@ -52,6 +53,7 @@ public class ObstacleManager {
 
         obstacles = new ArrayList<>();
         coins = new ArrayList<>();
+        shields = new ArrayList<>();
     }
 
     public boolean playerCollided(Player player) {
@@ -64,6 +66,14 @@ public class ObstacleManager {
             if (coin.playerCollided(player)){
                 coins.remove(coin);
                 coinsCount++;
+                break;
+            }
+        }
+        for (Obstacle shield : shields) {
+            if (shield.playerCollided(player)){
+                shields.remove(shield);
+                player.setShieldStatus(true);
+                // APPPLY SHIELD
                 break;
             }
         }
@@ -117,27 +127,45 @@ public class ObstacleManager {
                 coin.moveObstacle(speed * 20);
                 coin.update();
             }
+            for (Obstacle shield : shields) {
+                shield.moveObstacle(speed * 20);
+                shield.update();
+            }
             if (obstacles.get(obstacles.size() - 1).getTop() >= Constants.screenHeight) {
                 int obstacleY = obstacles.get(0).getTop() - obstacleHeight - obstacleGap;
                 int random = getRandomNumberInRange(1, 5);
                 double coinProb = Math.random();
                 double coinProb2 = Math.random();
-
+                double shieldProb = Math.random();
                 switch (random) {
                     case 1: {
                         obstacles.add(0, new LeftTriangle(this.color, 0, obstacleY));
-                        if (coinProb > 0.5) {
+                        if (shieldProb < 0.025) {
+                            shields.add(0, new Shield(Constants.screenWidth/2 - Constants.screenWidth/40, obstacleY + 850));
+                        }
+                        else if (coinProb > 0.5) {
                             coins.add(0, new Coin(Constants.screenWidth - Constants.screenWidth / 9, obstacleY + 150));
-                        }  if (coinProb2 > 0.5) {
+                        }
+                        if (shieldProb < 0.05 && shieldProb > 0.025) {
+                            shields.add(0, new Shield(Constants.screenWidth/2 - Constants.screenWidth/40, obstacleY + 850));
+                        }
+                        else if (coinProb2 > 0.5) {
                             coins.add(0, new Coin(Constants.screenWidth/2 - Constants.screenWidth/40, obstacleY + 850));
                         }
                         break;
                     }
                     case 2: {
                         obstacles.add(0, new RightTriangle(this.color, Constants.screenWidth / 4, obstacleY));
-                        if (coinProb > 0.5) {
+                        if (shieldProb < 0.025) {
+                            shields.add(0, new Shield(Constants.screenWidth / 12, obstacleY + 150));
+                        }
+                        else if (coinProb > 0.5) {
                             coins.add(0, new Coin(Constants.screenWidth / 12, obstacleY + 150));
-                        }  if (coinProb2 > 0.5) {
+                        }
+                        if (shieldProb < 0.05 && shieldProb > 0.025) {
+                            shields.add(0, new Shield(Constants.screenWidth/2 - Constants.screenWidth/40, obstacleY + 850));
+                        }
+                        else if (coinProb2 > 0.5) {
                             coins.add(0, new Coin(Constants.screenWidth/2 - Constants.screenWidth/40, obstacleY + 850));
                         }
                         break;
@@ -147,25 +175,43 @@ public class ObstacleManager {
                         if (coinProb > 0.5) {
                             coins.add(0, new Coin(Constants.screenWidth - Constants.screenWidth / 15, obstacleY + 150));
                             coins.add(0, new Coin(Constants.screenWidth / 35, obstacleY + 150));
-                        }  if (coinProb2 > 0.5) {
+                        }
+                        if (shieldProb < 0.025) {
+                            shields.add(0, new Shield(Constants.screenWidth/2 - Constants.screenWidth/40, obstacleY + 850));
+                        }
+                        else if (coinProb2 > 0.5) {
                             coins.add(0, new Coin(Constants.screenWidth/2 - Constants.screenWidth/40, obstacleY + 850));
                         }
                         break;
                     }
                     case 4: {
                         obstacles.add(0, new LeftTriangle(this.color, 0, obstacleY));
-                        if (coinProb > 0.5) {
+                        if (shieldProb < 0.025) {
+                            shields.add(0, new Shield(Constants.screenWidth/2 - Constants.screenWidth/40, obstacleY + 850));
+                        }
+                        else if (coinProb > 0.5) {
                             coins.add(0, new Coin(Constants.screenWidth - Constants.screenWidth / 9, obstacleY + 150));
-                        } if (coinProb2 > 0.5) {
+                        }
+                        if (shieldProb < 0.05 && shieldProb > 0.025) {
+                            shields.add(0, new Shield(Constants.screenWidth/2 - Constants.screenWidth/40, obstacleY + 850));
+                        }
+                        else if (coinProb2 > 0.5) {
                             coins.add(0, new Coin(Constants.screenWidth/2 - Constants.screenWidth/40, obstacleY + 850));
                         }
                         break;
                     }
                     case 5: {
                         obstacles.add(0, new RightTriangle(this.color, Constants.screenWidth / 4, obstacleY));
-                        if (coinProb > 0.5) {
+                        if (shieldProb < 0.025) {
+                            shields.add(0, new Shield(Constants.screenWidth / 12, obstacleY + 150));
+                        }
+                        else if (coinProb > 0.5) {
                             coins.add(0, new Coin(Constants.screenWidth / 12, obstacleY + 150));
-                        } if (coinProb2 > 0.5) {
+                        }
+                        if (shieldProb < 0.05 && shieldProb > 0.025) {
+                            shields.add(0, new Shield(Constants.screenWidth/2 - Constants.screenWidth/40, obstacleY + 850));
+                        }
+                        else if (coinProb2 > 0.5) {
                             coins.add(0, new Coin(Constants.screenWidth/2 - Constants.screenWidth/40, obstacleY + 850));
                         }
                         break;
@@ -189,6 +235,16 @@ public class ObstacleManager {
         for (Obstacle coin: coins){
             coin.draw(canvas);
         }
+
+        if (shields.size() > 0) {
+            if (shields.get(shields.size() - 1).getTop() >= Constants.screenHeight) {
+                shields.remove(shields.size() - 1);
+            }
+        }
+        for (Obstacle shield: shields){
+            shield.draw(canvas);
+        }
+
         Paint paint = new Paint();
         Typeface typeface = Typeface.createFromAsset(Constants.currentContext.getAssets(), "spaceage.ttf");
         paint.setTypeface(typeface);
