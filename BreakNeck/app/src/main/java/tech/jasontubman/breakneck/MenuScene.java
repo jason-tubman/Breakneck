@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -13,7 +12,6 @@ import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.view.MotionEvent;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 import tech.jasontubman.game.R;
@@ -705,7 +703,10 @@ public class MenuScene implements Scene {
         Paint paint = new Paint();
         paint.setColor(Color.RED);
         RectF selected = new RectF();
-        switch (selectedShip) {
+        SharedPreferences prefs = Constants.currentContext.getSharedPreferences("gameData", Context.MODE_PRIVATE);
+        int shipChosen = prefs.getInt("selectedShip", 0);;
+
+        switch (shipChosen) {
             case 0: selected.set((int) (Constants.screenWidth / 8.2) - 5, (int) (Constants.screenHeight / 4.7) - 5,
                     (int) (Constants.screenWidth/8.2) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/4.7) + (Constants.screenHeight / 12) + 5);
                 break;
@@ -795,7 +796,7 @@ public class MenuScene implements Scene {
                     (int) (Constants.screenWidth/1.35) + (int) (Constants.screenWidth / 7.5) + 5, (int) (Constants.screenHeight/1.25) + Constants.screenHeight / 12 + 5);
                 break;
         }
-        this.sceneManager.shipChosen = selectedShip;
+        this.sceneManager.shipChosen = shipChosen;
         canvas.drawRoundRect(selected, 8, 8, paint);
 
     }
@@ -1106,6 +1107,8 @@ public class MenuScene implements Scene {
                             }
                         } else {
                             selectedShip = 0;
+                            editor.putInt("selectedShip", 0);
+                            editor.commit();
                         }
                     } else if (event.getY() > Constants.screenHeight / 4.7 && event.getY() < Constants.screenHeight / 4.7 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 3.0 && event.getX() < Constants.screenWidth / 3.0 + (int) (Constants.screenWidth / 7.5) && store) {
@@ -1118,6 +1121,8 @@ public class MenuScene implements Scene {
                             }
                         } else {
                             selectedShip = 1;
+                            editor.putInt("selectedShip", 1);
+                            editor.commit();
                         }
                     } else if (event.getY() > Constants.screenHeight / 4.7 && event.getY() < Constants.screenHeight / 4.7 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 1.9 && event.getX() < Constants.screenWidth / 1.9 + (int) (Constants.screenWidth / 7.5) && store) {
@@ -1130,6 +1135,8 @@ public class MenuScene implements Scene {
                             }
                         } else {
                             selectedShip = 2;
+                            editor.putInt("selectedShip", 2);
+                            editor.commit();
                         }
                     } else if (event.getY() > Constants.screenHeight / 4.7 && event.getY() < Constants.screenHeight / 4.7 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 1.35 && event.getX() < Constants.screenWidth / 1.35 + (int) (Constants.screenWidth / 7.5) && store) {
@@ -1142,6 +1149,8 @@ public class MenuScene implements Scene {
                             }
                         } else {
                             selectedShip = 3;
+                            editor.putInt("selectedShip", 3);
+                            editor.commit();
                         }
                     }
                     //ROW 2
@@ -1156,6 +1165,8 @@ public class MenuScene implements Scene {
                             }
                         } else {
                             selectedShip = 4;
+                            editor.putInt("selectedShip", 4);
+                            editor.commit();
                         }
                     } else if (event.getY() > Constants.screenHeight / 3.2 && event.getY() < Constants.screenHeight / 3.2 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 3.0 && event.getX() < Constants.screenWidth / 3.0 + (int) (Constants.screenWidth / 7.5) && store) {
@@ -1168,6 +1179,8 @@ public class MenuScene implements Scene {
                             }
                         } else {
                             selectedShip = 5;
+                            editor.putInt("selectedShip", 5);
+                            editor.commit();
                         }
                     } else if (event.getY() > Constants.screenHeight / 3.2 && event.getY() < Constants.screenHeight / 3.2 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 1.9 && event.getX() < Constants.screenWidth / 1.9 + (int) (Constants.screenWidth / 7.5) && store) {
@@ -1180,6 +1193,8 @@ public class MenuScene implements Scene {
                             }
                         } else {
                             selectedShip = 6;
+                            editor.putInt("selectedShip", 6);
+                            editor.commit();
                         }
                     } else if (event.getY() > Constants.screenHeight / 3.2 && event.getY() < Constants.screenHeight / 3.2 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 1.35 && event.getX() < Constants.screenWidth / 1.35 + (int) (Constants.screenWidth / 7.5) && store) {
@@ -1192,6 +1207,8 @@ public class MenuScene implements Scene {
                             }
                         } else {
                             selectedShip = 7;
+                            editor.putInt("selectedShip", 7);
+                            editor.commit();
                         }
                     }
                     //ROW 3
@@ -1206,6 +1223,8 @@ public class MenuScene implements Scene {
                             }
                         } else {
                             selectedShip = 8;
+                            editor.putInt("selectedShip", 8);
+                            editor.commit();
                         }
                     } else if (event.getY() > Constants.screenHeight / 2.43 && event.getY() < Constants.screenHeight / 2.43 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 3.0 && event.getX() < Constants.screenWidth / 3.0 + (int) (Constants.screenWidth / 7.5) && store) {
@@ -1218,6 +1237,8 @@ public class MenuScene implements Scene {
                             }
                         } else {
                             selectedShip = 9;
+                            editor.putInt("selectedShip", 9);
+                            editor.commit();
                         }
                     } else if (event.getY() > Constants.screenHeight / 2.43 && event.getY() < Constants.screenHeight / 2.43 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 1.9 && event.getX() < Constants.screenWidth / 1.9 + (int) (Constants.screenWidth / 7.5) && store) {
@@ -1230,6 +1251,8 @@ public class MenuScene implements Scene {
                             }
                         } else {
                             selectedShip = 10;
+                            editor.putInt("selectedShip", 10);
+                            editor.commit();
                         }
                     } else if (event.getY() > Constants.screenHeight / 2.43 && event.getY() < Constants.screenHeight / 2.43 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 1.35 && event.getX() < Constants.screenWidth / 1.35 + (int) (Constants.screenWidth / 7.5) && store) {
@@ -1242,6 +1265,8 @@ public class MenuScene implements Scene {
                             }
                         } else {
                             selectedShip = 11;
+                            editor.putInt("selectedShip", 11);
+                            editor.commit();
                         }
                     }
                     //ROW 4
@@ -1256,6 +1281,8 @@ public class MenuScene implements Scene {
                             }
                         } else {
                             selectedShip = 12;
+                            editor.putInt("selectedShip", 12);
+                            editor.commit();
                         }
                     } else if (event.getY() > Constants.screenHeight / 1.95 && event.getY() < Constants.screenHeight / 1.95 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 3.0 && event.getX() < Constants.screenWidth / 3.0 + (int) (Constants.screenWidth / 7.5) && store) {
@@ -1268,6 +1295,8 @@ public class MenuScene implements Scene {
                             }
                         } else {
                             selectedShip = 13;
+                            editor.putInt("selectedShip", 13);
+                            editor.commit();
                         }
                     } else if (event.getY() > Constants.screenHeight / 1.95 && event.getY() < Constants.screenHeight / 1.95 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 1.9 && event.getX() < Constants.screenWidth / 1.9 + (int) (Constants.screenWidth / 7.5) && store) {
@@ -1280,6 +1309,8 @@ public class MenuScene implements Scene {
                             }
                         } else {
                             selectedShip = 14;
+                            editor.putInt("selectedShip", 14);
+                            editor.commit();
                         }
                     } else if (event.getY() > Constants.screenHeight / 1.95 && event.getY() < Constants.screenHeight / 1.95 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 1.35 && event.getX() < Constants.screenWidth / 1.35 + (int) (Constants.screenWidth / 7.5) && store) {
@@ -1292,6 +1323,8 @@ public class MenuScene implements Scene {
                             }
                         } else {
                             selectedShip = 15;
+                            editor.putInt("selectedShip", 15);
+                            editor.commit();
                         }
                     }
                     //ROW 5
@@ -1306,6 +1339,8 @@ public class MenuScene implements Scene {
                             }
                         } else {
                             selectedShip = 16;
+                            editor.putInt("selectedShip", 16);
+                            editor.commit();
                         }
                     } else if (event.getY() > Constants.screenHeight / 1.65 && event.getY() < Constants.screenHeight / 1.65 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 3.0 && event.getX() < Constants.screenWidth / 3.0 + (int) (Constants.screenWidth / 7.5) && store) {
@@ -1318,6 +1353,8 @@ public class MenuScene implements Scene {
                             }
                         } else {
                             selectedShip = 17;
+                            editor.putInt("selectedShip", 17);
+                            editor.commit();
                         }
                     } else if (event.getY() > Constants.screenHeight / 1.65 && event.getY() < Constants.screenHeight / 1.65 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 1.9 && event.getX() < Constants.screenWidth / 1.9 + (int) (Constants.screenWidth / 7.5) && store) {
@@ -1330,6 +1367,8 @@ public class MenuScene implements Scene {
                             }
                         } else {
                             selectedShip = 18;
+                            editor.putInt("selectedShip", 18);
+                            editor.commit();
                         }
                     } else if (event.getY() > Constants.screenHeight / 1.65 && event.getY() < Constants.screenHeight / 1.65 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 1.35 && event.getX() < Constants.screenWidth / 1.35 + (int) (Constants.screenWidth / 7.5) && store) {
@@ -1342,6 +1381,8 @@ public class MenuScene implements Scene {
                             }
                         } else {
                             selectedShip = 19;
+                            editor.putInt("selectedShip", 19);
+                            editor.commit();
                         }
                     }
                     //ROW 6
@@ -1356,6 +1397,8 @@ public class MenuScene implements Scene {
                             }
                         } else {
                             selectedShip = 20;
+                            editor.putInt("selectedShip", 20);
+                            editor.commit();
                         }
                     } else if (event.getY() > Constants.screenHeight / 1.42 && event.getY() < Constants.screenHeight / 1.42 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 3.0 && event.getX() < Constants.screenWidth / 3.0 + (int) (Constants.screenWidth / 7.5) && store) {
@@ -1368,6 +1411,8 @@ public class MenuScene implements Scene {
                             }
                         } else {
                             selectedShip = 21;
+                            editor.putInt("selectedShip", 21);
+                            editor.commit();
                         }
                     } else if (event.getY() > Constants.screenHeight / 1.42 && event.getY() < Constants.screenHeight / 1.42 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 1.9 && event.getX() < Constants.screenWidth / 1.9 + (int) (Constants.screenWidth / 7.5) && store) {
@@ -1380,6 +1425,8 @@ public class MenuScene implements Scene {
                             }
                         } else {
                             selectedShip = 22;
+                            editor.putInt("selectedShip", 22);
+                            editor.commit();
                         }
                     } else if (event.getY() > Constants.screenHeight / 1.42 && event.getY() < Constants.screenHeight / 1.42 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 1.35 && event.getX() < Constants.screenWidth / 1.35 + (int) (Constants.screenWidth / 7.5) && store) {
@@ -1392,6 +1439,8 @@ public class MenuScene implements Scene {
                             }
                         } else {
                             selectedShip = 23;
+                            editor.putInt("selectedShip", 23);
+                            editor.commit();
                         }
                     }
                     //ROW 7
@@ -1406,6 +1455,8 @@ public class MenuScene implements Scene {
                             }
                         } else {
                             selectedShip = 24;
+                            editor.putInt("selectedShip", 24);
+                            editor.commit();
                         }
                     } else if (event.getY() > Constants.screenHeight / 1.25 && event.getY() < Constants.screenHeight / 1.25 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 3.0 && event.getX() < Constants.screenWidth / 3.0 + (int) (Constants.screenWidth / 7.5) && store) {
@@ -1418,6 +1469,8 @@ public class MenuScene implements Scene {
                             }
                         } else {
                             selectedShip = 25;
+                            editor.putInt("selectedShip", 25);
+                            editor.commit();
                         }
                     } else if (event.getY() > Constants.screenHeight / 1.25 && event.getY() < Constants.screenHeight / 1.25 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 1.9 && event.getX() < Constants.screenWidth / 1.9 + (int) (Constants.screenWidth / 7.5) && store) {
@@ -1430,6 +1483,8 @@ public class MenuScene implements Scene {
                             }
                         } else {
                             selectedShip = 26;
+                            editor.putInt("selectedShip", 26);
+                            editor.commit();
                         }
                     } else if (event.getY() > Constants.screenHeight / 1.25 && event.getY() < Constants.screenHeight / 1.25 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 1.35 && event.getX() < Constants.screenWidth / 1.35 + (int) (Constants.screenWidth / 7.5) && store) {
@@ -1442,6 +1497,8 @@ public class MenuScene implements Scene {
                             }
                         } else {
                             selectedShip = 27;
+                            editor.putInt("selectedShip", 27);
+                            editor.commit();
                         }
                     }
                     // STORE CLICKS END ---------

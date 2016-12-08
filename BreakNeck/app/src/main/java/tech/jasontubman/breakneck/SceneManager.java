@@ -1,5 +1,7 @@
 package tech.jasontubman.breakneck;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -24,7 +26,8 @@ public class SceneManager {
     private boolean isPaused = false;
     ParticleGenerator cogGen;
 
-    int shipChosen = 0;
+    public int shipChosen = 0;
+
     MediaPlayer backgroundMusic;
     private int sliderMin = (int) (Constants.screenWidth/7.9);
     private int sliderMax = (int) (Constants.screenWidth / 1.22);
@@ -61,6 +64,10 @@ public class SceneManager {
         activeScene = 0;
         scenes.add(0, new MenuScene(this));
         cogGen = new ParticleGenerator();
+
+        SharedPreferences prefs = Constants.currentContext.getSharedPreferences("gameData", Context.MODE_PRIVATE);
+        shipChosen = prefs.getInt("selectedShip", 0);;
+
         shipSel = new ShipSelector(shipChosen+1, 1);
 
         exit = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.exitbutton);
@@ -169,7 +176,7 @@ public class SceneManager {
         cogGen.addParticle((int) (Constants.screenWidth/2.07), (int) (Constants.screenHeight/1.5), 0, false);
         cogGen.update();
         cogGen.draw(canvas);
-
+        resizedShip = Bitmap.createScaledBitmap(ship, (int) (Constants.screenWidth / 4), Constants.screenHeight / 7, false);
         canvas.drawBitmap(resizedShip, (int) (Constants.screenWidth/2.8), (int) (Constants.screenHeight/1.9), paint);
 
 

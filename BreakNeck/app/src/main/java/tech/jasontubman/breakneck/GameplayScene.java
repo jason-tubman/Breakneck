@@ -314,7 +314,7 @@ public class GameplayScene implements Scene {
 
 
 
-        starManager.draw(canvas);
+       starManager.draw(canvas);
 
         particleGenerator1.draw(canvas);
 
