@@ -5,8 +5,8 @@ Breakneck is an endless vertical obstacle dodging game with an emphasis on speed
 Breakneck is a work in progress project.
 
 # CREDITS
-ASSETS DRAWN BY: KENNEY.
+Assets Drawn By: KENNEY.
 www.kenney.nl
 
-MUSIC BY: Alexandr Zhelanov.
+Music By: Alexandr Zhelanov.
 www.soundcloud.com/alexandrzhelanov
