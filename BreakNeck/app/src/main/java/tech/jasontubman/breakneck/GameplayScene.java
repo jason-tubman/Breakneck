@@ -1,5 +1,7 @@
 package tech.jasontubman.breakneck;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -12,7 +14,6 @@ import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.view.MotionEvent;
 
-import java.util.Timer;
 
 /**
  * Created by Jason on 21/11/2016.
@@ -266,6 +267,19 @@ public class GameplayScene implements Scene {
 
         if (gameOver) {
             fades();
+
+            //Save Score
+
+            //Save Coins
+
+            SharedPreferences prefs = Constants.currentContext.getSharedPreferences("gameData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("coinValue", coins);
+            editor.commit();
+
+            //End save Coins
+
+
             RectF gameOverScreen = new RectF();
             gameOverScreen.set(Constants.screenWidth/12, Constants.screenHeight/4, Constants.screenWidth - Constants.screenWidth/12, Constants.screenHeight-Constants.screenHeight/4);
 
@@ -325,6 +339,13 @@ public class GameplayScene implements Scene {
                     gameOver = false;
                 } else if (gameOver && event.getY() > Constants.screenHeight/1.53 && event.getY() < Constants.screenHeight/1.53 + Constants.screenHeight / 12 &&
                         event.getX() > Constants.screenWidth/9 && event.getX() < Constants.screenWidth/9 + Constants.screenWidth / 1.3) {
+                    reset();
+                    gameOver = false;
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) {
+
+                    }
                     terminate();
                 }
                 break;

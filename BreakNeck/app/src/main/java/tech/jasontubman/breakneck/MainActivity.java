@@ -26,4 +26,12 @@ public class MainActivity extends Activity {
 
 
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();  // Always call the superclass method first
+        System.exit(0);
+
+    }
+    
 }

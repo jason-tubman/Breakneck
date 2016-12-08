@@ -1,5 +1,7 @@
 package tech.jasontubman.breakneck;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -32,7 +34,7 @@ public class ObstacleManager {
     private int elapsedTime;
     private boolean countDown = true;
     private Rect r = new Rect();
-    private int coinsCount = 0;
+    private int coinsCount;
 
     public ObstacleManager(int playerGap, int obstacleGap, int obstacleHeight, int color, Player player) {
         this.playerGap = playerGap;
@@ -40,6 +42,11 @@ public class ObstacleManager {
         this.obstacleHeight = obstacleHeight;
         this.color = color;
         this.player = player;
+
+        SharedPreferences prefs = Constants.currentContext.getSharedPreferences("gameData", Context.MODE_PRIVATE);
+        int score = prefs.getInt("coinValue", 0); //0 is the default value
+
+        this.coinsCount = score;
 
         startTime = initTime = System.currentTimeMillis();
 
@@ -185,7 +192,7 @@ public class ObstacleManager {
         Paint paint = new Paint();
         Typeface typeface = Typeface.createFromAsset(Constants.currentContext.getAssets(), "spaceage.ttf");
         paint.setTypeface(typeface);
-        paint.setTextSize(900 / Constants.currentContext.getResources().getDisplayMetrics().density);
+        paint.setTextSize(700 / Constants.currentContext.getResources().getDisplayMetrics().density);
         paint.setColor(Color.LTGRAY);
         if (elapsedTime < 1000) {
             centreText(canvas, paint, "3");
@@ -224,6 +231,8 @@ public class ObstacleManager {
         float y = cHeight / 2f - r.height() / 2f - r.top;
         canvas.drawText(text, x, y, paint);
     }
+
+
 
 
 }
