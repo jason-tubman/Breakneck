@@ -8,6 +8,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+
+import tech.jasontubman.breakneck.Triangles.Diamond;
+import tech.jasontubman.breakneck.Triangles.LeftTriangle;
+import tech.jasontubman.breakneck.Triangles.RightTriangle;
 import tech.jasontubman.game.R;
 
 import android.graphics.RectF;
@@ -19,52 +23,59 @@ import android.view.MotionEvent;
  * Created by Jason on 21/11/2016.
  */
 
-public class GameplayScene implements Scene {
+public class TutorialScene implements Scene {
     private float eventX =0;
+
+    private SharedPreferences prefs = Constants.currentContext.getSharedPreferences("gameData", Context.MODE_PRIVATE);
+    private SharedPreferences.Editor editor = prefs.edit();
+
     private int numPoints = 0;
     private Player player;
     private Point playerPoint;
     private Player player2;
     private Point playerPoint2;
-    private ObstacleManager obstacleManager;
-    private int score;
+    private int tutorialStage = 0;
     private Rect r = new Rect();
     private int justReset = 1;
 
-    private int coins = 0;
-
-    //GAME OVER PAINTS
-    Paint paint3 = new Paint();
     private int opacity = 0;
-    private int opacity2 = 0;
-    Paint paint4 = new Paint();
-    //
+
+    private boolean shieldMade = false;
+    private boolean shieldGrabbed = false;
+    private Shield shield;
+
+    private int elapsedTime= 0;
+    private long startTime = System.currentTimeMillis();
+
+    private boolean obstaclesBeaten = false;
+    private boolean obstacles1made = false;
+    private boolean obstacles2made = false;
+    private boolean obstacles3made = false;
 
     private SceneManager sceneManager;
 
     private StarManager starManager;
     private boolean split;
     private boolean gameOver = false;
-    private long timeEnded;
 
     private ShipSelector selector;
 
     private ParticleGenerator particleGenerator1;
     private ParticleGenerator particleGenerator2;
 
+    private Obstacle left;
+    private Obstacle right;
+    private Obstacle diamond;
 
-    private Boolean justHit = false;
 
-    public GameplayScene(SceneManager manager) {
+    public TutorialScene(SceneManager manager) {
         this.sceneManager = manager;
         selector = new ShipSelector(this.sceneManager.shipChosen + 1, 1);
         player = new Player(new Rect(100, 100, 235, 235), selector.getSprite(), selector.getSpeed());
         playerPoint = new Point(Constants.screenWidth/2, Constants.screenHeight-Constants.screenHeight/4);
         player.update(playerPoint);
 
-        obstacleManager = new ObstacleManager(200, 950, 400, Color.LTGRAY, player);
 
-        coins = obstacleManager.getCoins();
         starManager = new StarManager(player.getSpeed(), false);
 
         particleGenerator1 = new ParticleGenerator();
@@ -74,8 +85,6 @@ public class GameplayScene implements Scene {
         playerPoint2 = new Point(Constants.screenWidth/2, Constants.screenHeight-Constants.screenHeight/4);
         player2.update(playerPoint2);
         player2.setVisible(false);
-
-
 
 
     }
@@ -88,13 +97,7 @@ public class GameplayScene implements Scene {
         player2.update(playerPoint2);
         player2.setVisible(false);
 
-        obstacleManager = new ObstacleManager(200, 950, 400, Color.LTGRAY, player);
-        this.score = 0;
         numPoints  = 0;
-
-        opacity = 0;
-        opacity2 = 0;
-
     }
     @Override
     public void update() {
@@ -102,7 +105,6 @@ public class GameplayScene implements Scene {
             if (player.getShieldStatus() && !player2.getShieldStatus()) {
                 player2.setShieldStatus(true);
             }
-            coins = obstacleManager.getCoins();
             if (player2.isVisible()) {
                 particleGenerator2.addParticle(player2.getX(), player2.getY() + player2.getHeight()-50, 0, true);
                 particleGenerator2.update();
@@ -117,11 +119,6 @@ public class GameplayScene implements Scene {
             player.update(playerPoint);
             player2.update(playerPoint2);
 
-            obstacleManager.update();
-
-            if (!obstacleManager.getcountDown()) {
-                addToScore(100);
-            }
 
             starManager.update();
 
@@ -134,15 +131,9 @@ public class GameplayScene implements Scene {
             if (numPoints > 0 && !gameOver) {
                 if (eventX < Constants.screenWidth/2) {
                     if (!(playerPoint.x < player.getRectangle().width())) {
-                        if (obstacleManager.getSpeed() > 0) {
-                            playerPoint.set((int) (playerPoint.x - 70 * obstacleManager.getSpeed()), playerPoint.y);
+                            playerPoint.set(playerPoint.x - 70, playerPoint.y);
                             particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, -5, false);
                             particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, -5, false);
-                        } else {
-                                playerPoint.set(playerPoint.x - 70, playerPoint.y);
-                                particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, -5, false);
-                                particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, -5, false);
-                        }
                     } else {
                         if (!split) {
                             playerPoint.set(100, playerPoint.y);
@@ -150,15 +141,9 @@ public class GameplayScene implements Scene {
                     }
                 } else if (eventX > Constants.screenWidth/2) {
                     if (!(playerPoint.x > Constants.screenWidth - player.getRectangle().width())) {
-                        if (obstacleManager.getSpeed() > 0) {
-                            playerPoint.set((int) (playerPoint.x + 70 * obstacleManager.getSpeed()), playerPoint.y);
-                            particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, 5, false);
-                            particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, 5, false);
-                        } else {
                             playerPoint.set(playerPoint.x + 70, playerPoint.y);
                             particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, 5, false);
                             particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, 5, false);
-                        }
                     }
                     else {
                         playerPoint.set(Constants.screenWidth - 100, playerPoint.y);
@@ -198,124 +183,233 @@ public class GameplayScene implements Scene {
             }
 
         }
-        if (obstacleManager.playerCollided(player) && !gameOver || obstacleManager.playerCollided(player2) && !gameOver) {
-            if (player.getShieldStatus()) {
-                justHit = true;
-            } else {
-                gameOver = true;
-                timeEnded = System.currentTimeMillis();
+        elapsedTime += (int)(System.currentTimeMillis() - startTime);
+        startTime = System.currentTimeMillis();
+
+
+    }
+
+    private void fade() {
+        if (opacity < 255) {
+            opacity+=15;
+        }
+
+    }
+
+    private void runTutorial(Canvas canvas) {
+
+        Typeface typeface = Typeface.createFromAsset(Constants.currentContext.getAssets(), "spaceage.ttf");
+        Paint paint2 = new Paint();
+        paint2.setTypeface(typeface);
+        paint2.setColor(Color.LTGRAY);
+        paint2.setTextSize(40 * Constants.currentContext.getResources().getDisplayMetrics().density);
+
+
+        if (elapsedTime < 4000) {
+            tutorialStage = 0;
+        } else if (elapsedTime >= 4000 && elapsedTime < 8000 ) {
+            tutorialStage = 1;
+        } else if (elapsedTime >= 8000 && elapsedTime < 12000) {
+            tutorialStage = 2;
+        } else if (elapsedTime >= 12000 && elapsedTime < 17000) {
+            tutorialStage = 3;
+        } else if (elapsedTime >= 17000 && elapsedTime < 21000) {
+            tutorialStage = 4;
+        } else if (elapsedTime >= 21000 && elapsedTime < 25000) {
+            tutorialStage = 5;
+        }  else if (elapsedTime >= 25000 && elapsedTime < 30000) {
+            tutorialStage = 6;
+            if (!shieldMade) {
+               shield = new Shield(Constants.screenWidth/2 - 30, -50);
+                shieldMade = true;
+            }
+            shield.moveObstacle(20);
+            shield.update();
+            if (!shieldGrabbed) {
+                shield.draw(canvas);
+            }
+            if (shield.getTop() >= Constants.screenHeight) {
+                shield = new Shield(Constants.screenWidth/2, Constants.screenHeight - 300);
+            }
+            if (shield.playerCollided(player)) {
+                shieldGrabbed = true;
+                player.setShieldStatus(true);
             }
 
-        } else {
-            if (justHit) {
-                player.setShieldStatus(false);
-                player2.setShieldStatus(false);
+        } else if (elapsedTime >= 30000 && elapsedTime < 35000) {
+            if (!shieldGrabbed) {
+                startTime += 5000;
+            } else {
+                tutorialStage = 7;
+            }
+        } else if (elapsedTime >= 35000 && elapsedTime < 37000) {
+            tutorialStage = 8;
+        } else if (elapsedTime >= 37000 && elapsedTime < 41000) {
+            tutorialStage = 9;
+
+            if (!obstacles1made) {
+                left = new LeftTriangle(Color.LTGRAY, 0, -300);
+                obstacles1made = true;
+            } if (!obstacles2made) {
+                right = new RightTriangle(Color.LTGRAY, Constants.screenWidth/4, -2000);
+                obstacles2made = true;
+            } if (!obstacles3made) {
+                diamond = new Diamond(Color.LTGRAY, Constants.screenWidth/2, -3700);
+                obstacles3made = true;
+            }
+
+            left.moveObstacle(20);
+            left.update();
+
+            right.moveObstacle(20);
+            right.update();
+
+            diamond.moveObstacle(20);
+            diamond.update();
+
+            right.draw(canvas);
+            left.draw(canvas);
+            diamond.draw(canvas);
+
+            if (left.playerCollided(player) || right.playerCollided(player) || diamond.playerCollided(player)) {
+                left = new LeftTriangle(Color.LTGRAY, 0, -300);
+                right = new RightTriangle(Color.LTGRAY, Constants.screenWidth/4, -2000);
+                diamond = new Diamond(Color.LTGRAY, Constants.screenWidth/2, -3700);
+            }
+
+            if (diamond.getTop() >= Constants.screenHeight) {
+                obstaclesBeaten = true;
+            }
+
+        } else if (elapsedTime >= 41000 && elapsedTime < 42000) {
+            if (!obstaclesBeaten) {
+                startTime += 4000;
+            } else {
+                tutorialStage = 10;
             }
         }
-    }
+        else if (elapsedTime >= 42000 && elapsedTime < 47000) {
+            tutorialStage = 11;
+        }
+        else if (elapsedTime >= 47000 && elapsedTime < 52000) {
+            tutorialStage = 12;
+        }
+        else if (elapsedTime >= 52000 && elapsedTime < 57000) {
+            tutorialStage = 13;
+            editor.putBoolean("tutorial", true);
+            editor.commit();
+        }  else if (elapsedTime >= 57000 && elapsedTime < 61000) {
+            fade();
+            Paint paint = new Paint();
+            paint.setColor(Color.BLACK);
+            RectF rect = new RectF();
+            paint.setAlpha(opacity);
+            rect.set(0, 0, Constants.screenWidth, Constants.screenHeight);
+            canvas.drawRoundRect(rect, 0, 0, paint);
 
-    public void fades() {
-            if (opacity < 255) {
-                opacity+=15;
-            }
-            if (opacity2 < 210) {
-                opacity2+=15;
-            }
-    }
+        } else if (elapsedTime > 61000) {
+            terminate();
+        }
 
-    public void saveScores(int score) {
-        SharedPreferences prefs = Constants.currentContext.getSharedPreferences("gameData", Context.MODE_PRIVATE);
-
-        int score1 = prefs.getInt("save1", 0); //0 is the default value
-        int score2 = prefs.getInt("save2", 0); //0 is the default value
-        int score3 = prefs.getInt("save3", 0); //0 is the default value
-        int score4 = prefs.getInt("save4", 0); //0 is the default value
-        int score5 = prefs.getInt("save5", 0); //0 is the default value
-        int score6 = prefs.getInt("save6", 0); //0 is the default value
-        int score7 = prefs.getInt("save7", 0); //0 is the default value
-        int score8 = prefs.getInt("save8", 0); //0 is the default value
-        int score9 = prefs.getInt("save9", 0); //0 is the default value
-        int score10 = prefs.getInt("save10", 0); //0 is the default value
-
-        SharedPreferences.Editor editor = prefs.edit();
-
-        if (score > score1) {
-            for (int i = 2; i < 11; i++) {
-                editor.putInt("save" + i, prefs.getInt("save" + (i - 1), 0));
+        switch(tutorialStage) {
+            case 0: {
+                centreText(canvas, paint2, "WELCOME", Constants.screenHeight/4);
+                centreText(canvas, paint2, "TO SURGE", Constants.screenHeight/3);
+                break;
             }
-            editor.putInt("save1", score);
-            editor.commit();
-        } else if (score > score2 && score < score1) {
-            for (int i = 3; i < 11; i++) {
-                editor.putInt("save" + i, prefs.getInt("save" + (i - 1), 0));
+            case 1: {
+                paint2.setTextSize(20 * Constants.currentContext.getResources().getDisplayMetrics().density);
+                centreText(canvas, paint2, "THIS QUICK", Constants.screenHeight/4);
+                centreText(canvas, paint2, "TUTORIAL WILL", (int) (Constants.screenHeight/3.4));
+                centreText(canvas, paint2, "SHOW YOU THE ROPES", (int) (Constants.screenHeight/3.0));
+                break;
             }
-            editor.putInt("save2", score);
-            editor.commit();
-        }  else if (score > score3 && score < score2) {
-            for (int i = 4; i < 11; i++) {
-                editor.putInt("save" + i, prefs.getInt("save" + (i - 1), 0));
+            case 2: {
+                paint2.setTextSize(20 * Constants.currentContext.getResources().getDisplayMetrics().density);
+                centreText(canvas, paint2, "LET'S START", Constants.screenHeight/4);
+                centreText(canvas, paint2, "WITH THE CONTROLS", (int) (Constants.screenHeight/3.4));
+                break;
             }
-            editor.putInt("save3", score);
-            editor.commit();
-        } else if (score > score4 && score < score3) {
-            for (int i = 5; i < 11; i++) {
-                editor.putInt("save" + i, prefs.getInt("save" + (i - 1), 0));
+            case 3: {
+                paint2.setTextSize(20 * Constants.currentContext.getResources().getDisplayMetrics().density);
+                centreText(canvas, paint2, "HOLD THE LEFT", Constants.screenHeight/4);
+                centreText(canvas, paint2, "SIDE OF THE", (int) (Constants.screenHeight/3.4));
+                centreText(canvas, paint2, "SCREEN TO MOVE LEFT", (int) (Constants.screenHeight/3.0));
+                break;
             }
-            editor.putInt("save4", score);
-            editor.commit();
-        } else if (score > score5 && score < score4) {
-            for (int i = 6; i < 11; i++) {
-                editor.putInt("save" + i, prefs.getInt("save" + (i - 1), 0));
+            case 4: {
+                paint2.setTextSize(20 * Constants.currentContext.getResources().getDisplayMetrics().density);
+                centreText(canvas, paint2, "SIMILARLY, THE", Constants.screenHeight/4);
+                centreText(canvas, paint2, "RIGHT SIDE WILL", (int) (Constants.screenHeight/3.4));
+                centreText(canvas, paint2, "MOVE YOU TO THE RIGHT", (int) (Constants.screenHeight/3.0));
+                break;
             }
-            editor.putInt("save5", score);
-            editor.commit();
-        } else if (score > score6 && score < score5) {
-            for (int i = 7; i < 11; i++) {
-                editor.putInt("save" + i, prefs.getInt("save" + (i - 1), 0));
+            case 5: {
+                paint2.setTextSize(20 * Constants.currentContext.getResources().getDisplayMetrics().density);
+                centreText(canvas, paint2, "AT ANY TIME JUST", Constants.screenHeight/4);
+                centreText(canvas, paint2, "REMOVE BOTH FINGERS", (int) (Constants.screenHeight/3.4));
+                centreText(canvas, paint2, "TO CENTRE YOURSELF", (int) (Constants.screenHeight/3.0));
+                break;
             }
-            editor.putInt("save6", score);
-            editor.commit();
-        } else if (score > score7 && score < score6) {
-            for (int i = 8; i < 11; i++) {
-                editor.putInt("save" + i, prefs.getInt("save" + (i - 1), 0));
+            case 6: {
+                paint2.setTextSize(20 * Constants.currentContext.getResources().getDisplayMetrics().density);
+                centreText(canvas, paint2, "THIS IS A SHIELD", Constants.screenHeight/4);
+                paint2.setTextSize(30 * Constants.currentContext.getResources().getDisplayMetrics().density);
+                centreText(canvas, paint2, "GRAB IT!", (int) (Constants.screenHeight/2.8));
+                break;
             }
-            editor.putInt("save7", score);
-            editor.commit();
-        } else if (score > score8 && score < score7) {
-            for (int i = 9; i < 11; i++) {
-                editor.putInt("save" + i, prefs.getInt("save" + (i - 1), 0));
+            case 7: {
+                paint2.setTextSize(30 * Constants.currentContext.getResources().getDisplayMetrics().density);
+                centreText(canvas, paint2, "NICE!", Constants.screenHeight/4);
+                paint2.setTextSize(15 * Constants.currentContext.getResources().getDisplayMetrics().density);
+                centreText(canvas, paint2, "SHIELDS WILL ", (int) (Constants.screenHeight/3.4));
+                centreText(canvas, paint2, "PROTECT YOU FROM", (int) (Constants.screenHeight/3.1));
+                centreText(canvas, paint2, "ANY INCOMING OBSTACLE", (int) (Constants.screenHeight/2.8));
+                break;
             }
-            editor.putInt("save8", score);
-            editor.commit();
-        } else if (score > score9 && score < score8) {
-            for (int i = 10; i < 11; i++) {
-                editor.putInt("save" + i, prefs.getInt("save" + (i - 1), 0));
+            case 8: {
+                paint2.setTextSize(20 * Constants.currentContext.getResources().getDisplayMetrics().density);
+                centreText(canvas, paint2, "SPEAKING OF", Constants.screenHeight/4);
+                paint2.setTextSize(30 * Constants.currentContext.getResources().getDisplayMetrics().density);
+                centreText(canvas, paint2, "WATCH OUT!", (int) (Constants.screenHeight/2.8));
+                break;
             }
-            editor.putInt("save9", score);
-            editor.commit();
-        } else if (score > score10 && score < score9) {
-            editor.putInt("save10", score);
-            editor.commit();
-        } else {
-
+            case 10: {
+                paint2.setTextSize(30 * Constants.currentContext.getResources().getDisplayMetrics().density);
+                centreText(canvas, paint2, "NICE!", Constants.screenHeight/4);
+                break;
+            }
+            case 11: {
+                paint2.setTextSize(20 * Constants.currentContext.getResources().getDisplayMetrics().density);
+                centreText(canvas, paint2, "LOOKS LIKE", Constants.screenHeight/4);
+                centreText(canvas, paint2, "YOU'RE READY", (int) (Constants.screenHeight/3.4));
+                break;
+            }
+            case 12: {
+                paint2.setTextSize(20 * Constants.currentContext.getResources().getDisplayMetrics().density);
+                centreText(canvas, paint2, "IF AT ANY TIME", Constants.screenHeight/4);
+                centreText(canvas, paint2, "YOU WANT TO RETURN", (int) (Constants.screenHeight/3.4));
+                centreText(canvas, paint2, "TO THIS TUTORIAL JUST", (int) (Constants.screenHeight/3.2));
+                centreText(canvas, paint2, "NAVIGATE TO THE OPTIONS PANEL", (int) (Constants.screenHeight/2.9));
+                break;
+            }
+            case 13: {
+                paint2.setTextSize(20 * Constants.currentContext.getResources().getDisplayMetrics().density);
+                centreText(canvas, paint2, "HAVE FUN PLAYING", Constants.screenHeight/4);
+                paint2.setTextSize(30 * Constants.currentContext.getResources().getDisplayMetrics().density);
+                centreText(canvas, paint2, "SURGE", (int) (Constants.screenHeight/3.2));
+                break;
+            }
         }
     }
 
     @Override
     public void draw(Canvas canvas) {
         canvas.drawRGB(44, 42, 49);
-
-        Paint score = new Paint();
-        score.setTextSize(50);
-        score.setColor(Color.WHITE);
-        score.setTextAlign(Paint.Align.RIGHT);
+        runTutorial(canvas);
         Typeface typeface = Typeface.createFromAsset(Constants.currentContext.getAssets(), "spaceage.ttf");
-        score.setTypeface(typeface);
-        canvas.drawText(Integer.toString(this.score), Constants.screenWidth - Constants.screenWidth/30, (int)(Constants.screenHeight/17.7), score);
 
-
-
-       starManager.draw(canvas);
+        starManager.draw(canvas);
 
         particleGenerator1.draw(canvas);
 
@@ -327,7 +421,6 @@ public class GameplayScene implements Scene {
         player.draw(canvas);
         player2.draw(canvas);
 
-        obstacleManager.draw(canvas);
 
         //DRAW COG
         Paint paint2 = new Paint();
@@ -338,66 +431,7 @@ public class GameplayScene implements Scene {
         canvas.drawBitmap(Assets.resizedCog, (int) (Constants.screenWidth/40), Constants.screenHeight/40, paint2);
         //END OF COG
 
-        //Draw Coins
-        canvas.drawBitmap(Assets.resizedCoin2, (int) (Constants.screenWidth/2) - Constants.screenWidth/15, Constants.screenHeight/25, paint2);
-        canvas.drawText(Integer.toString(coins), (int) (Constants.screenWidth/2), (int)(Constants.screenHeight/17.5), paint2);
-        //End of Coins
 
-
-        if (gameOver) {
-            fades();
-
-            //Save Score
-
-            //Save Coins
-
-            SharedPreferences prefs = Constants.currentContext.getSharedPreferences("gameData", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putInt("coinValue", coins);
-            editor.commit();
-
-            //End save Coins
-
-
-            RectF gameOverScreen = new RectF();
-            gameOverScreen.set(Constants.screenWidth/12, Constants.screenHeight/4, Constants.screenWidth - Constants.screenWidth/12, Constants.screenHeight-Constants.screenHeight/4);
-
-            Rect fade = new Rect();
-            fade.set(0, 0, Constants.screenWidth, Constants.screenHeight);
-            paint4.setColor(Color.BLACK);
-            paint4.setAlpha(opacity2);
-            canvas.drawRect(fade, paint4);
-
-            paint3.setColor(Color.WHITE);
-            paint3.setAlpha(opacity);
-            canvas.drawRoundRect(gameOverScreen, 10, 10, paint3);
-            paint3.setTextSize(150*2/8 * Constants.currentContext.getResources().getDisplayMetrics().density);
-            paint3.setColor(Color.DKGRAY);
-            paint3.setTypeface(typeface);
-            centreText(canvas, paint3, "GAME OVER", Constants.screenHeight/3.0f);
-            paint3.setTextSize(90*2  /8 * Constants.currentContext.getResources().getDisplayMetrics().density);
-            centreText(canvas, paint3, "Your Score was: ", Constants.screenHeight/2.5f);
-            paint3.setTextSize(140*2  /8 * Constants.currentContext.getResources().getDisplayMetrics().density);
-
-            int score1 = prefs.getInt("save1", 0); //0 is the default value)
-
-            if (this.score >= score1) {
-                paint3.setColor(Color.rgb(255, 215, 0));
-            }
-
-            saveScores(this.score);
-
-            centreText(canvas, paint3, Integer.toString(this.score), Constants.screenHeight/2.0f);
-
-            paint3.setColor(Color.DKGRAY);
-
-            canvas.drawBitmap(Assets.resizedplayAgain, (int) (Constants.screenWidth/9), (int) (Constants.screenHeight/1.8), paint3);
-            paint3.setTextSize(100*2  /8 * Constants.currentContext.getResources().getDisplayMetrics().density);
-            centreText(canvas, paint3, "PLAY AGAIN", Constants.screenHeight/1.66f);
-
-            canvas.drawBitmap(Assets.resizedstore, (int) (Constants.screenWidth/9), (int) (Constants.screenHeight/1.53), paint3);
-            centreText(canvas, paint3, "MENU", Constants.screenHeight/1.42f);
-        }
     }
 
     @Override
@@ -455,13 +489,8 @@ public class GameplayScene implements Scene {
 
     }
     private void resetPoint() {
-        double speed  = obstacleManager.getSpeed();
         if (playerPoint.x > (Constants.screenWidth / 2)) {
-            if (speed > 0) {
-                playerPoint.set((int) (playerPoint.x - 70 * speed), playerPoint.y);
-            } else {
-                playerPoint.set(playerPoint.x - 70, playerPoint.y);
-            }
+            playerPoint.set(playerPoint.x - 70, playerPoint.y);
             if (playerPoint.x <= (Constants.screenWidth / 2)) {
                 playerPoint.set(Constants.screenWidth/2, playerPoint.y);
                 selector.selectSprite(this.sceneManager.shipChosen + 1, 1);
@@ -469,11 +498,8 @@ public class GameplayScene implements Scene {
                 player2.updateSprite(selector.getSprite());
             }
         } else if (playerPoint.x < (Constants.screenWidth / 2)) {
-            if (speed > 0) {
-                playerPoint.set((int) (playerPoint.x + 70 * speed), playerPoint.y);
-            } else {
                 playerPoint.set(playerPoint.x + 70, playerPoint.y);
-            }
+
             if (playerPoint.x >= (Constants.screenWidth / 2)) {
                 playerPoint.set(Constants.screenWidth/2, playerPoint.y);
                 selector.selectSprite(this.sceneManager.shipChosen + 1, 1);
@@ -485,13 +511,10 @@ public class GameplayScene implements Scene {
         numPoints = 0;
     }
     private void resetPointTwo() {
-        double speed  = obstacleManager.getSpeed();
         if (playerPoint2.x > playerPoint.x) {
-            if (speed > 0) {
-                playerPoint2.set((int) (playerPoint2.x - 70 * speed), playerPoint2.y);
-            } else {
+
                 playerPoint2.set(playerPoint2.x - 70, playerPoint2.y);
-            }
+
             if (playerPoint2.x <= playerPoint.x) {
                 split = false;
                 playerPoint.set(playerPoint.x, Constants.screenHeight - Constants.screenHeight/4);
@@ -504,11 +527,8 @@ public class GameplayScene implements Scene {
 
             }
         } else if (playerPoint2.x < playerPoint.x) {
-            if (speed > 0) {
-                playerPoint2.set((int) (playerPoint2.x + 70 * speed), playerPoint2.y);
-            } else {
                 playerPoint2.set(playerPoint2.x + 70, playerPoint2.y);
-            }
+
             if (playerPoint2.x >= playerPoint.x) {
                 split = false;
                 playerPoint.set(playerPoint.x, Constants.screenHeight - Constants.screenHeight/4);
@@ -523,35 +543,19 @@ public class GameplayScene implements Scene {
         justReset++;
     }
 
-    public void addToScore(int score){
-        if (!gameOver) {
-            this.score += score*player.getSpeed();
-        }
-    }
-
     private void split() {
         if (eventX < Constants.screenWidth/2) {
             if (!(playerPoint2.x > Constants.screenWidth - player.getRectangle().width())) {
-                if (obstacleManager.getSpeed() > 0) {
-                    playerPoint2.set(playerPoint2.x + (int) (70 * obstacleManager.getSpeed()), playerPoint2.y);
-                    playerPoint.set(player.getRectangle().width() - 40, playerPoint.y);
-                } else {
                     playerPoint2.set(playerPoint2.x +70, playerPoint2.y);
                     playerPoint.set(player.getRectangle().width() - 40, playerPoint.y);
-                }
             } else {
                 playerPoint2.set(Constants.screenWidth - 60, playerPoint2.y);
                 playerPoint.set(player.getRectangle().width() - 40, playerPoint.y);
             }
         } else if (eventX > Constants.screenWidth/2) {
             if (!(playerPoint2.x < player.getRectangle().width())) {
-                if (obstacleManager.getSpeed() > 0) {
-                    playerPoint2.set(playerPoint2.x - (int) (70 * obstacleManager.getSpeed()), playerPoint2.y);
-                    playerPoint.set(Constants.screenWidth - 60, playerPoint.y);
-                } else {
                     playerPoint2.set(playerPoint2.x - (70), playerPoint2.y);
                     playerPoint.set(Constants.screenWidth - 60, playerPoint.y);
-                }
             } else {
                 playerPoint2.set(player.getRectangle().width() - 40, playerPoint2.y);
                 playerPoint.set(Constants.screenWidth - 60, playerPoint.y);

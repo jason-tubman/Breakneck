@@ -21,10 +21,13 @@ import java.util.ArrayList;
  */
 
 public class SceneManager {
-    private ArrayList<Scene> scenes = new ArrayList<>();
+    public ArrayList<Scene> scenes = new ArrayList<>();
     private Rect r = new Rect();
     private boolean isPaused = false;
     ParticleGenerator cogGen;
+
+    private SharedPreferences prefs = Constants.currentContext.getSharedPreferences("gameData", Context.MODE_PRIVATE);
+    private SharedPreferences.Editor editor = prefs.edit();
 
     public int shipChosen = 0;
 
@@ -224,6 +227,8 @@ public class SceneManager {
                     activeScene = 0;
                     isPaused = false;
                     firstRun = 0;
+                    editor.putBoolean("tutorial", true);
+                    editor.commit();
                     this.scenes.remove(1);
                     try {
                         Thread.sleep(250);

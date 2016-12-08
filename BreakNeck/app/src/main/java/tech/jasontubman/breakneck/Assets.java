@@ -45,6 +45,20 @@ public class Assets {
     public static Bitmap shield;
     public static Bitmap planet7;
     public static Bitmap planet8;
+
+    public static Bitmap cog = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.gear);
+    public static Bitmap resizedCog = (Bitmap.createScaledBitmap(cog, Constants.screenWidth/12, Constants.screenWidth/12, false));
+
+    public static Bitmap  store = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_button03);
+    public static Bitmap resizedstore = Bitmap.createScaledBitmap(store, (int) (Constants.screenWidth / 1.3), Constants.screenHeight / 12, false);
+
+    public static Bitmap coin2 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.coin);
+    public static Bitmap resizedCoin2 = (Bitmap.createScaledBitmap(coin2, Constants.screenWidth/25, Constants.screenWidth/25, false));
+
+    public static Bitmap playAgain = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.playbutton);
+    public static Bitmap resizedplayAgain = Bitmap.createScaledBitmap(playAgain, (int) (Constants.screenWidth / 1.3), Constants.screenHeight / 12, false);
+
+
     
     public Assets() {
         star = bf.decodeResource(currentContext.getResources(), R.drawable.star2);

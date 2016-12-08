@@ -24,7 +24,6 @@ import tech.jasontubman.game.R;
 public class MenuScene implements Scene {
 
     private int coins;
-
     private StarManager manager;
     private Rect r = new Rect();
     private  SceneManager sceneManager;
@@ -83,6 +82,8 @@ public class MenuScene implements Scene {
     private Bitmap resizedshipButton;
     private Bitmap lock;
     private Bitmap resizedlock;
+
+    private SharedPreferences prefs = Constants.currentContext.getSharedPreferences("gameData", Context.MODE_PRIVATE);
 
     private Bitmap ship1;
     private Bitmap  resizedship1;
@@ -949,7 +950,7 @@ public class MenuScene implements Scene {
         paint.setTextSize(210 /8 * Constants.currentContext.getResources().getDisplayMetrics().density);
         canvas.drawBitmap(resizedExit, (int) (Constants.screenWidth - Constants.screenWidth/7), Constants.screenHeight/14, paint);
         paint.setTextAlign(Paint.Align.LEFT);
-        SharedPreferences prefs = Constants.currentContext.getSharedPreferences("gameData", Context.MODE_PRIVATE);
+
         int score1 = prefs.getInt("save1", 0); //0 is the default value
         int score2 = prefs.getInt("save2", 0); //0 is the default value
         int score3 = prefs.getInt("save3", 0); //0 is the default value
@@ -1002,7 +1003,15 @@ public class MenuScene implements Scene {
 
     @Override
     public void terminate() {
-        sceneManager.addScene(new GameplayScene(this.sceneManager));
+        if (prefs.getBoolean("tutorial", false)) {
+            if (this.sceneManager.scenes.size() == 2) {
+                sceneManager.scenes.remove(sceneManager.scenes.size()-1);
+            }
+            sceneManager.addScene(new GameplayScene(this.sceneManager));
+
+        } else {
+            sceneManager.addScene(new TutorialScene(this.sceneManager));
+        }
         SceneManager.activeScene = 1;
     }
 
