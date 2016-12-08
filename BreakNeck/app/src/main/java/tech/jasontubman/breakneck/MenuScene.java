@@ -1,5 +1,7 @@
 package tech.jasontubman.breakneck;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 
 import android.graphics.BitmapFactory;
@@ -831,9 +833,36 @@ public class MenuScene implements Scene {
         Paint paint = new Paint();
         paint.setTypeface(typeface);
         paint.setColor(Color.DKGRAY);
-        paint.setTextSize(180 / Constants.currentContext.getResources().getDisplayMetrics().density);
+        paint.setTextSize(260 / Constants.currentContext.getResources().getDisplayMetrics().density);
 
+        centreText4(canvas, paint, "HIGH SCORES", Constants.screenHeight/4);
+        paint.setTextSize(390 / Constants.currentContext.getResources().getDisplayMetrics().density);
         canvas.drawBitmap(resizedExit, (int) (Constants.screenWidth - Constants.screenWidth/7), Constants.screenHeight/14, paint);
+        paint.setTextAlign(Paint.Align.LEFT);
+        SharedPreferences prefs = Constants.currentContext.getSharedPreferences("gameData", Context.MODE_PRIVATE);
+        int score1 = prefs.getInt("save1", 0); //0 is the default value
+        int score2 = prefs.getInt("save2", 0); //0 is the default value
+        int score3 = prefs.getInt("save3", 0); //0 is the default value
+        int score4 = prefs.getInt("save4", 0); //0 is the default value
+        int score5 = prefs.getInt("save5", 0); //0 is the default value
+        int score6 = prefs.getInt("save6", 0); //0 is the default value
+        int score7 = prefs.getInt("save7", 0); //0 is the default value
+        int score8 = prefs.getInt("save8", 0); //0 is the default value
+        int score9 = prefs.getInt("save9", 0); //0 is the default value
+        int score10 = prefs.getInt("save10", 0); //0 is the default value
+
+        centreText4(canvas, paint, "1.  " + score1,(int) (Constants.screenHeight/3.32));
+        centreText4(canvas, paint, "2.  " + score2,(int) (Constants.screenHeight/2.75));
+        centreText4(canvas, paint, "3.  " + score3,(int) (Constants.screenHeight/2.34));
+        centreText4(canvas, paint, "4.  " + score4,(int)( Constants.screenHeight/2.01));
+        centreText4(canvas, paint, "5.  " + score5,(int) (Constants.screenHeight/1.79));
+        centreText4(canvas, paint, "6.  " + score6,(int)(Constants.screenHeight/1.59));
+        centreText4(canvas, paint, "7.  " + score7,(int)(Constants.screenHeight/1.43));
+        centreText4(canvas, paint, "8.  " + score8,(int) (Constants.screenHeight/1.31));
+        centreText4(canvas, paint, "9.  " + score9,(int) (Constants.screenHeight/1.21));
+        centreText4(canvas, paint, "10.  " + score10,(int) (Constants.screenHeight/1.13));
+
+
     }
 
     @Override

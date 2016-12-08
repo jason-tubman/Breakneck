@@ -222,6 +222,84 @@ public class GameplayScene implements Scene {
             }
     }
 
+    public void saveScores(int score) {
+        SharedPreferences prefs = Constants.currentContext.getSharedPreferences("gameData", Context.MODE_PRIVATE);
+
+        int score1 = prefs.getInt("save1", 0); //0 is the default value
+        int score2 = prefs.getInt("save2", 0); //0 is the default value
+        int score3 = prefs.getInt("save3", 0); //0 is the default value
+        int score4 = prefs.getInt("save4", 0); //0 is the default value
+        int score5 = prefs.getInt("save5", 0); //0 is the default value
+        int score6 = prefs.getInt("save6", 0); //0 is the default value
+        int score7 = prefs.getInt("save7", 0); //0 is the default value
+        int score8 = prefs.getInt("save8", 0); //0 is the default value
+        int score9 = prefs.getInt("save9", 0); //0 is the default value
+        int score10 = prefs.getInt("save10", 0); //0 is the default value
+
+        SharedPreferences.Editor editor = prefs.edit();
+
+        if (score > score1) {
+            for (int i = 2; i < 11; i++) {
+                editor.putInt("save" + i, prefs.getInt("save" + (i - 1), 0));
+            }
+            editor.putInt("save1", score);
+            editor.commit();
+        } else if (score > score2 && score < score1) {
+            for (int i = 3; i < 11; i++) {
+                editor.putInt("save" + i, prefs.getInt("save" + (i - 1), 0));
+            }
+            editor.putInt("save2", score);
+            editor.commit();
+        }  else if (score > score3 && score < score2) {
+            for (int i = 4; i < 11; i++) {
+                editor.putInt("save" + i, prefs.getInt("save" + (i - 1), 0));
+            }
+            editor.putInt("save3", score);
+            editor.commit();
+        } else if (score > score4 && score < score3) {
+            for (int i = 5; i < 11; i++) {
+                editor.putInt("save" + i, prefs.getInt("save" + (i - 1), 0));
+            }
+            editor.putInt("save4", score);
+            editor.commit();
+        } else if (score > score5 && score < score4) {
+            for (int i = 6; i < 11; i++) {
+                editor.putInt("save" + i, prefs.getInt("save" + (i - 1), 0));
+            }
+            editor.putInt("save5", score);
+            editor.commit();
+        } else if (score > score6 && score < score5) {
+            for (int i = 7; i < 11; i++) {
+                editor.putInt("save" + i, prefs.getInt("save" + (i - 1), 0));
+            }
+            editor.putInt("save6", score);
+            editor.commit();
+        } else if (score > score7 && score < score6) {
+            for (int i = 8; i < 11; i++) {
+                editor.putInt("save" + i, prefs.getInt("save" + (i - 1), 0));
+            }
+            editor.putInt("save7", score);
+            editor.commit();
+        } else if (score > score8 && score < score7) {
+            for (int i = 9; i < 11; i++) {
+                editor.putInt("save" + i, prefs.getInt("save" + (i - 1), 0));
+            }
+            editor.putInt("save8", score);
+            editor.commit();
+        } else if (score > score9 && score < score8) {
+            for (int i = 10; i < 11; i++) {
+                editor.putInt("save" + i, prefs.getInt("save" + (i - 1), 0));
+            }
+            editor.putInt("save9", score);
+            editor.commit();
+        } else if (score > score10 && score < score9) {
+            editor.putInt("save10", score);
+            editor.commit();
+        } else {
+
+        }
+    }
+
     @Override
     public void draw(Canvas canvas) {
         canvas.drawRGB(44, 42, 49);
@@ -299,7 +377,18 @@ public class GameplayScene implements Scene {
             paint3.setTextSize(90*2  / Constants.currentContext.getResources().getDisplayMetrics().density);
             centreText(canvas, paint3, "Your Score was: ", Constants.screenHeight/2.5f);
             paint3.setTextSize(140*2  / Constants.currentContext.getResources().getDisplayMetrics().density);
+
+            int score1 = prefs.getInt("save1", 0); //0 is the default value)
+
+            if (this.score >= score1) {
+                paint3.setColor(Color.rgb(255, 215, 0));
+            }
+
+            saveScores(this.score);
+
             centreText(canvas, paint3, Integer.toString(this.score), Constants.screenHeight/2.0f);
+
+            paint3.setColor(Color.DKGRAY);
 
             canvas.drawBitmap(resizedplayAgain, (int) (Constants.screenWidth/9), (int) (Constants.screenHeight/1.8), paint3);
             paint3.setTextSize(100*2  / Constants.currentContext.getResources().getDisplayMetrics().density);
