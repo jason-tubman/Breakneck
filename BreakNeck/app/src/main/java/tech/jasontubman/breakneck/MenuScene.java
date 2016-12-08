@@ -13,6 +13,7 @@ import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.view.MotionEvent;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 
 import tech.jasontubman.game.R;
@@ -23,6 +24,8 @@ import tech.jasontubman.game.R;
  */
 
 public class MenuScene implements Scene {
+
+    private int coins;
 
     private StarManager manager;
     private Rect r = new Rect();
@@ -38,7 +41,8 @@ public class MenuScene implements Scene {
     private boolean credits = false;
     private boolean exit = false;
     Boolean[] ships = new Boolean[28];
-
+    int[] costs = new int[28];
+    int[] unlocks = new int[28];
     private int sliderMin = (int) (Constants.screenWidth/7.9);
     private int sliderMax = (int) (Constants.screenWidth / 1.22);
     private int sliderX = (int) sliderMax;
@@ -200,7 +204,7 @@ public class MenuScene implements Scene {
         storeButton9 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_button03);
         resizedStoreButton9 = Bitmap.createScaledBitmap(storeButton9, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 11, false);
         storeButton10 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_button04);
-        resizedStoreButton10 = Bitmap.createScaledBitmap(storeButton, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 11, false);
+        resizedStoreButton10 = Bitmap.createScaledBitmap(storeButton10, (int) (Constants.screenWidth / 1.35), Constants.screenHeight / 11, false);
         exitButton = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.exitbutton);
         resizedExit = Bitmap.createScaledBitmap(exitButton, (int) (Constants.screenWidth / 12), Constants.screenHeight / 20, false);
         shipButton = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.grey_button10);
@@ -295,6 +299,53 @@ public class MenuScene implements Scene {
          ship28 = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.s7bl);
          resizedship28 = Bitmap.createScaledBitmap(ship28, (int) (Constants.screenWidth / 10), Constants.screenHeight / 16, false);
 
+        for (int i = 0; i < 28; i++) {
+            costs[i] = 100 * i;
+        }
+
+
+
+
+        SharedPreferences prefs = Constants.currentContext.getSharedPreferences("gameData", Context.MODE_PRIVATE);
+        unlocks[0] = prefs.getInt("unlock0", 0); //0 is the default value
+        unlocks[1] = prefs.getInt("unlock1", 0); //0 is the default value
+        unlocks[2]  = prefs.getInt("unlock2", 0); //0 is the default value
+        unlocks[3]  = prefs.getInt("unlock3", 0); //0 is the default value
+        unlocks[4] = prefs.getInt("unlock4", 0); //0 is the default value
+        unlocks[5] = prefs.getInt("unlock5", 0); //0 is the default value
+        unlocks[6] = prefs.getInt("unlock6", 0); //0 is the default value
+        unlocks[7] = prefs.getInt("unlock7", 0); //0 is the default value
+        unlocks[8] = prefs.getInt("unlock8", 0); //0 is the default value
+        unlocks[9] = prefs.getInt("unlock9", 0); //0 is the default value
+        unlocks[10]  = prefs.getInt("unlock10", 0); //0 is the default value
+        unlocks[11] = prefs.getInt("unlock11", 0); //0 is the default value
+        unlocks[12]  = prefs.getInt("unlock12", 0); //0 is the default value
+        unlocks[13] = prefs.getInt("unlock13", 0); //0 is the default value
+        unlocks[14]  = prefs.getInt("unlock14", 0); //0 is the default value
+        unlocks[15]  = prefs.getInt("unlock15", 0); //0 is the default value
+        unlocks[16] = prefs.getInt("unlock16", 0); //0 is the default value
+        unlocks[17]  = prefs.getInt("unlock17", 0); //0 is the default value
+        unlocks[18] = prefs.getInt("unlock18", 0); //0 is the default value
+        unlocks[19]  = prefs.getInt("unlock19", 0); //0 is the default value
+        unlocks[20]  = prefs.getInt("unlock20", 0); //0 is the default value
+        unlocks[21]  = prefs.getInt("unlock21", 0); //0 is the default value
+        unlocks[22]  = prefs.getInt("unlock22", 0); //0 is the default value
+        unlocks[23] = prefs.getInt("unlock23", 0); //0 is the default value
+        unlocks[24] = prefs.getInt("unlock24", 0); //0 is the default value
+        unlocks[25] = prefs.getInt("unlock25", 0); //0 is the default value
+        unlocks[26]= prefs.getInt("unlock26", 0); //0 is the default value
+        unlocks[27] = prefs.getInt("unlock27", 0); //0 is the default value
+
+
+        for (int i = 0; i < 28; i++) {
+            costs[i] = 100 * i;
+        }
+
+        for (int i = 0; i < 27; i++) {
+            if (unlocks[i] == 1) {
+                ships[i] = true;
+            }
+        }
     }
 
     @Override
@@ -501,96 +552,151 @@ public class MenuScene implements Scene {
         canvas.drawBitmap(resizedship28, (int) (Constants.screenWidth / 1.32), (int) (Constants.screenHeight / 1.24), paint);
 
         drawLocks(canvas);
-
     }
 
     public void drawLocks(Canvas canvas) {
-        
+
+        Typeface typeface = Typeface.createFromAsset(Constants.currentContext.getAssets(), "spaceage.ttf");
         Paint paint = new Paint();
+        paint.setTypeface(typeface);
+        paint.setColor(Color.DKGRAY);
+        paint.setTextSize(120 / Constants.currentContext.getResources().getDisplayMetrics().density);
+        paint.setTextAlign(Paint.Align.LEFT);
 
         if (!ships[0]) {
-            canvas.drawBitmap(resizedlock, (int) (Constants.screenWidth / 7.2), (int) (Constants.screenHeight / 4.5), paint);
+            //canvas.drawBitmap(resizedlock, (int) (Constants.screenWidth / 7.2), (int) (Constants.screenHeight / 4.5), paint);
         }
         if (!ships[1]) {
             canvas.drawBitmap(resizedlock, (int) (Constants.screenWidth / 2.85), (int) (Constants.screenHeight / 4.5), paint);
+            canvas.drawText(Integer.toString(costs[1]), (int) (Constants.screenWidth / 2.75), (int) (Constants.screenHeight / 4.5), paint);
         }
         if (!ships[2]) {
             canvas.drawBitmap(resizedlock, (int) (Constants.screenWidth / 1.85), (int) (Constants.screenHeight / 4.5), paint);
+            canvas.drawText(Integer.toString(costs[2]), (int) (Constants.screenWidth / 1.85), (int) (Constants.screenHeight / 4.5), paint);
         }
         if (!ships[3]) {
             canvas.drawBitmap(resizedlock, (int) (Constants.screenWidth / 1.32), (int) (Constants.screenHeight / 4.5), paint);
+            canvas.drawText(Integer.toString(costs[3]), (int) (Constants.screenWidth / 1.32), (int) (Constants.screenHeight / 4.5), paint);
         }
         if (!ships[4]) {
             canvas.drawBitmap(resizedlock, (int) (Constants.screenWidth / 7.2), (int) (Constants.screenHeight / 3.15), paint);
+
+            canvas.drawText(Integer.toString(costs[4]), (int) (Constants.screenWidth / 7.2), (int) (Constants.screenHeight / 3.15), paint);
         }
         if (!ships[5]) {
             canvas.drawBitmap(resizedlock, (int) (Constants.screenWidth / 2.85), (int) (Constants.screenHeight / 3.15), paint);
+
+            canvas.drawText(Integer.toString(costs[5]), (int) (Constants.screenWidth / 2.85), (int) (Constants.screenHeight / 3.15), paint);
         }
         if (!ships[6]) {
             canvas.drawBitmap(resizedlock, (int) (Constants.screenWidth / 1.85), (int) (Constants.screenHeight / 3.15), paint);
+
+            canvas.drawText(Integer.toString(costs[6]), (int) (Constants.screenWidth / 1.85), (int) (Constants.screenHeight / 3.15), paint);
         }
         if (!ships[7]) {
             canvas.drawBitmap(resizedlock, (int) (Constants.screenWidth / 1.32), (int) (Constants.screenHeight / 3.15), paint);
+
+            canvas.drawText(Integer.toString(costs[7]), (int) (Constants.screenWidth / 1.32), (int) (Constants.screenHeight / 3.15), paint);
         }
         if (!ships[8]) {
             canvas.drawBitmap(resizedlock, (int) (Constants.screenWidth / 7.2), (int) (Constants.screenHeight / 2.4), paint);
+
+            canvas.drawText(Integer.toString(costs[8]), (int) (Constants.screenWidth / 7.2), (int) (Constants.screenHeight / 2.4), paint);
         }
         if (!ships[9]) {
             canvas.drawBitmap(resizedlock, (int) (Constants.screenWidth / 2.85), (int) (Constants.screenHeight / 2.4), paint);
+
+            canvas.drawText(Integer.toString(costs[9]), (int) (Constants.screenWidth / 2.85), (int) (Constants.screenHeight / 2.4), paint);
         }
         if (!ships[10]) {
             canvas.drawBitmap(resizedlock, (int) (Constants.screenWidth / 1.85), (int) (Constants.screenHeight / 2.4), paint);
+
+            canvas.drawText(Integer.toString(costs[10]), (int) (Constants.screenWidth / 1.85), (int) (Constants.screenHeight / 2.4), paint);
         }
         if (!ships[11]) {
             canvas.drawBitmap(resizedlock, (int) (Constants.screenWidth / 1.32), (int) (Constants.screenHeight / 2.4), paint);
+
+            canvas.drawText(Integer.toString(costs[11]), (int) (Constants.screenWidth / 1.32), (int) (Constants.screenHeight / 2.4), paint);
         }
         if (!ships[12]) {
             canvas.drawBitmap(resizedlock, (int) (Constants.screenWidth / 7.2), (int) (Constants.screenHeight / 1.93), paint);
+
+            canvas.drawText(Integer.toString(costs[12]), (int) (Constants.screenWidth / 7.5), (int) (Constants.screenHeight / 1.93), paint);
         }
         if (!ships[13]) {
             canvas.drawBitmap(resizedlock, (int) (Constants.screenWidth / 2.85), (int) (Constants.screenHeight / 1.93), paint);
+
+            canvas.drawText(Integer.toString(costs[13]), (int) (Constants.screenWidth / 2.95), (int) (Constants.screenHeight / 1.93), paint);
         }
         if (!ships[14]) {
             canvas.drawBitmap(resizedlock, (int) (Constants.screenWidth / 1.85), (int) (Constants.screenHeight / 1.93), paint);
+
+            canvas.drawText(Integer.toString(costs[14]), (int) (Constants.screenWidth / 1.85), (int) (Constants.screenHeight / 1.93), paint);
         }
         if (!ships[15]) {
             canvas.drawBitmap(resizedlock, (int) (Constants.screenWidth / 1.32), (int) (Constants.screenHeight / 1.93), paint);
+
+            canvas.drawText(Integer.toString(costs[15]), (int) (Constants.screenWidth / 1.34), (int) (Constants.screenHeight / 1.93), paint);
         }
         if (!ships[16]) {
             canvas.drawBitmap(resizedlock, (int) (Constants.screenWidth / 7.2), (int) (Constants.screenHeight / 1.63), paint);
+
+            canvas.drawText(Integer.toString(costs[16]), (int) (Constants.screenWidth / 7.6), (int) (Constants.screenHeight / 1.63), paint);
         }
         if (!ships[17]) {
             canvas.drawBitmap(resizedlock, (int) (Constants.screenWidth / 2.85), (int) (Constants.screenHeight / 1.63), paint);
+
+            canvas.drawText(Integer.toString(costs[17]), (int) (Constants.screenWidth / 2.9), (int) (Constants.screenHeight / 1.63), paint);
         }
         if (!ships[18]) {
             canvas.drawBitmap(resizedlock, (int) (Constants.screenWidth / 1.85), (int) (Constants.screenHeight / 1.63), paint);
+
+            canvas.drawText(Integer.toString(costs[18]), (int) (Constants.screenWidth / 1.85), (int) (Constants.screenHeight / 1.63), paint);
         }
         if (!ships[19]) {
             canvas.drawBitmap(resizedlock, (int) (Constants.screenWidth / 1.32), (int) (Constants.screenHeight / 1.63), paint);
+
+            canvas.drawText(Integer.toString(costs[19]), (int) (Constants.screenWidth / 1.32), (int) (Constants.screenHeight / 1.63), paint);
         }
         if (!ships[20]) {
             canvas.drawBitmap(resizedlock, (int) (Constants.screenWidth / 7.2), (int) (Constants.screenHeight / 1.41), paint);
+
+            canvas.drawText(Integer.toString(costs[20]), (int) (Constants.screenWidth / 7.8), (int) (Constants.screenHeight / 1.41), paint);
         }
         if (!ships[21]) {
             canvas.drawBitmap(resizedlock, (int) (Constants.screenWidth / 2.85), (int) (Constants.screenHeight / 1.41), paint);
+
+            canvas.drawText(Integer.toString(costs[21]), (int) (Constants.screenWidth / 2.9), (int) (Constants.screenHeight / 1.41), paint);
         }
         if (!ships[22]) {
             canvas.drawBitmap(resizedlock, (int) (Constants.screenWidth / 1.85), (int) (Constants.screenHeight / 1.41), paint);
+
+            canvas.drawText(Integer.toString(costs[22]), (int) (Constants.screenWidth / 1.9), (int) (Constants.screenHeight / 1.41), paint);
         }
         if (!ships[23]) {
             canvas.drawBitmap(resizedlock, (int) (Constants.screenWidth / 1.32), (int) (Constants.screenHeight / 1.41), paint);
+
+            canvas.drawText(Integer.toString(costs[23]), (int) (Constants.screenWidth / 1.34), (int) (Constants.screenHeight / 1.41), paint);
         }
         if (!ships[24]) {
             canvas.drawBitmap(resizedlock, (int) (Constants.screenWidth / 7.2), (int) (Constants.screenHeight / 1.24), paint);
+
+            canvas.drawText(Integer.toString(costs[24]), (int) (Constants.screenWidth / 7.7), (int) (Constants.screenHeight / 1.24), paint);
         }
         if (!ships[25]) {
             canvas.drawBitmap(resizedlock, (int) (Constants.screenWidth / 2.85), (int) (Constants.screenHeight / 1.24), paint);
+
+            canvas.drawText(Integer.toString(costs[25]), (int) (Constants.screenWidth / 3.0), (int) (Constants.screenHeight / 1.24), paint);
         }
         if (!ships[26]) {
             canvas.drawBitmap(resizedlock, (int) (Constants.screenWidth / 1.85), (int) (Constants.screenHeight / 1.24), paint);
+
+            canvas.drawText(Integer.toString(costs[26]), (int) (Constants.screenWidth / 1.9), (int) (Constants.screenHeight / 1.24), paint);
         }
         if (!ships[27]) {
             canvas.drawBitmap(resizedlock, (int) (Constants.screenWidth / 1.32), (int) (Constants.screenHeight / 1.24), paint);
+
+            canvas.drawText(Integer.toString(costs[27]), (int) (Constants.screenWidth / 1.34), (int) (Constants.screenHeight / 1.24), paint);
         }
 
     }
@@ -710,7 +816,10 @@ public class MenuScene implements Scene {
         canvas.drawRoundRect(shopPanel, 10, 10, paint3);
         paint2.setTextSize(250 / Constants.currentContext.getResources().getDisplayMetrics().density);
         canvas.drawText("COINS:", (int) (Constants.screenWidth/20), (int) (Constants.screenHeight/20), paint);
-
+        SharedPreferences prefs = Constants.currentContext.getSharedPreferences("gameData", Context.MODE_PRIVATE);
+        int score = prefs.getInt("coinValue", 0); //0 is the default value
+        this.coins = score;
+        canvas.drawText(Integer.toString(score), (int) (Constants.screenWidth/2.5), (int) (Constants.screenHeight/20), paint);
         drawShopPanels(canvas);
     }
 
@@ -851,16 +960,16 @@ public class MenuScene implements Scene {
         int score9 = prefs.getInt("save9", 0); //0 is the default value
         int score10 = prefs.getInt("save10", 0); //0 is the default value
 
-        centreText4(canvas, paint, "1.  " + score1,(int) (Constants.screenHeight/3.32));
-        centreText4(canvas, paint, "2.  " + score2,(int) (Constants.screenHeight/2.75));
-        centreText4(canvas, paint, "3.  " + score3,(int) (Constants.screenHeight/2.34));
-        centreText4(canvas, paint, "4.  " + score4,(int)( Constants.screenHeight/2.01));
-        centreText4(canvas, paint, "5.  " + score5,(int) (Constants.screenHeight/1.79));
-        centreText4(canvas, paint, "6.  " + score6,(int)(Constants.screenHeight/1.59));
-        centreText4(canvas, paint, "7.  " + score7,(int)(Constants.screenHeight/1.43));
-        centreText4(canvas, paint, "8.  " + score8,(int) (Constants.screenHeight/1.31));
-        centreText4(canvas, paint, "9.  " + score9,(int) (Constants.screenHeight/1.21));
-        centreText4(canvas, paint, "10.  " + score10,(int) (Constants.screenHeight/1.13));
+        centreText4(canvas, paint, "1. " + score1,(int) (Constants.screenHeight/3.32));
+        centreText4(canvas, paint, "2. " + score2,(int) (Constants.screenHeight/2.75));
+        centreText4(canvas, paint, "3. " + score3,(int) (Constants.screenHeight/2.34));
+        centreText4(canvas, paint, "4. " + score4,(int)( Constants.screenHeight/2.01));
+        centreText4(canvas, paint, "5. " + score5,(int) (Constants.screenHeight/1.79));
+        centreText4(canvas, paint, "6. " + score6,(int)(Constants.screenHeight/1.59));
+        centreText4(canvas, paint, "7. " + score7,(int)(Constants.screenHeight/1.43));
+        centreText4(canvas, paint, "8. " + score8,(int) (Constants.screenHeight/1.31));
+        centreText4(canvas, paint, "9. " + score9,(int) (Constants.screenHeight/1.21));
+        centreText4(canvas, paint, "10. " + score10,(int) (Constants.screenHeight/1.13));
 
 
     }
@@ -986,31 +1095,51 @@ public class MenuScene implements Scene {
 
                     //STORE CLICKS ----------
                     //ROW 1
+
+                    SharedPreferences prefs = Constants.currentContext.getSharedPreferences("gameData", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
                     if (event.getY() > Constants.screenHeight / 4.7 && event.getY() < Constants.screenHeight / 4.7 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 8.2 && event.getX() < Constants.screenWidth / 8.2 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[0]) {
-                            ships[0] = true;
+                            if (costs[0] <= this.coins) {
+                                ships[0] = true;
+                            }
                         } else {
                             selectedShip = 0;
                         }
                     } else if (event.getY() > Constants.screenHeight / 4.7 && event.getY() < Constants.screenHeight / 4.7 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 3.0 && event.getX() < Constants.screenWidth / 3.0 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[1]) {
-                            ships[1] = true;
+                            if (costs[1] <= this.coins) {
+                                editor.putInt("unlock1", 1);
+                                editor.putInt("coinValue", this.coins - costs[1]);
+                                editor.commit();
+                                ships[1] = true;
+                            }
                         } else {
                             selectedShip = 1;
                         }
                     } else if (event.getY() > Constants.screenHeight / 4.7 && event.getY() < Constants.screenHeight / 4.7 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 1.9 && event.getX() < Constants.screenWidth / 1.9 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[2]) {
-                            ships[2] = true;
+                            if (costs[2] <= this.coins) {
+                                editor.putInt("unlock2", 1);
+                                editor.putInt("coinValue", this.coins - costs[2]);
+                                editor.commit();
+                                ships[2] = true;
+                            }
                         } else {
                             selectedShip = 2;
                         }
                     } else if (event.getY() > Constants.screenHeight / 4.7 && event.getY() < Constants.screenHeight / 4.7 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 1.35 && event.getX() < Constants.screenWidth / 1.35 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[3]) {
-                            ships[3] = true;
+                            if (costs[3] <= this.coins) {
+                                editor.putInt("unlock3", 1);
+                                editor.putInt("coinValue", this.coins - costs[3]);
+                                editor.commit();
+                                ships[3] = true;
+                            }
                         } else {
                             selectedShip = 3;
                         }
@@ -1019,28 +1148,48 @@ public class MenuScene implements Scene {
                     else if (event.getY() > Constants.screenHeight / 3.2 && event.getY() < Constants.screenHeight / 3.2 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 8.2 && event.getX() < Constants.screenWidth / 8.2 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[4]) {
-                            ships[4] = true;
+                            if (costs[4] <= this.coins) {
+                                editor.putInt("unlock4", 1);
+                                editor.putInt("coinValue", this.coins - costs[4]);
+                                editor.commit();
+                                ships[4] = true;
+                            }
                         } else {
                             selectedShip = 4;
                         }
                     } else if (event.getY() > Constants.screenHeight / 3.2 && event.getY() < Constants.screenHeight / 3.2 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 3.0 && event.getX() < Constants.screenWidth / 3.0 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[5]) {
-                            ships[5] = true;
+                            if (costs[5] <= this.coins) {
+                                editor.putInt("unlock5", 1);
+                                editor.putInt("coinValue", this.coins - costs[5]);
+                                editor.commit();
+                                ships[5] = true;
+                            }
                         } else {
                             selectedShip = 5;
                         }
                     } else if (event.getY() > Constants.screenHeight / 3.2 && event.getY() < Constants.screenHeight / 3.2 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 1.9 && event.getX() < Constants.screenWidth / 1.9 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[6]) {
-                            ships[6] = true;
+                            if (costs[6] <= this.coins) {
+                                editor.putInt("unlock6", 1);
+                                editor.putInt("coinValue", this.coins - costs[6]);
+                                editor.commit();
+                                ships[6] = true;
+                            }
                         } else {
                             selectedShip = 6;
                         }
                     } else if (event.getY() > Constants.screenHeight / 3.2 && event.getY() < Constants.screenHeight / 3.2 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 1.35 && event.getX() < Constants.screenWidth / 1.35 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[7]) {
-                            ships[7] = true;
+                            if (costs[7] <= this.coins) {
+                                editor.putInt("unlock7", 1);
+                                editor.putInt("coinValue", this.coins - costs[7]);
+                                editor.commit();
+                                ships[7] = true;
+                            }
                         } else {
                             selectedShip = 7;
                         }
@@ -1049,28 +1198,48 @@ public class MenuScene implements Scene {
                     else if (event.getY() > Constants.screenHeight / 2.43 && event.getY() < Constants.screenHeight / 2.43 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 8.2 && event.getX() < Constants.screenWidth / 8.2 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[8]) {
-                            ships[8] = true;
+                            if (costs[8] <= this.coins) {
+                                editor.putInt("unlock8", 1);
+                                editor.putInt("coinValue", this.coins - costs[8]);
+                                editor.commit();
+                                ships[8] = true;
+                            }
                         } else {
                             selectedShip = 8;
                         }
                     } else if (event.getY() > Constants.screenHeight / 2.43 && event.getY() < Constants.screenHeight / 2.43 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 3.0 && event.getX() < Constants.screenWidth / 3.0 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[9]) {
-                            ships[9] = true;
+                            if (costs[9] <= this.coins) {
+                                editor.putInt("unlock9", 1);
+                                editor.putInt("coinValue", this.coins - costs[9]);
+                                editor.commit();
+                                ships[9] = true;
+                            }
                         } else {
                             selectedShip = 9;
                         }
                     } else if (event.getY() > Constants.screenHeight / 2.43 && event.getY() < Constants.screenHeight / 2.43 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 1.9 && event.getX() < Constants.screenWidth / 1.9 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[10]) {
-                            ships[10] = true;
+                            if (costs[10] <= this.coins) {
+                                editor.putInt("unlock10", 1);
+                                editor.putInt("coinValue", this.coins - costs[10]);
+                                editor.commit();
+                                ships[10] = true;
+                            }
                         } else {
                             selectedShip = 10;
                         }
                     } else if (event.getY() > Constants.screenHeight / 2.43 && event.getY() < Constants.screenHeight / 2.43 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 1.35 && event.getX() < Constants.screenWidth / 1.35 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[11]) {
-                            ships[11] = true;
+                            if (costs[11] <= this.coins) {
+                                editor.putInt("unlock11", 1);
+                                editor.putInt("coinValue", this.coins - costs[11]);
+                                editor.commit();
+                                ships[11] = true;
+                            }
                         } else {
                             selectedShip = 11;
                         }
@@ -1079,28 +1248,48 @@ public class MenuScene implements Scene {
                     else if (event.getY() > Constants.screenHeight / 1.95 && event.getY() < Constants.screenHeight / 1.95 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 8.2 && event.getX() < Constants.screenWidth / 8.2 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[12]) {
-                            ships[12] = true;
+                            if (costs[12] <= this.coins) {
+                                editor.putInt("unlock12", 1);
+                                editor.putInt("coinValue", this.coins - costs[12]);
+                                editor.commit();
+                                ships[12] = true;
+                            }
                         } else {
                             selectedShip = 12;
                         }
                     } else if (event.getY() > Constants.screenHeight / 1.95 && event.getY() < Constants.screenHeight / 1.95 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 3.0 && event.getX() < Constants.screenWidth / 3.0 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[13]) {
-                            ships[13] = true;
+                            if (costs[13] <= this.coins) {
+                                editor.putInt("unlock13", 1);
+                                editor.putInt("coinValue", this.coins - costs[13]);
+                                editor.commit();
+                                ships[13] = true;
+                            }
                         } else {
                             selectedShip = 13;
                         }
                     } else if (event.getY() > Constants.screenHeight / 1.95 && event.getY() < Constants.screenHeight / 1.95 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 1.9 && event.getX() < Constants.screenWidth / 1.9 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[14]) {
-                            ships[14] = true;
+                            if (costs[14] <= this.coins) {
+                                editor.putInt("unlock14", 1);
+                                editor.putInt("coinValue", this.coins - costs[14]);
+                                editor.commit();
+                                ships[14] = true;
+                            }
                         } else {
                             selectedShip = 14;
                         }
                     } else if (event.getY() > Constants.screenHeight / 1.95 && event.getY() < Constants.screenHeight / 1.95 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 1.35 && event.getX() < Constants.screenWidth / 1.35 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[15]) {
-                            ships[15] = true;
+                            if (costs[15] <= this.coins) {
+                                editor.putInt("unlock15", 1);
+                                editor.putInt("coinValue", this.coins - costs[15]);
+                                editor.commit();
+                                ships[15] = true;
+                            }
                         } else {
                             selectedShip = 15;
                         }
@@ -1109,28 +1298,48 @@ public class MenuScene implements Scene {
                     else if (event.getY() > Constants.screenHeight / 1.65 && event.getY() < Constants.screenHeight / 1.65 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 8.2 && event.getX() < Constants.screenWidth / 8.2 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[16]) {
-                            ships[16] = true;
+                            if (costs[16] <= this.coins) {
+                                editor.putInt("unlock16", 1);
+                                editor.putInt("coinValue", this.coins - costs[16]);
+                                editor.commit();
+                                ships[16] = true;
+                            }
                         } else {
                             selectedShip = 16;
                         }
                     } else if (event.getY() > Constants.screenHeight / 1.65 && event.getY() < Constants.screenHeight / 1.65 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 3.0 && event.getX() < Constants.screenWidth / 3.0 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[17]) {
-                            ships[17] = true;
+                            if (costs[17] <= this.coins) {
+                                editor.putInt("unlock17", 1);
+                                editor.putInt("coinValue", this.coins - costs[17]);
+                                editor.commit();
+                                ships[17] = true;
+                            }
                         } else {
                             selectedShip = 17;
                         }
                     } else if (event.getY() > Constants.screenHeight / 1.65 && event.getY() < Constants.screenHeight / 1.65 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 1.9 && event.getX() < Constants.screenWidth / 1.9 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[18]) {
-                            ships[18] = true;
+                            if (costs[18] <= this.coins) {
+                                editor.putInt("unlock18", 1);
+                                editor.putInt("coinValue", this.coins - costs[18]);
+                                editor.commit();
+                                ships[18] = true;
+                            }
                         } else {
                             selectedShip = 18;
                         }
                     } else if (event.getY() > Constants.screenHeight / 1.65 && event.getY() < Constants.screenHeight / 1.65 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 1.35 && event.getX() < Constants.screenWidth / 1.35 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[19]) {
-                            ships[19] = true;
+                            if (costs[19] <= this.coins) {
+                                editor.putInt("unlock19", 1);
+                                editor.putInt("coinValue", this.coins - costs[19]);
+                                editor.commit();
+                                ships[19] = true;
+                            }
                         } else {
                             selectedShip = 19;
                         }
@@ -1139,28 +1348,48 @@ public class MenuScene implements Scene {
                     else if (event.getY() > Constants.screenHeight / 1.42 && event.getY() < Constants.screenHeight / 1.42 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 8.2 && event.getX() < Constants.screenWidth / 8.2 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[20]) {
-                            ships[20] = true;
+                            if (costs[20] <= this.coins) {
+                                editor.putInt("unlock20", 1);
+                                editor.putInt("coinValue", this.coins - costs[20]);
+                                editor.commit();
+                                ships[20] = true;
+                            }
                         } else {
                             selectedShip = 20;
                         }
                     } else if (event.getY() > Constants.screenHeight / 1.42 && event.getY() < Constants.screenHeight / 1.42 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 3.0 && event.getX() < Constants.screenWidth / 3.0 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[21]) {
-                            ships[21] = true;
+                            if (costs[21] <= this.coins) {
+                                editor.putInt("unlock21", 1);
+                                editor.putInt("coinValue", this.coins - costs[21]);
+                                editor.commit();
+                                ships[21] = true;
+                            }
                         } else {
                             selectedShip = 21;
                         }
                     } else if (event.getY() > Constants.screenHeight / 1.42 && event.getY() < Constants.screenHeight / 1.42 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 1.9 && event.getX() < Constants.screenWidth / 1.9 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[22]) {
-                            ships[22] = true;
+                            if (costs[22] <= this.coins) {
+                                editor.putInt("unlock22", 1);
+                                editor.putInt("coinValue", this.coins - costs[22]);
+                                editor.commit();
+                                ships[22] = true;
+                            }
                         } else {
                             selectedShip = 22;
                         }
                     } else if (event.getY() > Constants.screenHeight / 1.42 && event.getY() < Constants.screenHeight / 1.42 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 1.35 && event.getX() < Constants.screenWidth / 1.35 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[23]) {
-                            ships[23] = true;
+                            if (costs[23] <= this.coins) {
+                                editor.putInt("unlock23", 1);
+                                editor.putInt("coinValue", this.coins - costs[23]);
+                                editor.commit();
+                                ships[23] = true;
+                            }
                         } else {
                             selectedShip = 23;
                         }
@@ -1169,28 +1398,48 @@ public class MenuScene implements Scene {
                     else if (event.getY() > Constants.screenHeight / 1.25 && event.getY() < Constants.screenHeight / 1.25 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 8.2 && event.getX() < Constants.screenWidth / 8.2 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[24]) {
-                            ships[24] = true;
+                            if (costs[24] <= this.coins) {
+                                editor.putInt("unlock24", 1);
+                                editor.putInt("coinValue", this.coins - costs[24]);
+                                editor.commit();
+                                ships[24] = true;
+                            }
                         } else {
                             selectedShip = 24;
                         }
                     } else if (event.getY() > Constants.screenHeight / 1.25 && event.getY() < Constants.screenHeight / 1.25 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 3.0 && event.getX() < Constants.screenWidth / 3.0 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[25]) {
-                            ships[25] = true;
+                            if (costs[25] <= this.coins) {
+                                editor.putInt("unlock25", 1);
+                                editor.putInt("coinValue", this.coins - costs[25]);
+                                editor.commit();
+                                ships[25] = true;
+                            }
                         } else {
                             selectedShip = 25;
                         }
                     } else if (event.getY() > Constants.screenHeight / 1.25 && event.getY() < Constants.screenHeight / 1.25 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 1.9 && event.getX() < Constants.screenWidth / 1.9 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[26]) {
-                            ships[26] = true;
+                            if (costs[26] <= this.coins) {
+                                editor.putInt("unlock26", 1);
+                                editor.putInt("coinValue", this.coins - costs[26]);
+                                editor.commit();
+                                ships[26] = true;
+                            }
                         } else {
                             selectedShip = 26;
                         }
                     } else if (event.getY() > Constants.screenHeight / 1.25 && event.getY() < Constants.screenHeight / 1.25 + Constants.screenHeight / 12
                             && event.getX() > Constants.screenWidth / 1.35 && event.getX() < Constants.screenWidth / 1.35 + (int) (Constants.screenWidth / 7.5) && store) {
                         if (!ships[27]) {
-                            ships[27] = true;
+                            if (costs[27] <= this.coins) {
+                                editor.putInt("unlock27", 1);
+                                editor.putInt("coinValue", this.coins - costs[27]);
+                                editor.commit();
+                                ships[27] = true;
+                            }
                         } else {
                             selectedShip = 27;
                         }
