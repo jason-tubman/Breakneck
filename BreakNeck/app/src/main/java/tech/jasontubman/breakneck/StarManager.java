@@ -29,7 +29,7 @@ public class StarManager {
 
     private void generateStars() {
         if (!menu) {
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 70; i++) {
                 int x = getRandomNumberInRange(20, Constants.screenWidth - 20);
                 int y = getRandomNumberInRange(-500, Constants.screenHeight - 20);
                 stars.add(i, new Star(Color.WHITE, x, y));
@@ -42,7 +42,7 @@ public class StarManager {
                 planets.add(i, new Planet(radius, planetStyle, x, y));
             }
         } else {
-            for (int i = 0; i < 30; i++) {
+            for (int i = 0; i < 40; i++) {
                 int x = getRandomNumberInRange(20, Constants.screenWidth - 20);
                 int y = getRandomNumberInRange(-500, Constants.screenHeight - 20);
                 stars.add(i, new Star(Color.WHITE, x, y));

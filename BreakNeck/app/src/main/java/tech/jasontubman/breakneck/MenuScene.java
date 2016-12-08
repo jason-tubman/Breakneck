@@ -372,12 +372,12 @@ public class MenuScene implements Scene {
     public void drawName(Canvas canvas) {
         Typeface typeface = Typeface.createFromAsset(Constants.currentContext.getAssets(), "spaceage.ttf");
         Paint paint2 = new Paint();
-        paint2.setTextSize(450 / Constants.currentContext.getResources().getDisplayMetrics().density);
+        paint2.setTextSize(450/8 * Constants.currentContext.getResources().getDisplayMetrics().density);
         paint2.setColor(Color.BLACK);
         paint2.setTypeface(typeface);
         centreText2(canvas, paint2, "SURGE");
         Paint paint = new Paint();
-        paint.setTextSize(450 / Constants.currentContext.getResources().getDisplayMetrics().density);
+        paint.setTextSize(450/8 *Constants.currentContext.getResources().getDisplayMetrics().density);
         paint.setColor(Color.WHITE);
         paint.setTypeface(typeface);
         centreText(canvas, paint, "SURGE");
@@ -390,11 +390,11 @@ public class MenuScene implements Scene {
         Paint paint = new Paint();
         paint.setTypeface(typeface);
         paint.setColor(Color.WHITE);
-        paint.setTextSize(520 / Constants.currentContext.getResources().getDisplayMetrics().density);
+        paint.setTextSize(520 /8 * Constants.currentContext.getResources().getDisplayMetrics().density);
         Paint paint2 = new Paint();
         paint2.setTypeface(typeface);
         paint2.setColor(Color.BLACK);
-        paint2.setTextSize(520 / Constants.currentContext.getResources().getDisplayMetrics().density);
+        paint2.setTextSize(520 /8 * Constants.currentContext.getResources().getDisplayMetrics().density);
         if (play) {
             canvas.drawBitmap(resizedPlayButton, Constants.screenWidth / 8, Constants.screenHeight / 5, paint);
         } else {
@@ -413,8 +413,8 @@ public class MenuScene implements Scene {
         centreText3(canvas, paint, "PLAY", Constants.screenHeight/3.2f);
 
         //STORE
-        paint.setTextSize(300 / Constants.currentContext.getResources().getDisplayMetrics().density);
-        paint2.setTextSize(300 / Constants.currentContext.getResources().getDisplayMetrics().density);
+        paint.setTextSize(300 /8 * Constants.currentContext.getResources().getDisplayMetrics().density);
+        paint2.setTextSize(300 /8 * Constants.currentContext.getResources().getDisplayMetrics().density);
         paint.setTypeface(typeface);
         paint.setColor(Color.DKGRAY);
         paint2.setTypeface(typeface);
@@ -426,8 +426,8 @@ public class MenuScene implements Scene {
         }
         canvas.drawText(" STORE", (int) (x), (int) (Constants.screenHeight/2.27), paint);
         //OPTIONS
-        paint.setTextSize(300 / Constants.currentContext.getResources().getDisplayMetrics().density);
-        paint2.setTextSize(300 / Constants.currentContext.getResources().getDisplayMetrics().density);
+        paint.setTextSize(300 /8 * Constants.currentContext.getResources().getDisplayMetrics().density);
+        paint2.setTextSize(300 /8 * Constants.currentContext.getResources().getDisplayMetrics().density);
         paint.setTypeface(typeface);
         paint.setColor(Color.DKGRAY);
         paint2.setTypeface(typeface);
@@ -558,7 +558,7 @@ public class MenuScene implements Scene {
         Paint paint = new Paint();
         paint.setTypeface(typeface);
         paint.setColor(Color.DKGRAY);
-        paint.setTextSize(120 / Constants.currentContext.getResources().getDisplayMetrics().density);
+        paint.setTextSize(120 /8 * Constants.currentContext.getResources().getDisplayMetrics().density);
         paint.setTextAlign(Paint.Align.LEFT);
 
         if (!ships[0]) {
@@ -806,7 +806,7 @@ public class MenuScene implements Scene {
         Paint paint = new Paint();
         paint.setTypeface(typeface);
         paint.setColor(Color.LTGRAY);
-        paint.setTextSize(250 / Constants.currentContext.getResources().getDisplayMetrics().density);
+        paint.setTextSize(250/8 * Constants.currentContext.getResources().getDisplayMetrics().density);
         Paint paint2 = new Paint();
         paint2.setTypeface(typeface);
         paint2.setColor(Color.DKGRAY);
@@ -815,7 +815,7 @@ public class MenuScene implements Scene {
         RectF shopPanel = new RectF();
         shopPanel.set(Constants.screenWidth/9, Constants.screenHeight/5, Constants.screenWidth - Constants.screenWidth/9, Constants.screenHeight - (int) (Constants.screenHeight/9.7));
         canvas.drawRoundRect(shopPanel, 10, 10, paint3);
-        paint2.setTextSize(250 / Constants.currentContext.getResources().getDisplayMetrics().density);
+        paint2.setTextSize(250/8 * Constants.currentContext.getResources().getDisplayMetrics().density);
         canvas.drawText("COINS:", (int) (Constants.screenWidth/20), (int) (Constants.screenHeight/20), paint);
         SharedPreferences prefs = Constants.currentContext.getSharedPreferences("gameData", Context.MODE_PRIVATE);
         int score = prefs.getInt("coinValue", 0); //0 is the default value
@@ -837,30 +837,30 @@ public class MenuScene implements Scene {
         Paint paint = new Paint();
         paint.setTypeface(typeface);
         paint.setColor(Color.DKGRAY);
-        paint.setTextSize(180 / Constants.currentContext.getResources().getDisplayMetrics().density);
+        paint.setTextSize(150 /8 * Constants.currentContext.getResources().getDisplayMetrics().density);
 
         centreText4(canvas, paint, "ASSETS DRAWN BY", Constants.screenHeight/4);
 
         paint.setTextAlign(Paint.Align.CENTER);
         centreText4(canvas, paint, "KENNEY", Constants.screenHeight/3.5f);
 
-        paint.setTextSize(100 / Constants.currentContext.getResources().getDisplayMetrics().density);
+        paint.setTextSize(100 /8 * Constants.currentContext.getResources().getDisplayMetrics().density);
         centreText4(canvas, paint, "www.kenney.nl", Constants.screenHeight/3f);
 
-        paint.setTextSize(150 / Constants.currentContext.getResources().getDisplayMetrics().density);
+        paint.setTextSize(140 /8 * Constants.currentContext.getResources().getDisplayMetrics().density);
 
         centreText4(canvas, paint, "MUSIC BY", Constants.screenHeight/2.4f);
         centreText4(canvas, paint, "Alexandr Zhelanov", Constants.screenHeight/2.25f);
 
-        paint.setTextSize(100 / Constants.currentContext.getResources().getDisplayMetrics().density);
+        paint.setTextSize(100 /8 * Constants.currentContext.getResources().getDisplayMetrics().density);
         centreText4(canvas, paint, "soundcloud.com/", Constants.screenHeight/2.05f);
         centreText4(canvas, paint, "alexandr-zhelanov", Constants.screenHeight/1.95f);
 
-        paint.setTextSize(150 / Constants.currentContext.getResources().getDisplayMetrics().density);
+        paint.setTextSize(140 /8 * Constants.currentContext.getResources().getDisplayMetrics().density);
         centreText4(canvas, paint, "SOFTWARE DEVELOPED", Constants.screenHeight/1.7f);
         centreText4(canvas, paint, "BY JASON TUBMAN", Constants.screenHeight/1.6f);
 
-        paint.setTextSize(100 / Constants.currentContext.getResources().getDisplayMetrics().density);
+        paint.setTextSize(100 /8 * Constants.currentContext.getResources().getDisplayMetrics().density);
         centreText4(canvas, paint, "www.jasontubman.tech", Constants.screenHeight/1.5f);
 
 
@@ -898,7 +898,7 @@ public class MenuScene implements Scene {
         Paint paint = new Paint();
         paint.setTypeface(typeface);
         paint.setColor(Color.DKGRAY);
-        paint.setTextSize(260 / Constants.currentContext.getResources().getDisplayMetrics().density);
+        paint.setTextSize(260 /8 * Constants.currentContext.getResources().getDisplayMetrics().density);
 
         
        // Bitmap exit = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.exitbutton);
@@ -906,10 +906,10 @@ public class MenuScene implements Scene {
         canvas.drawBitmap(resizedExit, (int) (Constants.screenWidth - Constants.screenWidth/7), Constants.screenHeight/14, paint);
 
         centreText4(canvas, paint, "OPTIONS", Constants.screenHeight/4);
-        paint.setTextSize(180 / Constants.currentContext.getResources().getDisplayMetrics().density);
+        paint.setTextSize(180 /8 * Constants.currentContext.getResources().getDisplayMetrics().density);
         centreText4(canvas, paint, "CHANGE VOLUME", Constants.screenHeight/3.3f);
-
-        centreText4(canvas, paint, "MUTE MUSIC :", Constants.screenHeight/2.23f);
+        paint.setTextSize(160 /8 * Constants.currentContext.getResources().getDisplayMetrics().density);
+        centreText4(canvas, paint, "MUTE MUSIC:", Constants.screenHeight/2.23f);
 
         canvas.drawBitmap(resizedSlider, (int) (Constants.screenWidth/7), (int) (Constants.screenHeight/3.1), paint);
 
@@ -943,10 +943,10 @@ public class MenuScene implements Scene {
         Paint paint = new Paint();
         paint.setTypeface(typeface);
         paint.setColor(Color.DKGRAY);
-        paint.setTextSize(260 / Constants.currentContext.getResources().getDisplayMetrics().density);
+        paint.setTextSize(260 /8 * Constants.currentContext.getResources().getDisplayMetrics().density);
 
         centreText4(canvas, paint, "HIGH SCORES", Constants.screenHeight/4);
-        paint.setTextSize(390 / Constants.currentContext.getResources().getDisplayMetrics().density);
+        paint.setTextSize(210 /8 * Constants.currentContext.getResources().getDisplayMetrics().density);
         canvas.drawBitmap(resizedExit, (int) (Constants.screenWidth - Constants.screenWidth/7), Constants.screenHeight/14, paint);
         paint.setTextAlign(Paint.Align.LEFT);
         SharedPreferences prefs = Constants.currentContext.getSharedPreferences("gameData", Context.MODE_PRIVATE);

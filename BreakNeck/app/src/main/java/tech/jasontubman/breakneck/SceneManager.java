@@ -149,7 +149,7 @@ public class SceneManager {
         Paint paint = new Paint();
         paint.setTypeface(typeface);
         paint.setColor(Color.DKGRAY);
-        paint.setTextSize(450 / Constants.currentContext.getResources().getDisplayMetrics().density);
+        paint.setTextSize(400 /8 * Constants.currentContext.getResources().getDisplayMetrics().density);
         
 
         canvas.drawBitmap(resizedExit, (int) (Constants.screenWidth - Constants.screenWidth/7), Constants.screenHeight/6, paint);
@@ -157,9 +157,10 @@ public class SceneManager {
 
         centreText4(canvas, paint, "PAUSED", Constants.screenHeight/3.7f);
 
-        paint.setTextSize(180 / Constants.currentContext.getResources().getDisplayMetrics().density);
+        paint.setTextSize(180 /8 * Constants.currentContext.getResources().getDisplayMetrics().density);
 
         centreText4(canvas, paint, "VOLUME", Constants.screenHeight/3.0f);
+        paint.setTextSize(160 /8 * Constants.currentContext.getResources().getDisplayMetrics().density);
         centreText4(canvas, paint, "MUTE MUSIC :", Constants.screenHeight/2.13f);
 
         canvas.drawBitmap(resizedSlider, (int) (Constants.screenWidth/7), (int) (Constants.screenHeight/2.8), paint);

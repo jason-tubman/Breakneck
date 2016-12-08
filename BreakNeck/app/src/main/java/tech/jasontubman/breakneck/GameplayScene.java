@@ -370,13 +370,13 @@ public class GameplayScene implements Scene {
             paint3.setColor(Color.WHITE);
             paint3.setAlpha(opacity);
             canvas.drawRoundRect(gameOverScreen, 10, 10, paint3);
-            paint3.setTextSize(150*2/ Constants.currentContext.getResources().getDisplayMetrics().density);
+            paint3.setTextSize(150*2/8 * Constants.currentContext.getResources().getDisplayMetrics().density);
             paint3.setColor(Color.DKGRAY);
             paint3.setTypeface(typeface);
             centreText(canvas, paint3, "GAME OVER", Constants.screenHeight/3.0f);
-            paint3.setTextSize(90*2  / Constants.currentContext.getResources().getDisplayMetrics().density);
+            paint3.setTextSize(90*2  /8 * Constants.currentContext.getResources().getDisplayMetrics().density);
             centreText(canvas, paint3, "Your Score was: ", Constants.screenHeight/2.5f);
-            paint3.setTextSize(140*2  / Constants.currentContext.getResources().getDisplayMetrics().density);
+            paint3.setTextSize(140*2  /8 * Constants.currentContext.getResources().getDisplayMetrics().density);
 
             int score1 = prefs.getInt("save1", 0); //0 is the default value)
 
@@ -391,7 +391,7 @@ public class GameplayScene implements Scene {
             paint3.setColor(Color.DKGRAY);
 
             canvas.drawBitmap(resizedplayAgain, (int) (Constants.screenWidth/9), (int) (Constants.screenHeight/1.8), paint3);
-            paint3.setTextSize(100*2  / Constants.currentContext.getResources().getDisplayMetrics().density);
+            paint3.setTextSize(100*2  /8 * Constants.currentContext.getResources().getDisplayMetrics().density);
             centreText(canvas, paint3, "PLAY AGAIN", Constants.screenHeight/1.66f);
 
             canvas.drawBitmap(resizedstore, (int) (Constants.screenWidth/9), (int) (Constants.screenHeight/1.53), paint3);
@@ -495,9 +495,10 @@ public class GameplayScene implements Scene {
                 playerPoint2.set(playerPoint.x, Constants.screenHeight - Constants.screenHeight/4);
                 if (justReset == 1) {
                     selector.selectSprite(this.sceneManager.shipChosen + 1, 1);
+                    player.updateSprite(selector.getSprite());
+                    player2.updateSprite(selector.getSprite());
                 }
-                player.updateSprite(selector.getSprite());
-                player2.updateSprite(selector.getSprite());
+
             }
         } else if (playerPoint2.x < playerPoint.x) {
             if (obstacleManager.getSpeed() > 0) {
@@ -511,9 +512,9 @@ public class GameplayScene implements Scene {
                 playerPoint2.set(playerPoint.x, Constants.screenHeight - Constants.screenHeight/4);
                 if (justReset == 1) {
                     selector.selectSprite(this.sceneManager.shipChosen + 1, 1);
+                    player.updateSprite(selector.getSprite());
+                    player2.updateSprite(selector.getSprite());
                 }
-                player.updateSprite(selector.getSprite());
-                player2.updateSprite(selector.getSprite());
             }
         }
         justReset++;
