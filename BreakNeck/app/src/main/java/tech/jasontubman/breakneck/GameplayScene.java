@@ -31,6 +31,8 @@ public class GameplayScene implements Scene {
     private Rect r = new Rect();
     private int justReset = 1;
 
+    private boolean explosionOnce = false;
+
     private int coins = 0;
 
     //GAME OVER PAINTS
@@ -52,6 +54,7 @@ public class GameplayScene implements Scene {
     private ParticleGenerator particleGenerator1;
     private ParticleGenerator particleGenerator2;
 
+    private Explosion explosion = new Explosion();
 
     private Boolean justHit = false;
 
@@ -87,7 +90,7 @@ public class GameplayScene implements Scene {
         playerPoint2 = new Point(Constants.screenWidth/2, Constants.screenHeight-Constants.screenHeight/4);
         player2.update(playerPoint2);
         player2.setVisible(false);
-
+        player.setVisible(true);
         obstacleManager = new ObstacleManager(200, 950, 400, Color.LTGRAY, player);
         this.score = 0;
         numPoints  = 0;
@@ -99,12 +102,18 @@ public class GameplayScene implements Scene {
     @Override
     public void update() {
         if (!gameOver) {
+            explosion.update();
             if (player.getShieldStatus() && !player2.getShieldStatus()) {
                 player2.setShieldStatus(true);
             }
+            if (!player.getShieldStatus() && player2.getShieldStatus()) {
+                player2.setShieldStatus(false);
+            }
             if (player.getSpeedStatus() && !player2.getShieldStatus()) {
                 player2.setShieldStatus(true);
-                //playerPoint2.y = playerPoint.y;
+            }
+            if (!player.getSpeedStatus() && player2.getShieldStatus()) {
+                player2.setShieldStatus(false);
             }
             coins = obstacleManager.getCoins();
             if (player2.isVisible()) {
@@ -211,15 +220,23 @@ public class GameplayScene implements Scene {
         if (obstacleManager.playerCollided(player) && !gameOver || obstacleManager.playerCollided(player2) && !gameOver && !player.getSpeedStatus() && !player2.getShieldStatus()) {
             if (player.getShieldStatus() && player.getSpeedStatus() == false && player2.getSpeedStatus() == false) {
                 justHit = true;
-            } else if (player.getSpeedStatus() == false && player2.getSpeedStatus() == false) {
+                explosionOnce = true;
+            } else if (player.getSpeedStatus() == false) {
                 gameOver = true;
+                explosion.addParticle(playerPoint.x, playerPoint.y+40, 3, false);
+                explosion.addParticle(playerPoint2.x, playerPoint2.y+40, 3, false);
+                player.setVisible(false);
+                player2.setVisible(false);
                 timeEnded = System.currentTimeMillis();
             }
 
         } else {
-            if (justHit) {
+            if (justHit && explosionOnce) {
+                explosion.addParticle(playerPoint.x, playerPoint.y+40, 3, false);
+                explosion.addParticle(playerPoint2.x, playerPoint2.y+40, 3, false);
                 player.setShieldStatus(false);
                 player2.setShieldStatus(false);
+                explosionOnce = false;
             }
         }
     }
@@ -314,7 +331,7 @@ public class GameplayScene implements Scene {
     @Override
     public void draw(Canvas canvas) {
         canvas.drawRGB(44, 42, 49);
-
+        explosion.draw(canvas);
         Paint score = new Paint();
         score.setTextSize(50);
         score.setColor(Color.WHITE);
@@ -356,7 +373,8 @@ public class GameplayScene implements Scene {
 
         if (gameOver) {
             fades();
-
+            explosion.update();
+            explosion.draw(canvas);
             //Save Score
 
             //Save Coins
@@ -417,7 +435,7 @@ public class GameplayScene implements Scene {
 
     @Override
     public void recieveTouch(MotionEvent event) {
-        switch(event.getAction()) {
+        switch(event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN: {
                 if (!gameOver) {
                     numPoints = event.getPointerCount();
@@ -455,6 +473,10 @@ public class GameplayScene implements Scene {
                     numPoints = event.getPointerCount();
                     eventX = event.getX(0);
                 }
+                break;
+            }
+            case MotionEvent.ACTION_POINTER_UP: {
+                numPoints = event.getPointerCount() - 1;
                 break;
             }
             case MotionEvent.ACTION_UP: {

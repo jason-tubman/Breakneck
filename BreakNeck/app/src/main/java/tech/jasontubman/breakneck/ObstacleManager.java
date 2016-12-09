@@ -94,7 +94,30 @@ public class ObstacleManager {
     public int getCoins() {
         return coinsCount;
     }
+    private void createObstacles2() {
+        int obstacleY = -15*Constants.screenHeight/4;
+        while (obstacleY < -2000) {
+            int random = getRandomNumberInRange(1, 3);
+            switch (random) {
 
+                case 1 : {
+                    obstacles.add(new LeftTriangle(this.color, 0, obstacleY));
+                    obstacleY += obstacleHeight + obstacleGap;
+                    break;
+                }
+                case 2 : {
+                    obstacles.add(new RightTriangle(this.color, Constants.screenWidth/4, obstacleY));
+                    obstacleY += obstacleHeight + obstacleGap;
+                    break;
+                }
+                case 3 : {
+                    obstacles.add(new Diamond(this.color, Constants.screenWidth/2, obstacleY));
+                    obstacleY += obstacleHeight + obstacleGap;
+                    break;
+                }
+            }
+        }
+    }
     private void createObstacles() {
         int obstacleY = -5*Constants.screenHeight/4;
         while (obstacleY < 0) {
@@ -139,7 +162,7 @@ public class ObstacleManager {
             } else if (player.getSpeedStatus()) {
                 this.speed = (float) (Math.sqrt(1.05 + (startTime - initTime) / 1500)) * player.getSpeed() * 5;
             }
-            
+
             if (elapsedTime - startSpeed >= 2500 && player.getSpeedStatus() && startSpeed !=0) {
                 obstacles.clear();
                 coins.clear();
@@ -147,7 +170,7 @@ public class ObstacleManager {
                 shields.clear();
                 startSpeed = 0;
                 player.setSpeedStatus(false);
-                createObstacles();
+                createObstacles2();
             }
 
             for (Obstacle obstacle : obstacles) {
