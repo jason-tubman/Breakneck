@@ -44,9 +44,11 @@ public class MainActivity extends Activity {
         // ads parameter
         RelativeLayout.LayoutParams params1 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         params1.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        params1.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         adView.setLayoutParams(params1);
-        adView.setForegroundGravity(Gravity.BOTTOM);
+
         RelativeLayout layout = new RelativeLayout(this);
+
 
         // layout list
         layout.addView(new GamePanel(this));

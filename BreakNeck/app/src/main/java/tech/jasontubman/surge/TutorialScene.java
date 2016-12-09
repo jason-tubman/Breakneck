@@ -104,13 +104,13 @@ public class TutorialScene implements Scene {
                 player2.setShieldStatus(true);
             }
             if (player2.isVisible()) {
-                particleGenerator2.addParticle(player2.getX(), player2.getY() + player2.getHeight()-50, 0, true);
+                particleGenerator2.addParticle(player2.getX(), player2.getY() + (int) (player.getHeight()/4), 0, true);
                 particleGenerator2.update();
-                particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, 0, true);
+                particleGenerator1.addParticle(player.getX(), player.getY() + (int) (player.getHeight()/4), 0, true);
                 particleGenerator1.update();
             } else {
-                particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, 0, false);
-                particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, 0, false);
+                particleGenerator1.addParticle(player.getX(), player.getY() + (int) (player.getHeight()/1.2), 0, false);
+                particleGenerator1.addParticle(player.getX(), player.getY()+ (int) (player.getHeight()/1.2), 0, false);
                 particleGenerator1.update();
             }
 
@@ -130,21 +130,21 @@ public class TutorialScene implements Scene {
                 if (eventX < Constants.screenWidth/2) {
                     if (!(playerPoint.x < player.getRectangle().width())) {
                             playerPoint.set(playerPoint.x - 70, playerPoint.y);
-                            particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, -5, false);
-                            particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, -5, false);
+                            particleGenerator1.addParticle(player.getX(), player.getY() + (int) (player.getHeight()/1.2), -5, false);
+                            particleGenerator1.addParticle(player.getX(), player.getY() + (int) (player.getHeight()/1.2), -5, false);
                     } else {
                         if (!split) {
-                            playerPoint.set(100, playerPoint.y);
+                            playerPoint.set(Constants.screenWidth/10, playerPoint.y);
                         }
                     }
                 } else if (eventX > Constants.screenWidth/2) {
                     if (!(playerPoint.x > Constants.screenWidth - player.getRectangle().width())) {
                             playerPoint.set(playerPoint.x + 70, playerPoint.y);
-                            particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, 5, false);
-                            particleGenerator1.addParticle(player.getX(), player.getY() + player.getHeight()-50, 5, false);
+                            particleGenerator1.addParticle(player.getX(), player.getY() + (int) (player.getHeight()/1.2), 5, false);
+                            particleGenerator1.addParticle(player.getX(), player.getY() + (int) (player.getHeight()/1.2), 5, false);
                     }
                     else {
-                        playerPoint.set(Constants.screenWidth - 100, playerPoint.y);
+                        playerPoint.set(Constants.screenWidth - Constants.screenWidth/10, playerPoint.y);
                     }
                 }
             }
@@ -489,7 +489,7 @@ public class TutorialScene implements Scene {
     private void resetPoint() {
         if (playerPoint.x > (Constants.screenWidth / 2)) {
             playerPoint.set(playerPoint.x - 70, playerPoint.y);
-            if (playerPoint.x <= (Constants.screenWidth / 2)) {
+            if (playerPoint.x <= (Constants.screenWidth / 2 + Constants.screenWidth/22)) {
                 playerPoint.set(Constants.screenWidth/2, playerPoint.y);
                 selector.selectSprite(this.sceneManager.shipChosen + 1, 1);
                 player.updateSprite(selector.getSprite());
@@ -498,7 +498,7 @@ public class TutorialScene implements Scene {
         } else if (playerPoint.x < (Constants.screenWidth / 2)) {
                 playerPoint.set(playerPoint.x + 70, playerPoint.y);
 
-            if (playerPoint.x >= (Constants.screenWidth / 2)) {
+            if (playerPoint.x >= (Constants.screenWidth / 2 + Constants.screenWidth/22)) {
                 playerPoint.set(Constants.screenWidth/2, playerPoint.y);
                 selector.selectSprite(this.sceneManager.shipChosen + 1, 1);
                 player.updateSprite(selector.getSprite());
@@ -545,18 +545,18 @@ public class TutorialScene implements Scene {
         if (eventX < Constants.screenWidth/2) {
             if (!(playerPoint2.x > Constants.screenWidth - player.getRectangle().width())) {
                     playerPoint2.set(playerPoint2.x +70, playerPoint2.y);
-                    playerPoint.set(player.getRectangle().width() - 40, playerPoint.y);
+                    playerPoint.set(player.getRectangle().width() - Constants.screenWidth/20, playerPoint.y);
             } else {
-                playerPoint2.set(Constants.screenWidth - 60, playerPoint2.y);
-                playerPoint.set(player.getRectangle().width() - 40, playerPoint.y);
+                playerPoint2.set(Constants.screenWidth - player.getRectangle().width(), playerPoint2.y);
+                playerPoint.set(player.getRectangle().width(), playerPoint.y);
             }
         } else if (eventX > Constants.screenWidth/2) {
             if (!(playerPoint2.x < player.getRectangle().width())) {
                     playerPoint2.set(playerPoint2.x - (70), playerPoint2.y);
-                    playerPoint.set(Constants.screenWidth - 60, playerPoint.y);
+                    playerPoint.set(Constants.screenWidth - Constants.screenWidth/22, playerPoint.y);
             } else {
-                playerPoint2.set(player.getRectangle().width() - 40, playerPoint2.y);
-                playerPoint.set(Constants.screenWidth - 60, playerPoint.y);
+                playerPoint2.set(player.getRectangle().width(), playerPoint2.y);
+                playerPoint.set(Constants.screenWidth - player.getRectangle().width(), playerPoint.y);
             }
         }
     }
