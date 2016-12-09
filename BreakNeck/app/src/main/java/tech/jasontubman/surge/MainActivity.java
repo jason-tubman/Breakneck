@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 
+import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
@@ -36,13 +37,15 @@ public class MainActivity extends Activity {
 
         // adview code
         AdView adView = new AdView(this);
-        adView.setAdUnitId("ca-app-pub-4328861976010980~6735154157");
+        adView.setAdUnitId("ca-app-pub-4328861976010980/1836962956");
         adView.setAdSize(AdSize.SMART_BANNER);
+
 
         // ads parameter
         RelativeLayout.LayoutParams params1 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        params1.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         adView.setLayoutParams(params1);
-
+        adView.setForegroundGravity(Gravity.BOTTOM);
         RelativeLayout layout = new RelativeLayout(this);
 
         // layout list
