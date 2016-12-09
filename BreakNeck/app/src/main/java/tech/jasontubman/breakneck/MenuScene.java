@@ -50,6 +50,7 @@ public class MenuScene implements Scene {
     private boolean musicMuted = false;
     private ShipSelector shipSel;
 
+
     private ParticleGenerator creditGen;
 
     private Bitmap playButton;
@@ -84,6 +85,7 @@ public class MenuScene implements Scene {
     private Bitmap resizedlock;
 
     private SharedPreferences prefs = Constants.currentContext.getSharedPreferences("gameData", Context.MODE_PRIVATE);
+    private SharedPreferences.Editor editor = prefs.edit();
 
     private Bitmap ship1;
     private Bitmap  resizedship1;
@@ -926,12 +928,16 @@ public class MenuScene implements Scene {
         canvas.drawBitmap(resizedSliderUp, (int) (this.sliderX), (int) (Constants.screenHeight/3.05), paint);
 
 
-        creditGen.addParticle((int) (Constants.screenWidth/2.07), (int) (Constants.screenHeight/1.6), 0, false);
+        canvas.drawBitmap(resizedStoreButton2, (int) (Constants.screenWidth/8), (int) (Constants.screenHeight/1.95), paint);
+
+        centreText4(canvas, paint, "TUTORIAL", (int) (Constants.screenHeight/1.75));
+
+        creditGen.addParticle((int) (Constants.screenWidth/2.07), (int) (Constants.screenHeight/1.4), 0, false);
         creditGen.update();
         creditGen.draw(canvas);
 
 
-        canvas.drawBitmap(resizedShip, (int) (Constants.screenWidth/2.8), (int) (Constants.screenHeight/1.9), paint);
+        canvas.drawBitmap(resizedShip, (int) (Constants.screenWidth/2.8), (int) (Constants.screenHeight/1.58), paint);
 
     }
     public void drawScores(Canvas canvas) {
@@ -1013,6 +1019,16 @@ public class MenuScene implements Scene {
             sceneManager.addScene(new TutorialScene(this.sceneManager));
         }
         SceneManager.activeScene = 1;
+    }
+
+    public void runTutorial() {
+
+        if (this.sceneManager.scenes.size() == 2) {
+            sceneManager.scenes.remove(sceneManager.scenes.size()-1);
+        }
+        sceneManager.addScene(new TutorialScene(this.sceneManager));
+        sceneManager.activeScene = 1;
+
     }
 
     public void playPressed(Canvas canvas) {
@@ -1517,6 +1533,12 @@ public class MenuScene implements Scene {
                     }
 
                 }
+
+                if (event.getY() > (int)(Constants.screenHeight/1.95) && event.getY() < (int)(Constants.screenHeight/1.95 + Constants.screenHeight/11)
+                    && event.getX() >  (int) (Constants.screenWidth/8) && event.getX() <  (int) (Constants.screenWidth/8 + Constants.screenHeight/1.35) && options) {
+                    runTutorial();
+                }
+
                 //EXIT CLICK STORE
                 if (event.getY() > Constants.screenHeight / 14 && event.getY() < Constants.screenHeight / 14 + Constants.screenHeight / 20
                         && event.getX() > Constants.screenWidth / 12 && event.getX() < Constants.screenWidth / 12 + Constants.screenWidth - Constants.screenWidth / 7 && store) {
@@ -1552,6 +1574,7 @@ public class MenuScene implements Scene {
                     if (!musicMuted) {
                         musicMuted = true;
                         this.sceneManager.mute = true;
+                        editor.putBoolean("mute", true);
                     } else {
                         musicMuted = false;
                     }

@@ -102,6 +102,10 @@ public class GameplayScene implements Scene {
             if (player.getShieldStatus() && !player2.getShieldStatus()) {
                 player2.setShieldStatus(true);
             }
+            if (player.getSpeedStatus() && !player2.getShieldStatus()) {
+                player2.setShieldStatus(true);
+                //playerPoint2.y = playerPoint.y;
+            }
             coins = obstacleManager.getCoins();
             if (player2.isVisible()) {
                 particleGenerator2.addParticle(player2.getX(), player2.getY() + player2.getHeight()-50, 0, true);
@@ -114,13 +118,18 @@ public class GameplayScene implements Scene {
                 particleGenerator1.update();
             }
 
+
+            obstacleManager.update();
             player.update(playerPoint);
             player2.update(playerPoint2);
 
-            obstacleManager.update();
+
 
             if (!obstacleManager.getcountDown()) {
                 addToScore(100);
+                if (player.getSpeedStatus()) {
+                    addToScore(200);
+                }
             }
 
             starManager.update();
@@ -198,10 +207,11 @@ public class GameplayScene implements Scene {
             }
 
         }
-        if (obstacleManager.playerCollided(player) && !gameOver || obstacleManager.playerCollided(player2) && !gameOver) {
-            if (player.getShieldStatus()) {
+
+        if (obstacleManager.playerCollided(player) && !gameOver || obstacleManager.playerCollided(player2) && !gameOver && !player.getSpeedStatus() && !player2.getShieldStatus()) {
+            if (player.getShieldStatus() && player.getSpeedStatus() == false && player2.getSpeedStatus() == false) {
                 justHit = true;
-            } else {
+            } else if (player.getSpeedStatus() == false && player2.getSpeedStatus() == false) {
                 gameOver = true;
                 timeEnded = System.currentTimeMillis();
             }

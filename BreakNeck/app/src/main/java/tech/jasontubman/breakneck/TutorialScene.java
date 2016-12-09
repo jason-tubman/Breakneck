@@ -244,7 +244,7 @@ public class TutorialScene implements Scene {
             }
         } else if (elapsedTime >= 35000 && elapsedTime < 37000) {
             tutorialStage = 8;
-        } else if (elapsedTime >= 37000 && elapsedTime < 41000) {
+        } else if (elapsedTime >= 37000 && elapsedTime < 45500) {
             tutorialStage = 9;
 
             if (!obstacles1made) {
@@ -281,24 +281,24 @@ public class TutorialScene implements Scene {
                 obstaclesBeaten = true;
             }
 
-        } else if (elapsedTime >= 41000 && elapsedTime < 42000) {
+        } else if (elapsedTime >= 45500 && elapsedTime < 46500) {
             if (!obstaclesBeaten) {
                 startTime += 4000;
             } else {
                 tutorialStage = 10;
             }
         }
-        else if (elapsedTime >= 42000 && elapsedTime < 47000) {
+        else if (elapsedTime >= 46500 && elapsedTime < 51000) {
             tutorialStage = 11;
         }
-        else if (elapsedTime >= 47000 && elapsedTime < 52000) {
+        else if (elapsedTime >= 51000 && elapsedTime < 57000) {
             tutorialStage = 12;
         }
-        else if (elapsedTime >= 52000 && elapsedTime < 57000) {
+        else if (elapsedTime >= 57000 && elapsedTime < 62000) {
             tutorialStage = 13;
             editor.putBoolean("tutorial", true);
             editor.commit();
-        }  else if (elapsedTime >= 57000 && elapsedTime < 61000) {
+        }  else if (elapsedTime >= 62000 && elapsedTime < 65000) {
             fade();
             Paint paint = new Paint();
             paint.setColor(Color.BLACK);
@@ -307,7 +307,7 @@ public class TutorialScene implements Scene {
             rect.set(0, 0, Constants.screenWidth, Constants.screenHeight);
             canvas.drawRoundRect(rect, 0, 0, paint);
 
-        } else if (elapsedTime > 61000) {
+        } else if (elapsedTime > 65000) {
             terminate();
         }
 
@@ -386,11 +386,11 @@ public class TutorialScene implements Scene {
                 break;
             }
             case 12: {
-                paint2.setTextSize(20 * Constants.currentContext.getResources().getDisplayMetrics().density);
-                centreText(canvas, paint2, "IF AT ANY TIME", Constants.screenHeight/4);
-                centreText(canvas, paint2, "YOU WANT TO RETURN", (int) (Constants.screenHeight/3.4));
-                centreText(canvas, paint2, "TO THIS TUTORIAL JUST", (int) (Constants.screenHeight/3.2));
-                centreText(canvas, paint2, "NAVIGATE TO THE OPTIONS PANEL", (int) (Constants.screenHeight/2.9));
+                paint2.setTextSize(15 * Constants.currentContext.getResources().getDisplayMetrics().density);
+                centreText(canvas, paint2, "IF AT ANY TIME YOU ", Constants.screenHeight/4);
+                centreText(canvas, paint2, "TO WANT TO RETURN THIS", (int) (Constants.screenHeight/3.6));
+                centreText(canvas, paint2, "TUTORIAL JUST NAVIGATE", (int) (Constants.screenHeight/3.2));
+                centreText(canvas, paint2, "TO THE OPTIONS PANEL", (int) (Constants.screenHeight/2.9));
                 break;
             }
             case 13: {

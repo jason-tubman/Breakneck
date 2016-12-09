@@ -20,7 +20,8 @@ public class Player implements Entity{
     private float speed;
 
     private boolean shieldSize;
-    private boolean shieldStatus;
+    private boolean shieldStatus = false;
+    private boolean speedStatus = false;
 
     public Player(Rect rectangle, Bitmap sprite, double speed) {
         this.rectangle = rectangle;
@@ -109,6 +110,12 @@ public class Player implements Entity{
         this.shieldStatus = bool;
     }
 
+    public boolean getSpeedStatus() {
+        return this.speedStatus;
+    }
+    public void setSpeedStatus(boolean bool) {
+        this.speedStatus = bool;
+    }
 
     public boolean isVisible () {
         return this.visible;

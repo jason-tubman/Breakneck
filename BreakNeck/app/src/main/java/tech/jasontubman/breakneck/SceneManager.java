@@ -36,7 +36,7 @@ public class SceneManager {
     private int sliderMax = (int) (Constants.screenWidth / 1.22);
     int sliderX = (int) sliderMax;
     private int firstRun = 0;
-    boolean mute = false;
+    boolean mute = prefs.getBoolean("mute", false);
 
     private ShipSelector shipSel;
 
@@ -207,6 +207,7 @@ public class SceneManager {
                         event.getX() > (Constants.screenWidth/1.3) && event.getX() < (Constants.screenWidth/1.3) + Constants.screenWidth /10) {
                     if (currentVolume != 0) {
                         mute = true;
+                        editor.putBoolean("mute", true);
                         sliderX = sliderMin;
                         break;
                     } else {

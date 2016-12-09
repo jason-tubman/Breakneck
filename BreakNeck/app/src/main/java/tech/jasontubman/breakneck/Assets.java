@@ -58,7 +58,8 @@ public class Assets {
     public static Bitmap playAgain = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.playbutton);
     public static Bitmap resizedplayAgain = Bitmap.createScaledBitmap(playAgain, (int) (Constants.screenWidth / 1.3), Constants.screenHeight / 12, false);
 
-
+    public static Bitmap speedBuff = Constants.bf.decodeResource(Constants.currentContext.getResources(), R.drawable.bolt_bronze);
+    public static Bitmap resizedspeedBuff = (Bitmap.createScaledBitmap(speedBuff, Constants.screenWidth/24, Constants.screenWidth/24, false));
     
     public Assets() {
         star = bf.decodeResource(currentContext.getResources(), R.drawable.star2);
