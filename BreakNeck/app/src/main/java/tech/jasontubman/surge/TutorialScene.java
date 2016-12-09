@@ -129,22 +129,22 @@ public class TutorialScene implements Scene {
             if (numPoints > 0 && !gameOver) {
                 if (eventX < Constants.screenWidth/2) {
                     if (!(playerPoint.x < player.getRectangle().width())) {
-                            playerPoint.set(playerPoint.x - 70, playerPoint.y);
+                            playerPoint.set(playerPoint.x - (int) (Constants.screenWidth/20.57), playerPoint.y);
                             particleGenerator1.addParticle(player.getX(), player.getY() + (int) (player2.getHeight()/1.2), -5, false);
                             particleGenerator1.addParticle(player.getX(), player.getY() + (int) (player2.getHeight()/1.2), -5, false);
                     } else {
                         if (!split) {
-                            playerPoint.set(100, playerPoint.y);
+                            playerPoint.set((int) (Constants.screenWidth/14.4), playerPoint.y);
                         }
                     }
                 } else if (eventX > Constants.screenWidth/2) {
                     if (!(playerPoint.x > Constants.screenWidth - player.getRectangle().width())) {
-                            playerPoint.set(playerPoint.x + 70, playerPoint.y);
+                            playerPoint.set(playerPoint.x + (int) (Constants.screenWidth/20.57), playerPoint.y);
                             particleGenerator1.addParticle(player.getX(), player.getY() + (int) (player2.getHeight()/1.2), 5, false);
                             particleGenerator1.addParticle(player.getX(), player.getY()+ (int) (player2.getHeight()/1.2), 5, false);
                     }
                     else {
-                        playerPoint.set(Constants.screenWidth - 100, playerPoint.y);
+                        playerPoint.set(Constants.screenWidth - (int) (Constants.screenWidth/14.4), playerPoint.y);
                     }
                 }
             }
@@ -488,7 +488,7 @@ public class TutorialScene implements Scene {
     }
     private void resetPoint() {
         if (playerPoint.x > (Constants.screenWidth / 2)) {
-            playerPoint.set(playerPoint.x - 70, playerPoint.y);
+            playerPoint.set(playerPoint.x - (int) (Constants.screenWidth/20.57), playerPoint.y);
             if (playerPoint.x <= (Constants.screenWidth / 2)) {
                 playerPoint.set(Constants.screenWidth/2, playerPoint.y);
                 selector.selectSprite(this.sceneManager.shipChosen + 1, 1);
@@ -496,7 +496,7 @@ public class TutorialScene implements Scene {
                 player2.updateSprite(selector.getSprite());
             }
         } else if (playerPoint.x < (Constants.screenWidth / 2)) {
-                playerPoint.set(playerPoint.x + 70, playerPoint.y);
+                playerPoint.set(playerPoint.x + (int) (Constants.screenWidth/20.57), playerPoint.y);
 
             if (playerPoint.x >= (Constants.screenWidth / 2)) {
                 playerPoint.set(Constants.screenWidth/2, playerPoint.y);
@@ -511,7 +511,7 @@ public class TutorialScene implements Scene {
     private void resetPointTwo() {
         if (playerPoint2.x > playerPoint.x) {
 
-                playerPoint2.set(playerPoint2.x - 70, playerPoint2.y);
+                playerPoint2.set(playerPoint2.x - (int) (Constants.screenWidth/20.57), playerPoint2.y);
 
             if (playerPoint2.x <= playerPoint.x) {
                 split = false;
@@ -525,7 +525,7 @@ public class TutorialScene implements Scene {
 
             }
         } else if (playerPoint2.x < playerPoint.x) {
-                playerPoint2.set(playerPoint2.x + 70, playerPoint2.y);
+                playerPoint2.set(playerPoint2.x + (int) (Constants.screenWidth/20.57), playerPoint2.y);
 
             if (playerPoint2.x >= playerPoint.x) {
                 split = false;
@@ -544,19 +544,19 @@ public class TutorialScene implements Scene {
     private void split() {
         if (eventX < Constants.screenWidth/2) {
             if (!(playerPoint2.x > Constants.screenWidth - player.getRectangle().width())) {
-                    playerPoint2.set(playerPoint2.x +70, playerPoint2.y);
-                    playerPoint.set(player.getRectangle().width() - 40, playerPoint.y);
+                    playerPoint2.set(playerPoint2.x +(int) (Constants.screenWidth/20.57), playerPoint2.y);
+                    playerPoint.set(player.getRectangle().width() - (int) (Constants.screenWidth/36), playerPoint.y);
             } else {
-                playerPoint2.set(Constants.screenWidth - 60, playerPoint2.y);
-                playerPoint.set(player.getRectangle().width() - 40, playerPoint.y);
+                playerPoint2.set(Constants.screenWidth - (int) (Constants.screenWidth/24), playerPoint2.y);
+                playerPoint.set(player.getRectangle().width() - (int) (Constants.screenWidth/36), playerPoint.y);
             }
         } else if (eventX > Constants.screenWidth/2) {
             if (!(playerPoint2.x < player.getRectangle().width())) {
-                    playerPoint2.set(playerPoint2.x - (70), playerPoint2.y);
-                    playerPoint.set(Constants.screenWidth - 60, playerPoint.y);
+                    playerPoint2.set(playerPoint2.x - ((int) (Constants.screenWidth/20.57)), playerPoint2.y);
+                    playerPoint.set(Constants.screenWidth - (int) (Constants.screenWidth/24), playerPoint.y);
             } else {
-                playerPoint2.set(player.getRectangle().width() - 40, playerPoint2.y);
-                playerPoint.set(Constants.screenWidth - 60, playerPoint.y);
+                playerPoint2.set(player.getRectangle().width() - (int) (Constants.screenWidth/36), playerPoint2.y);
+                playerPoint.set(Constants.screenWidth - (int) (Constants.screenWidth/24), playerPoint.y);
             }
         }
     }
