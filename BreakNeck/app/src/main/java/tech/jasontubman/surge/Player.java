@@ -97,10 +97,10 @@ public class Player implements Entity{
     }
 
     public void halfRect(int x, int y) {
-        this.rectangle.set(x, y, x+100, y+100);
+        this.rectangle.set(x, y, x+Constants.screenWidth/16, y+Constants.screenWidth/16);
     }
     public void resetRect(int x, int y) {
-        this.rectangle.set(x, y, x+205, y+205);
+        this.rectangle.set(x, y, x+Constants.screenWidth/8, y+ Constants.screenWidth/8);
     }
 
     public boolean getShieldStatus() {

@@ -21,15 +21,15 @@ public class ParticleGenerator {
     void addParticle(int xPos, int yPos, int xOffset, boolean split) {
         if (!split) {
             if (Math.random() < 0.5) {
-                xPos = xPos + (getRandomNumberInRange(0, 50)) * -1;
+                xPos = xPos + (getRandomNumberInRange(0, Constants.screenWidth/22)) * -1;
             } else {
-                xPos = xPos + (getRandomNumberInRange(0, 50));
+                xPos = xPos + (getRandomNumberInRange(0,  Constants.screenWidth/22));
             }
         } else {
             if (Math.random() < 0.5) {
-                xPos = xPos + (getRandomNumberInRange(0, 30)) * -1;
+                xPos = xPos + (getRandomNumberInRange(0,  Constants.screenWidth/35)) * -1;
             } else {
-                xPos = xPos + (getRandomNumberInRange(0, 30));
+                xPos = xPos + (getRandomNumberInRange(0,  Constants.screenWidth/30));
             }
         }
         particles.add(new Particle(xPos, yPos, xOffset));

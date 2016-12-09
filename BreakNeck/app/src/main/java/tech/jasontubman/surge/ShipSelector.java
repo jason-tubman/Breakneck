@@ -24,7 +24,7 @@ public class ShipSelector {
 
         chooseSprite(Constants.bf, ship);
 
-        shipSprite = Bitmap.createScaledBitmap(sprite, (int) (200*shrink), (int) (200*shrink), false);
+        shipSprite = Bitmap.createScaledBitmap(sprite, (int) (Constants.screenWidth/8*shrink), (int) (Constants.screenWidth/8*shrink), false);
     }
 
     private void chooseSprite(BitmapFactory bf, int shipNum) {
